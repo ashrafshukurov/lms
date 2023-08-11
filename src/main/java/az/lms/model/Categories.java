@@ -7,12 +7,28 @@
 
 package az.lms.model;
 
-import java.util.Set;
+import lombok.*;
 
+import javax.persistence.*;
+
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "categories")
 public class Categories {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
-    private Set<Books> books;
 
 }
