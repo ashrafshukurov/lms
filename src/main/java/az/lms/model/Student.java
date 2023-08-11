@@ -34,7 +34,6 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @NotBlank
     @Column(length = 55)
     private String finCode;
@@ -54,6 +53,5 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id")
     private Book borrowedBooks;
-   
    
 }
