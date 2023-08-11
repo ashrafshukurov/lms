@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
  * @project LMS
  */
 @Service
-public class BookService  {
+public class BookServiceImpl {
 
 }
