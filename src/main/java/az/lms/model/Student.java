@@ -14,7 +14,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(joinColumns = {@JoinColumn(name = "student_id",referencedColumnName = "id")},
     inverseJoinColumns = {@JoinColumn(name = "book_id",referencedColumnName = "id")})
     private Set<Book> borrowedBooks;
