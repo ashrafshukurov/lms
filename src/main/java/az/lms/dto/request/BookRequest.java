@@ -1,7 +1,8 @@
 package az.lms.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDate;
 
 /**
  * @author ashraf
@@ -9,10 +10,15 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookRequest {
-    private Long id;
     private String name;
     private String isbn;
     private int count;
     private String image;
+    private String authorName;
+    private LocalDate publishedTime;
+
 }

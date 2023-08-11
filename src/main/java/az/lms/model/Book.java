@@ -45,7 +45,5 @@ public class Book {
     @JoinColumn(name = "categories_id")
     private Category categories;
 
-    @ManyToMany(mappedBy = "borrowedBooks")
-    private Set<Student> borrowers;
 
 }
