@@ -7,20 +7,41 @@
 
 package az.lms.model;
 
+import lombok.*;
+
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "authors")
 public class Authors {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String surname;
-    String about;
-    @ManyToMany
-    Set<Books> books;
+    private Long id;
 
+    @Column(name = "first_name", nullable = false, unique = true)
+    private String name;
+
+    @Column(name = "last_name", unique = true)
+    private String surname;
+
+    @Column(name = "biography")
+    private String biography;
+
+    @Column(name = "birth_day")
+    private LocalDateTime birthDay;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "authors_book",
+            joinColumns = @JoinColumn(name = "authors_id"),
+            inverseJoinColumns = @JoinColumn(name = "books_id")
+    )
+    private Set<Books> books;
 }
