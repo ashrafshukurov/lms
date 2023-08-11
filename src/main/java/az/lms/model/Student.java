@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,7 +53,7 @@ public class Student {
 
 
    @NotBlank
-   @Column(length = 55)
+   @Column(length = 55,unique = true)
    private String finCode;
    @NotBlank
    @Column(name = "firstName", length = 55)
@@ -60,16 +61,13 @@ public class Student {
    @NotBlank
    @Column(name = "last_name", length = 55)
    private String surName;
-   @Min(17)
-   private int age;
+   private LocalDate birthDate;
    @NotBlank
    private String group;
-   @Column(length = 55)
-   private String image;
    @Column(length = 100)
    private String address;
+
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "book_id")
    private Book borrowedBooks;
-
 }
