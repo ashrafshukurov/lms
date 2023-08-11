@@ -19,19 +19,26 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Column(unique = true)
+
+    @Column(unique = true,nullable = false)
     private String isbn;
+    @Column(name ="book_image")
     private String image;
-    private int booksCount;
-    private String bookName;
+    @Column(name = "book_count")
+    private int count;
+    @Column(name = "book_name",nullable = false)
+    private String name;
+    @Column(name = "published_time")
     private LocalDate publishedTime;
+    @Column(name = "author_name",nullable = false)
     private String authorName;
+
 
     @ManyToMany(mappedBy ="books")
     private Set<Authors> authors;
 
-    @ManyToMany(mappedBy = "books")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categories_id")
     private Set<Category> categories;
 
     @ManyToMany(mappedBy = "borrowedBooks")
