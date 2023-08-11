@@ -23,10 +23,7 @@ import java.util.Set;
 @Table(name = "student")
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 @Builder
-@Table(name = "students")
 @Setter
 @Getter
 public class Student {
