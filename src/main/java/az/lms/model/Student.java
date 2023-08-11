@@ -44,37 +44,16 @@ public class Student {
     @NotBlank
     @Column(name = "last_name", length = 55)
     private String surName;
-    @Min(17)
-    private int age;
+    private LocalDate birthDate;
     @NotBlank
-    private String student_group;
-
+    @Column(name = "student_group", length = 10)
+    private String studentGroup;
     @Column(length = 100)
     private String address;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id")
     private Book borrowedBooks;
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-
-
-   @NotBlank
-   @Column(length = 55,unique = true)
-   private String finCode;
-   @NotBlank
-   @Column(name = "firstName", length = 55)
-   private String name;
-   @NotBlank
-   @Column(name = "last_name", length = 55)
-   private String surName;
-   private LocalDate birthDate;
-   @NotBlank
-   private String group;
-   @Column(length = 100)
-   private String address;
-
-   @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "book_id")
-   private Book borrowedBooks;
+   
+   
 }
