@@ -9,14 +9,4 @@ public class LmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LmsApplication.class, args);
 	}
-
-<<<<<<< src/main/java/az/lms/LmsApplication.java
-
-
-
-
-=======
->>>>>>> src/main/java/az/lms/LmsApplication.java
-
-
 }
