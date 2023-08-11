@@ -1,5 +1,6 @@
 package az.lms.model;
 
+import lombok.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,12 @@ import java.util.Set;
  * @project LMS
  */
 @Entity
+@Table(name = "student")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 @Table(name = "students")
 @Setter
 @Getter
@@ -40,12 +47,12 @@ public class Student {
     @Min(17)
     private int age;
     @NotBlank
-    private String group;
+    private String student_group;
 
     @Column(length = 100)
     private String address;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "books_id")
     private Book borrowedBooks;
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
