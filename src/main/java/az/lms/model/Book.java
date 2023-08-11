@@ -1,6 +1,6 @@
 package az.lms.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +14,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "books")
-@Data
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
