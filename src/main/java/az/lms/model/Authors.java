@@ -43,5 +43,5 @@ public class Authors {
             joinColumns = @JoinColumn(name = "authors_id"),
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
-    private Set<Books> books;
+    private Set<Book> books;
 }

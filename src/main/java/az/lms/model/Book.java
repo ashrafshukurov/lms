@@ -43,7 +43,7 @@ public class Book {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categories_id")
-    private Set<Category> categories;
+    private Set<Categories> categories;
 
     @ManyToMany(mappedBy = "borrowedBooks")
     private Set<Student> borrowers;
