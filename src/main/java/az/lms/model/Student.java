@@ -39,8 +39,6 @@ public class Student {
    private LocalDate birthDate;
    @NotBlank
    private String group;
-   @Column(length = 55)
-   private String image;
    @Column(length = 100)
    private String address;
 
