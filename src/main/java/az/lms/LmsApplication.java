@@ -10,7 +10,13 @@ public class LmsApplication {
 		SpringApplication.run(LmsApplication.class, args);
 	}
 
-	//comment
+<<<<<<< src/main/java/az/lms/LmsApplication.java
+
+
+
+
+=======
+>>>>>>> src/main/java/az/lms/LmsApplication.java
 
 
 }
