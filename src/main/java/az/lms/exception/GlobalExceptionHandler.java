@@ -36,23 +36,8 @@ public class GlobalExceptionHandler {
       } else if (ex instanceof StudentAlreadyExistsException) {
          return HttpStatus.CONFLICT;
       } else {
-         // Handle any other exceptions
          return HttpStatus.INTERNAL_SERVER_ERROR;
       }
    }
 
-//
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    ResponseEntity<ErrorMessage> handleConstraintViolationException(MethodArgumentNotValidException ex) {
-//        log.info(ex.getMessage(), ex);
-//        ErrorMessage errorMessage = new ErrorMessage();
-//        errorMessage.setDate(LocalDateTime.now());
-//        errorMessage.setStatus(HttpStatus.BAD_REQUEST);
-//        errorMessage.setErrorCode(HttpStatus.BAD_REQUEST.value());
-//        List<FieldError> list = ex.getFieldErrors();
-//        String stringBuilder = list.stream().map(
-//                fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage() + "; ").collect(Collectors.joining());
-//        errorMessage.setErrorMessage(stringBuilder);
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-//    }
 }
