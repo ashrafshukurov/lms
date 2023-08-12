@@ -7,11 +7,10 @@ import org.springframework.http.HttpStatus;
  * @project LMS
  */
 @Getter
-public class StudentAlreadyExistsException extends RuntimeException {
+public class AlreadyExistsException extends RuntimeException {
     private final HttpStatus status = HttpStatus.CONFLICT;
 
-
-    public StudentAlreadyExistsException(String message) {
+    public AlreadyExistsException(String message) {
         super(message);
     }
 }
