@@ -4,6 +4,7 @@ import az.lms.dto.request.OrderRequest;
 import az.lms.dto.response.OrderResponse;
 import az.lms.model.OrderType;
 import az.lms.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @project LMS
  */
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
    @Override
    public List<OrderResponse> getOrdersList() {
