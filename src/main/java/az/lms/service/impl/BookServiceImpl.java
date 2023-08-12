@@ -68,18 +68,11 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void updateBook(Long id, BookRequest bookRequest) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
-        book = Book.builder()
-                .authorName(bookRequest.getAuthorName())
-                .count(bookRequest.getCount())
-                .name(bookRequest.getName())
-                .publishedTime(bookRequest.getPublishedTime())
-                .isbn(bookRequest.getIsbn())
-                .image(bookRequest.getImage()).build();
-       bookRepository
-               .save(book);
+    public void updateBook(BookRequest bookRequest) {
+       Book book=bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(()->new NotFoundException("invalid book"));
+       Book newBook=bookMapper.requestToEntity(bookRequest);
+       newBook.setId(book.getId());
+       bookRepository.save(newBook);
     }
 
 }
