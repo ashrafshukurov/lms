@@ -1,5 +1,6 @@
 package az.lms.exception;
 
+import az.lms.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +17,16 @@ import java.time.LocalDateTime;
 @Slf4j
 public class GlobalExceptionHandler {
 
-   @ExceptionHandler({AgeLimitException.class, NotFoundException.class, StudentAlreadyExistsException.class
+   @ExceptionHandler({AgeLimitException.class, NotFoundException.class, AlreadyExistsException.class
    })
-   ResponseEntity<ErrorMessage> handleException(Exception ex) {
+   ResponseEntity<ErrorResponse> handleException(Exception ex) {
       log.info(ex.getMessage(), ex);
-      ErrorMessage errorMessage = new ErrorMessage();
-      errorMessage.setDate(LocalDateTime.now());
-      errorMessage.setStatus(getHttpStatus(ex));
-      errorMessage.setErrorCode(errorMessage.getStatus().value());
-      errorMessage.setErrorMessage(ex.getMessage());
-      return ResponseEntity.status(errorMessage.getStatus()).body(errorMessage);
+      ErrorResponse errorResponse = new ErrorResponse();
+      errorResponse.setDate(LocalDateTime.now());
+      errorResponse.setStatus(getHttpStatus(ex));
+      errorResponse.setErrorCode(errorResponse.getStatus().value());
+      errorResponse.setErrorMessage(ex.getMessage());
+      return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
    }
 
    private HttpStatus getHttpStatus(Exception ex) {
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler {
          return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
          return HttpStatus.NOT_FOUND;
-      } else if (ex instanceof StudentAlreadyExistsException) {
+      } else if (ex instanceof AlreadyExistsException) {
          return HttpStatus.CONFLICT;
       } else {
          return HttpStatus.INTERNAL_SERVER_ERROR;
