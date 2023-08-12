@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public interface OrderService {
 
-   List<OrderResponse> getOrdersList();
+   List<OrderResponse> getOrders();
 
    OrderType createOrder(OrderRequest request);
 
