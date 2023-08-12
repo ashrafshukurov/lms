@@ -1,5 +1,6 @@
 package az.lms.exception;
 
+import az.lms.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,14 @@ public class GlobalExceptionHandler {
 
    @ExceptionHandler({AgeLimitException.class, NotFoundException.class, StudentAlreadyExistsException.class
    })
-   ResponseEntity<ErrorMessage> handleException(Exception ex) {
+   ResponseEntity<ErrorResponse> handleException(Exception ex) {
       log.info(ex.getMessage(), ex);
-      ErrorMessage errorMessage = new ErrorMessage();
-      errorMessage.setDate(LocalDateTime.now());
-      errorMessage.setStatus(getHttpStatus(ex));
-      errorMessage.setErrorCode(errorMessage.getStatus().value());
-      errorMessage.setErrorMessage(ex.getMessage());
-      return ResponseEntity.status(errorMessage.getStatus()).body(errorMessage);
+      ErrorResponse errorResponse = new ErrorResponse();
+      errorResponse.setDate(LocalDateTime.now());
+      errorResponse.setStatus(getHttpStatus(ex));
+      errorResponse.setErrorCode(errorResponse.getStatus().value());
+      errorResponse.setErrorMessage(ex.getMessage());
+      return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
    }
 
    private HttpStatus getHttpStatus(Exception ex) {
@@ -41,18 +42,4 @@ public class GlobalExceptionHandler {
       }
    }
 
-//
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    ResponseEntity<ErrorMessage> handleConstraintViolationException(MethodArgumentNotValidException ex) {
-//        log.info(ex.getMessage(), ex);
-//        ErrorMessage errorMessage = new ErrorMessage();
-//        errorMessage.setDate(LocalDateTime.now());
-//        errorMessage.setStatus(HttpStatus.BAD_REQUEST);
-//        errorMessage.setErrorCode(HttpStatus.BAD_REQUEST.value());
-//        List<FieldError> list = ex.getFieldErrors();
-//        String stringBuilder = list.stream().map(
-//                fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage() + "; ").collect(Collectors.joining());
-//        errorMessage.setErrorMessage(stringBuilder);
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-//    }
 }
