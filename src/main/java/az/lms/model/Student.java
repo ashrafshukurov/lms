@@ -32,7 +32,7 @@ public class Student {
     private Long id;
 
     @NotBlank
-    @Column(length = 55)
+    @Column(length = 55, unique = true)
     private String finCode;
     @NotBlank
     @Column(name = "first_name", length = 55)
