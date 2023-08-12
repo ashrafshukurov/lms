@@ -1,0 +1,31 @@
+/*
+ *Created by Jaweed.Hajiyev
+ *Date:12.08.23
+ *TIME:01:46
+ *Project name:LMS
+ */
+
+package az.lms.dto.request;
+
+import az.lms.model.Book;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthorRequest {
+    private String name;
+
+    private String surname;
+
+    private String biography;
+
+    private LocalDateTime birthDay;
+
+    private Set<Book> books;
+}
