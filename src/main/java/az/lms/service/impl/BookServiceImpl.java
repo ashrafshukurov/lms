@@ -2,6 +2,7 @@ package az.lms.service.impl;
 
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
+import az.lms.exception.NotFoundBookException;
 import az.lms.mapper.BookMapper;
 import az.lms.model.Book;
 import az.lms.repository.BookRepository;
@@ -42,7 +43,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse getBookById(Long id) {
-       Book  book=bookRepository.findById(id).orElseThrow();
+       Book  book=bookRepository.findById(id).orElseThrow(()-> new NotFoundBookException("invalid book"));
+       return bookMapper.entityToResponse(book);
     }
 
     @Override

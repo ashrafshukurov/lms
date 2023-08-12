@@ -15,6 +15,6 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotFoundBookException extends RuntimeException {
-    private HttpStatus httpStatus=HttpStatus.NOT_FOUND;
-    private String msg;
+    private final HttpStatus httpStatus=HttpStatus.NOT_FOUND;
+    private String message;
 }
