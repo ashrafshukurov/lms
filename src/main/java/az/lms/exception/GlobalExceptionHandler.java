@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class GlobalExceptionHandler {
 
-   @ExceptionHandler({AgeLimitException.class, NotFoundException.class, StudentAlreadyExistsException.class
+   @ExceptionHandler({AgeLimitException.class, NotFoundException.class, AlreadyExistsException.class
    })
    ResponseEntity<ErrorResponse> handleException(Exception ex) {
       log.info(ex.getMessage(), ex);
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
          return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
          return HttpStatus.NOT_FOUND;
-      } else if (ex instanceof StudentAlreadyExistsException) {
+      } else if (ex instanceof AlreadyExistsException) {
          return HttpStatus.CONFLICT;
       } else {
          // Handle any other exceptions
