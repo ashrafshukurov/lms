@@ -13,6 +13,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
    Student findByFinCode(String finCode);
    boolean existsByFinCode(String finCode);
-
    void deleteByFinCode(String finCode);
 }
