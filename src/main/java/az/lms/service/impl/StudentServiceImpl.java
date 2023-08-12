@@ -37,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
 
    @Override
    public void create(StudentRequest request) {
-      if (studentRepository.findByFinCode(request.getFinCode()) == null) {
+      if (studentRepository.existsByFinCode(request.getFinCode())) {
          Student student = studentMapper.requestToEntity(request);
          studentRepository.save(student);
       } else throw new AlreadyExistsException("Student already exist with such fin code");
