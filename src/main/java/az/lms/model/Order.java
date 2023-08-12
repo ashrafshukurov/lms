@@ -1,9 +1,9 @@
 package az.lms.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,6 +15,9 @@ import java.util.Set;
 @Table(name = "orders")
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
