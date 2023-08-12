@@ -37,7 +37,6 @@ public class GlobalExceptionHandler {
       } else if (ex instanceof AlreadyExistsException) {
          return HttpStatus.CONFLICT;
       } else {
-         // Handle any other exceptions
          return HttpStatus.INTERNAL_SERVER_ERROR;
       }
    }
