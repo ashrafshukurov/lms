@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
    @Override
    public List<OrderResponse> getOrders() {
+      log.info("Getting all existing orders");
       List<Order> orders = orderRepository.findAll();
       return orders.stream().map(orderMapper::entityToDto).toList();
    }
@@ -44,40 +45,44 @@ public class OrderServiceImpl implements OrderService {
    @Transactional
    @Override
    public OrderType createOrder(OrderRequest request) {
+      log.info("Starting to create a new borrow order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
       if (book.getCount() < 0)
          throw new InsufficientCount("This book is out of stock");
       String existingOrderType = orderRepository.getLastOrder(request.getStudentId(), request.getBookId());
-      if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.ORDERED.name()))
+      if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.ORDERED.name())) {
+         log.warn("You have already taken the book!");
          throw new AlreadyExistsException("You have already taken the book!");
-
+      }
       Order order = orderMapper.dtoToEntity(request);
       order.setOrderTime(LocalDateTime.now());
 
       book.setCount(book.getCount() - 1);
       bookRepository.save(book);
       orderRepository.save(order);
-
+      log.info("Successfully made borrow order");
       return OrderType.ORDERED;
    }
 
 
    @Override
    public OrderType returnOrder(OrderRequest request) {
+      log.info("Starting to create a new return order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
       String existingOrderType = orderRepository.getLastOrder(request.getStudentId(), request.getBookId());
-      if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.RETURNED.name()))
+      if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.RETURNED.name())) {
+         log.warn("You have not taken the book!");
          throw new NotFoundException("You have not taken the book!");
-
+      }
       Order order = orderMapper.dtoToEntity(request);
       order.setOrderTime(LocalDateTime.now());
 
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       orderRepository.save(order);
-
+      log.info("Successfully made return order");
       return OrderType.RETURNED;
    }
 

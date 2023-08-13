@@ -13,6 +13,7 @@ import az.lms.repository.OrderRepository;
 import az.lms.repository.StudentRepository;
 import az.lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  * @project LMS
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
    private final StudentRepository studentRepository;
@@ -31,12 +33,14 @@ public class StudentServiceImpl implements StudentService {
 
    @Override
    public List<StudentResponse> getAll() {
+      log.info("Getting all students");
       List<Student> students = studentRepository.findAll();
       return students.stream().map(studentMapper::entityToResponse).toList();
    }
 
    @Override
    public void create(StudentRequest request) {
+      log.info("Creating new student account");
       if (studentRepository.existsByFinCode(request.getFinCode())) {
          Student student = studentMapper.requestToEntity(request);
          studentRepository.save(student);
@@ -45,6 +49,7 @@ public class StudentServiceImpl implements StudentService {
 
    @Override
    public void update(StudentRequest request) {
+      log.info("Updating student's fields");
       Student student = studentRepository.findByFinCode(request.getFinCode());
       if (student == null)
          throw new NotFoundException("Student is not found with such fin code");
@@ -55,6 +60,7 @@ public class StudentServiceImpl implements StudentService {
 
    @Override
    public StudentResponse getById(String fin) {
+      log.info("Getting student by fin {}",fin);
       Student student = studentRepository.findByFinCode(fin);
       if (student == null)
          throw new NotFoundException("Student is not found with such fin code");
@@ -63,11 +69,13 @@ public class StudentServiceImpl implements StudentService {
 
    @Override
    public void deleteById(String fin) {
+      log.warn("Deleting student account");
       studentRepository.deleteByFinCode(fin);
    }
 
    @Override
    public List<OrderResponse> getStudentOrders(String fin) {
+      log.warn("Getting all student's orders");
       Student student = studentRepository.findByFinCode(fin);
       List<Order> orders = orderRepository.findOrderByStudentId(student.getId());
       return orders.stream().map(orderMapper::entityToDto).toList();
