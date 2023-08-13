@@ -10,6 +10,7 @@ package az.lms.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Getter
@@ -18,16 +19,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @NotBlank
     @Column(name = "description")
     private String description;
 

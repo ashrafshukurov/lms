@@ -22,25 +22,25 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String isbn;
-    @Column(name ="book_image")
+    @Column(name = "book_image")
     private String image;
     @Column(name = "book_count")
     private int count;
-    @Column(name = "book_name",nullable = false)
+    @Column(name = "book_name", nullable = false)
     private String name;
     @Column(name = "published_time")
     private LocalDate publishedTime;
-    @Column(name = "author_name",nullable = false)
+    @Column(name = "author_name", nullable = false)
     private String authorName;
 
 
-    @ManyToMany(mappedBy ="books")
-    private Set<Authors> authors;
+    @ManyToMany(mappedBy = "books")
+    private Set<Author> authors;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categories_id")
+    @JoinColumn(name = "category_id")
     private Category categories;
 
 }

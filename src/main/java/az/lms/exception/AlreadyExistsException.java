@@ -14,3 +14,4 @@ public class AlreadyExistsException extends RuntimeException {
     private final HttpStatus status = HttpStatus.CONFLICT;
     private final String message;
 }
+

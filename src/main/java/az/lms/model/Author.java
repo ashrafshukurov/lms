@@ -10,6 +10,7 @@ package az.lms.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -20,11 +21,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "authors")
-public class Authors {
+public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(name = "first_name", nullable = false, unique = true)
     private String name;
 
@@ -34,9 +36,11 @@ public class Authors {
     @Column(name = "biography")
     private String biography;
 
+    @NotBlank
     @Column(name = "birth_day")
     private LocalDateTime birthDay;
 
+    @NotBlank
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_book",
