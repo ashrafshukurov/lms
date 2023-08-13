@@ -15,7 +15,7 @@ import java.util.List;
  * @project LMS
  */
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/v1/student")
 @RequiredArgsConstructor
 public class StudentController  {
     private final StudentService studentService;
@@ -44,9 +44,4 @@ public class StudentController  {
     public ResponseEntity<List<OrderResponse>> getStudentOrders(@PathVariable String fin){
         return ResponseEntity.ok(studentService.getStudentOrders(fin));
     }
-
-
-
-
-
 }
