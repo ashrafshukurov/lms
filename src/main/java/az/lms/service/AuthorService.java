@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface AuthorService {
     void createAuthor(AuthorRequest request);
 
@@ -25,5 +24,5 @@ public interface AuthorService {
 
     AuthorResponse getAuthorById(Long id);
 
-    void updateAuthors(Long id, AuthorRequest request);
+    void updateAuthors(AuthorRequest request);
 }
