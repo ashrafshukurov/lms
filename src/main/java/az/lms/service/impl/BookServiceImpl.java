@@ -7,6 +7,7 @@ import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.BookMapper;
 import az.lms.model.Book;
+import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -59,8 +60,11 @@ public class BookServiceImpl implements BookService {
         try {
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
+            Category category = book.getCategories();
+            BookResponse bookResponse = bookMapper.entityToResponse(book);
+            bookResponse.setCategory(category);
 
-            return bookMapper.entityToResponse(book);
+            return bookResponse;
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch book with ID " + id, e);
         }
@@ -69,10 +73,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void updateBook(BookRequest bookRequest) {
-       Book book=bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(()->new NotFoundException("invalid book"));
-       Book newBook=bookMapper.requestToEntity(bookRequest);
-       newBook.setId(book.getId());
-       bookRepository.save(newBook);
+        Book book = bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(() -> new NotFoundException("invalid book"));
+        Book newBook = bookMapper.requestToEntity(bookRequest);
+        newBook.setId(book.getId());
+        bookRepository.save(newBook);
     }
 
 }

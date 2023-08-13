@@ -28,11 +28,11 @@ public class StudentController  {
     public ResponseEntity<StudentResponse> getStudentById(@PathVariable String fin){
         return ResponseEntity.ok(studentService.getById(fin));
     }
-    @PutMapping
+    @PutMapping("/")
     public void updateStudent(@RequestBody StudentRequest studentRequest){
         studentService.update(studentRequest);
     }
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<StudentResponse>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAll());
     }

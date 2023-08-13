@@ -1,5 +1,6 @@
 package az.lms.dto.response;
 
+import az.lms.model.Category;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -22,4 +23,9 @@ public class BookResponse {
     private String image;
     private String authorName;
     private LocalDate publishedTime;
+    private Category category;
+
+
+
+
 }
