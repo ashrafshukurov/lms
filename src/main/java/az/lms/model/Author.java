@@ -27,10 +27,10 @@ public class Author {
     private Long id;
 
     @NotBlank
-    @Column(name = "first_name", nullable = false, unique = true)
+    @Column(name = "first_name", nullable = false)
     private String name;
 
-    @Column(name = "last_name", unique = true)
+    @Column(name = "last_name")
     private String surname;
 
     @Column(name = "biography")

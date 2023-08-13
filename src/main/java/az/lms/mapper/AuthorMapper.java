@@ -12,7 +12,7 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.model.Author;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AuthorMapper {
     AuthorResponse modelToResponse(Author author);
     Author requestToModel(AuthorRequest request);
