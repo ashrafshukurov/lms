@@ -10,10 +10,18 @@ import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
+import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
 
 
 /**
@@ -25,14 +33,19 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final FileUtil fileUtil;
+    @Value("${file.directory}")
+    private  String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest) {
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+        String imageFileName=fileUtil.uploadFile(imageFile);
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
 
         }
+        book.setImage(imageFileName);
         bookRepository.save(book);
     }
 
@@ -78,5 +91,12 @@ public class BookServiceImpl implements BookService {
         newBook.setId(book.getId());
         bookRepository.save(newBook);
     }
+
+    @Override
+    public Resource downloadBookImage(String imageFileName) {
+        Path imagePath = Paths.get(directory).resolve(imageFileName);
+        return fileUtil.load(imagePath.toString(), imagePath.getParent());
+    }
+
 
 }

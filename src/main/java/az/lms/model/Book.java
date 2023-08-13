@@ -40,7 +40,7 @@ public class Book {
     private Set<Author> authors;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "categories_id")
     private Category categories;
 
 }

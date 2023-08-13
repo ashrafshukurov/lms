@@ -15,7 +15,7 @@ import java.util.List;
  * @project LMS
  */
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/v1/student")
 @RequiredArgsConstructor
 public class StudentController  {
     private final StudentService studentService;
@@ -28,15 +28,15 @@ public class StudentController  {
     public ResponseEntity<StudentResponse> getStudentById(@PathVariable String fin){
         return ResponseEntity.ok(studentService.getById(fin));
     }
-    @PutMapping("/")
+    @PutMapping("/update")
     public void updateStudent(@RequestBody StudentRequest studentRequest){
         studentService.update(studentRequest);
     }
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<StudentResponse>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAll());
     }
-    @DeleteMapping("{fin}")
+    @DeleteMapping("/delete/{fin}")
     public void deleteStudentByFin(@PathVariable String fin){
         studentService.deleteById(fin);
     }

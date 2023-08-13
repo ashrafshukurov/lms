@@ -1,5 +1,6 @@
 package az.lms.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 /**
  * @author ashraf
@@ -16,6 +19,9 @@ import java.nio.file.Path;
  */
 @Component
 public class FileUtil {
+    @Value("${file.directory}")
+    private String directory;
+
     public Resource load(String filename,Path root) {
         try {
             Path file = root.resolve(filename);
@@ -28,6 +34,13 @@ public class FileUtil {
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
+    }
+    public String uploadFile(MultipartFile file) throws IOException {
+        String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+        Path filePath = Paths.get(directory).resolve(fileName);
+        Files.copy(file.getInputStream(), filePath);
+
+        return fileName;
     }
 
 }

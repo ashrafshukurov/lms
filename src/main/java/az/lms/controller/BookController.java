@@ -5,9 +5,12 @@ import az.lms.dto.response.BookResponse;
 import az.lms.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 import java.util.List;
 
@@ -23,9 +26,10 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
+
     @PostMapping("/add")
-    public void addBook(@RequestBody BookRequest bookRequest){
-        bookService.createBook(bookRequest);
+    public void addBook(@RequestParam("file") MultipartFile file,@ModelAttribute BookRequest bookRequest) throws IOException {
+        bookService.createBook(bookRequest,file);
     }
 
     @PutMapping("/update")
@@ -37,7 +41,7 @@ public class BookController {
     public ResponseEntity<BookResponse> getBookByID(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<BookResponse>> getBooks(){
         return ResponseEntity.ok(bookService.getAllBooks());
     }
@@ -46,9 +50,21 @@ public class BookController {
         bookService.deleteBook(id);
     }
 
-    @PostMapping("/upload")
-    public void uploadFile(@RequestParam("file")MultipartFile file){
-        log.info("Size: {}",file.getSize());
-        log.info("File Name: {}",file.getOriginalFilename());
-    }
+//        @PostMapping("/upload")
+//    public void upLoadFile(@RequestParam("file") MultipartFile file) throws IOException {
+//        Path path = Paths.get(directory);
+//        log.info("size:{}", file.getSize());
+//        log.info("name:{}", file.getOriginalFilename());
+//        Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()));
+//    }
+//    @GetMapping("/download")
+//    public ResponseEntity<Resource> download(@RequestParam("file") String fileName) {
+//        Path path = Paths.get(directory);
+//        Resource resource = fileUtil.load(fileName, path);
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+//                .body(resource);
+//    }
+
 }
