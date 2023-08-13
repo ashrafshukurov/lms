@@ -12,6 +12,7 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.model.Author;
+import az.lms.model.Book;
 import az.lms.repository.AuthorRepository;
 import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,11 @@ public class AuthorServiceImpl implements AuthorService {
         Author newAuthor = mapper.requestToModel(request);
         newAuthor.setId(oldAuthor.getId());
         repository.save(new Author());
+    }
+
+    @Override
+    public List<Book> showAuthorsBooks(Long authorId) {
+        Author author = repository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
+        return new ArrayList<>(author.getBooks());
     }
 }
