@@ -26,6 +26,7 @@ public class Order {
    private Long studentId;
    private Long bookId;
    private LocalDateTime orderTime;
+   @Enumerated(EnumType.STRING)
    private OrderType orderType;
 
 }
