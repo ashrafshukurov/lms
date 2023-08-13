@@ -51,12 +51,10 @@ public class OrderServiceImpl implements OrderService {
       String existingOrderType = orderRepository.getLastOrder(request.getStudentId(), request.getBookId());
       if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.ORDERED.name()))
          throw new AlreadyExistsException("You have already taken the book!");
-      Order order =
-              Order.builder()
-                      .studentId(request.getStudentId())
-                      .bookId(request.getBookId())
-                      .orderType(OrderType.ORDERED)
-                      .orderTime(LocalDateTime.now()).build();
+
+      Order order = orderMapper.dtoToEntity(request);
+      order.setOrderTime(LocalDateTime.now());
+
       book.setCount(book.getCount() - 1);
       bookRepository.save(book);
       orderRepository.save(order);
@@ -72,12 +70,10 @@ public class OrderServiceImpl implements OrderService {
       String existingOrderType = orderRepository.getLastOrder(request.getStudentId(), request.getBookId());
       if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.RETURNED.name()))
          throw new NotFoundException("You have not taken the book!");
-      Order order =
-              Order.builder()
-                      .studentId(request.getStudentId())
-                      .bookId(request.getBookId())
-                      .orderType(OrderType.RETURNED)
-                      .orderTime(LocalDateTime.now()).build();
+
+      Order order = orderMapper.dtoToEntity(request);
+      order.setOrderTime(LocalDateTime.now());
+
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       orderRepository.save(order);
