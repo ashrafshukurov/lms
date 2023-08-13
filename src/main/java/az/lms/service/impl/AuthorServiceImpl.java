@@ -15,11 +15,13 @@ import az.lms.model.Author;
 import az.lms.repository.AuthorRepository;
 import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository repository;
@@ -53,7 +55,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void updateAuthors(Long id, AuthorRequest request) {
-
+    public void updateAuthors(AuthorRequest request) {
+        Author oldAuthor = repository.findById(mapper.requestToModel(request).getId()).orElseThrow(() -> new NotFoundException("Author not found"));
+        Author newAuthor = mapper.requestToModel(request);
+        newAuthor.setId(oldAuthor.getId());
+        repository.save(new Author());
     }
 }
