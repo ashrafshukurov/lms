@@ -1,11 +1,14 @@
 package az.lms.service.impl;
 
 import az.lms.dto.request.BookRequest;
+import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.BookResponse;
 
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
+import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.BookMapper;
+import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
@@ -21,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,13 +41,14 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final FileUtil fileUtil;
+    private final AuthorMapper authorMapper;
     @Value("${file.directory}")
-    private  String directory;
+    private String directory;
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
-        String imageFileName=fileUtil.uploadFile(imageFile);
+        String imageFileName = fileUtil.uploadFile(imageFile);
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
@@ -77,15 +83,18 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse getBookById(Long id) throws NotFoundException {
         try {
-            log.info("getting book by id:{}",id);
+            log.info("getting book by id:{}", id);
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
-
             bookResponse.setCategory(category);
-//            bookResponse.setAuthors(book.getAuthors());
+            final Set<Author> authors = book.getAuthors();
 
+           Resource resource= downloadBookImage(book.getImage());
+          bookResponse.setFile(resource.getFile());
+            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
+            bookResponse.setAuthors(authorResponseSet);
 
             return bookResponse;
         } catch (Exception e) {
