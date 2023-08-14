@@ -29,7 +29,7 @@ public class BookResponse {
     private String authorName;
     private LocalDate publishedTime;
     private Category category;
-    private List<Author> authors;
+//    private Set<Author> authors;
 
 
 

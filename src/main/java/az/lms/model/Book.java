@@ -1,5 +1,6 @@
 package az.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,9 +39,10 @@ public class Book {
 
 
     @ManyToMany(mappedBy = "books")
-    private List<Author> authors;
+    @JsonBackReference
+    private Set<Author> authors;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categories_id")
     private Category categories;
 

@@ -28,5 +28,5 @@ public class AuthorRequest {
 
     private LocalDate birthDay;
 
-    private List<Book> books;
+    private Set<Book> books;
 }
