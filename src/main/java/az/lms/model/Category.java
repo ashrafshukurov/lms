@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -35,6 +35,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-    private List<Book> book;
+//    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+//    private List<Book> book;
 }

@@ -7,12 +7,22 @@ import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.BookMapper;
 import az.lms.model.Book;
+import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
+import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
 
 
 /**
@@ -21,22 +31,31 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final FileUtil fileUtil;
+    @Value("${file.directory}")
+    private  String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest) {
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+        log.info("uploading file");
+        String imageFileName=fileUtil.uploadFile(imageFile);
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
 
         }
+        book.setImage(imageFileName);
+        log.info("creating book");
         bookRepository.save(book);
     }
 
     @Override
     public List<BookResponse> getAllBooks() {
+        log.info("getting all books");
         List<Book> books = bookRepository.findAll();
         return books.stream().map(bookMapper::entityToResponse).toList();
     }
@@ -44,6 +63,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) throws NotFoundException {
         try {
+            log.info("deleting book");
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
@@ -57,10 +77,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse getBookById(Long id) throws NotFoundException {
         try {
+            log.info("getting book by id:{}",id);
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
+            Category category = book.getCategories();
+            BookResponse bookResponse = bookMapper.entityToResponse(book);
 
-            return bookMapper.entityToResponse(book);
+            bookResponse.setCategory(category);
+//            bookResponse.setAuthors(book.getAuthors());
+
+
+            return bookResponse;
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch book with ID " + id, e);
         }
@@ -69,10 +96,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void updateBook(BookRequest bookRequest) {
-       Book book=bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(()->new NotFoundException("invalid book"));
-       Book newBook=bookMapper.requestToEntity(bookRequest);
-       newBook.setId(book.getId());
-       bookRepository.save(newBook);
+        Book book = bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(() -> new NotFoundException("invalid book"));
+        Book newBook = bookMapper.requestToEntity(bookRequest);
+        newBook.setId(book.getId());
+        bookRepository.save(newBook);
     }
+
+    @Override
+    public Resource downloadBookImage(String imageFileName) {
+        Path imagePath = Paths.get(directory).resolve(imageFileName);
+        return fileUtil.load(imagePath.toString(), imagePath.getParent());
+    }
+
 
 }

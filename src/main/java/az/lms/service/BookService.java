@@ -2,7 +2,10 @@ package az.lms.service;
 
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,9 +14,10 @@ import java.util.List;
  */
 
 public interface BookService {
-    void createBook(BookRequest bookRequest);
+    void createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
     List<BookResponse> getAllBooks();
     void deleteBook(Long id);
     BookResponse getBookById(Long id);
     void updateBook(BookRequest bookRequest);
+    Resource downloadBookImage(String imageFileName);
 }

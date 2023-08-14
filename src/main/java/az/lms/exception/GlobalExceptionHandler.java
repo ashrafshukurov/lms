@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 
@@ -17,34 +18,33 @@ import java.time.LocalDateTime;
 @Slf4j
 public class GlobalExceptionHandler {
 
-   @ExceptionHandler({
-           AgeLimitException.class,
-           NotFoundException.class,
-           AlreadyExistsException.class,
-           InsufficientCount.class
-   })
-   ResponseEntity<ErrorResponse> handleException(Exception ex) {
-      log.info(ex.getMessage(), ex);
-      ErrorResponse errorResponse = new ErrorResponse();
-      errorResponse.setDate(LocalDateTime.now());
-      errorResponse.setStatus(getHttpStatus(ex));
-      errorResponse.setErrorCode(errorResponse.getStatus().value());
-      errorResponse.setErrorMessage(ex.getMessage());
-      return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
-   }
+    @ExceptionHandler({
+            AgeLimitException.class,
+            NotFoundException.class,
+            AlreadyExistsException.class,
+            InsufficientCount.class,
+            MaxUploadSizeExceededException.class
+    })
+    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+        log.info(ex.getMessage(), ex);
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setDate(LocalDateTime.now());
+        errorResponse.setStatus(getHttpStatus(ex));
+        errorResponse.setErrorCode(errorResponse.getStatus().value());
+        errorResponse.setErrorMessage(ex.getMessage());
+        return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
+    }
 
-   private HttpStatus getHttpStatus(Exception ex) {
-      if (ex instanceof AgeLimitException) {
-         return HttpStatus.BAD_REQUEST;
+    private HttpStatus getHttpStatus(Exception ex) {
+        if (ex instanceof AgeLimitException || ex instanceof MaxUploadSizeExceededException ) {
+            return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
-         return HttpStatus.NOT_FOUND;
-      } else if (ex instanceof AlreadyExistsException) {
-         return HttpStatus.CONFLICT;
-      }else if (ex instanceof InsufficientCount) {
-         return HttpStatus.CONFLICT;
-      } else {
-         return HttpStatus.INTERNAL_SERVER_ERROR;
-      }
-   }
+            return HttpStatus.NOT_FOUND;
+        } else if (ex instanceof AlreadyExistsException || ex instanceof InsufficientCount) {
+            return HttpStatus.CONFLICT;
+        } else {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+    }
 
 }

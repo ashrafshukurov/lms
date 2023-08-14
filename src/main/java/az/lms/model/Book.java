@@ -1,9 +1,11 @@
 package az.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,10 +39,11 @@ public class Book {
 
 
     @ManyToMany(mappedBy = "books")
+    @JsonBackReference
     private Set<Author> authors;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categories_id")
     private Category categories;
 
 }
