@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -30,16 +29,21 @@ public class Author {
     private Long id;
 
     @NotBlank
-    @Column(name = "first_name", nullable = false)
+    @Size(max = 25, min = 2)
+    @Column(name = "first_name", length = 25, nullable = false)
     private String name;
 
-    @Column(name = "last_name")
+    @Size(max = 25)
+    @Column(name = "last_name", length = 25)
     private String surname;
 
+    @Size(max = 200)
     @Column(name = "biography")
     private String biography;
 
+
     @NotNull
+    @Past
     @Column(name = "birth_day")
     private LocalDate birthDay;
 

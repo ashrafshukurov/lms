@@ -27,5 +27,5 @@ public interface AuthorService {
 
     void updateAuthors(Long id, AuthorRequest request);
 
-    public List<Book> getAuthorsByBook(Long authorId);
+    public List<Book> getBooksByAuthorId(Long authorId);
 }

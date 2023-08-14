@@ -9,6 +9,7 @@ package az.lms.controller;
 
 import az.lms.dto.request.AuthorRequest;
 import az.lms.dto.response.AuthorResponse;
+import az.lms.model.Book;
 import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,10 @@ public class AuthorController {
     public ResponseEntity<String> deleteAuthor(@PathVariable Long id) {
         service.deleteAuthor(id);
         return ResponseEntity.ok("Author with ID " + id + " has been successfully deleted.");
+    }
+
+    @GetMapping("/get-books-by-author-id/{id}")
+    public ResponseEntity<List<Book>> getBooksByAuthorId(@PathVariable(name = "id") Long authorId) {
+        return ResponseEntity.ok(service.getBooksByAuthorId(authorId));
     }
 }

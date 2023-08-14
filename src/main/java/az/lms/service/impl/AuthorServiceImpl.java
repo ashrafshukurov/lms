@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -79,7 +80,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Book> getAuthorsByBook(Long authorId) {
+    public List<Book> getBooksByAuthorId(Long authorId) {
         Author author = repository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
         return new ArrayList<>(author.getBooks());
     }
