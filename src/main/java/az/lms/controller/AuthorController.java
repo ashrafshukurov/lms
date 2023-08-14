@@ -29,11 +29,12 @@ public class AuthorController {
         return ResponseEntity.ok("Successfully added");
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<String> updateAuthor(@RequestBody AuthorRequest request) {
-        service.updateAuthors(request);
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<String> updateAuthor(@PathVariable Long id, @RequestBody AuthorRequest request) {
+        service.updateAuthors(id, request);
         return ResponseEntity.ok("Successfully updated");
     }
+
     @GetMapping("/get-all")
     public ResponseEntity<List<AuthorResponse>> getAllAuthors() {
         return ResponseEntity.ok(service.getAllAuthors());
@@ -43,9 +44,10 @@ public class AuthorController {
     public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getAuthorById(id));
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAuthor(@PathVariable Long id) {
         service.deleteAuthor(id);
-        return ResponseEntity.ok("Student with ID " + id + " has been successfully deleted.");
+        return ResponseEntity.ok("Author with ID " + id + " has been successfully deleted.");
     }
 }
