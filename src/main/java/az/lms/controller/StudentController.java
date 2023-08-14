@@ -44,9 +44,4 @@ public class StudentController  {
     public ResponseEntity<List<OrderResponse>> getStudentOrders(@PathVariable String fin){
         return ResponseEntity.ok(studentService.getStudentOrders(fin));
     }
-
-
-
-
-
 }

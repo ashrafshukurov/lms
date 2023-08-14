@@ -7,11 +7,14 @@
 
 package az.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,16 +39,15 @@ public class Author {
     @Column(name = "biography")
     private String biography;
 
-    @NotBlank
+    @NotNull
     @Column(name = "birth_day")
-    private LocalDateTime birthDay;
+    private LocalDate birthDay;
 
-    @NotBlank
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_book",
             joinColumns = @JoinColumn(name = "authors_id"),
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
-    private Set<Book> books;
+    private List<Book> books;
 }

@@ -1,6 +1,9 @@
 HELP.md
 .gradle
-src/main/java/az/lms/model/Books.java
+src/main/java/az/lms/model/Book.java
+src/main/resources/application-db.properties
+
+
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

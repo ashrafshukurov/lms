@@ -84,6 +84,7 @@ public class BookServiceImpl implements BookService {
             BookResponse bookResponse = bookMapper.entityToResponse(book);
 
             bookResponse.setCategory(category);
+            bookResponse.setAuthors(book.getAuthors());
 
 
             return bookResponse;

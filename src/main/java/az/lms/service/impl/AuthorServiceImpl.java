@@ -12,9 +12,11 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.model.Author;
+import az.lms.model.Book;
 import az.lms.repository.AuthorRepository;
 import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository repository;
@@ -55,10 +58,29 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void updateAuthors(AuthorRequest request) {
-        Author oldAuthor = repository.findById(mapper.requestToModel(request).getId()).orElseThrow(() -> new NotFoundException("Author not found"));
-        Author newAuthor = mapper.requestToModel(request);
-        newAuthor.setId(oldAuthor.getId());
-        repository.save(new Author());
+    public void updateAuthors(Long id, AuthorRequest request) {
+        Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found"));
+        if (request.getName() != null) {
+            author.setName(request.getName());
+        }
+        if (request.getSurname() != null) {
+            author.setSurname(request.getSurname());
+        }
+        if (request.getBiography() != null) {
+            author.setBiography(request.getBiography());
+        }
+        if (request.getBirthDay() != null) {
+            author.setBirthDay(request.getBirthDay());
+        }
+        if (request.getBooks() != null) {
+            author.setBooks(request.getBooks());
+        }
+        repository.save(author);
+    }
+
+    @Override
+    public List<Book> getAuthorsByBook(Long authorId) {
+        Author author = repository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
+        return new ArrayList<>(author.getBooks());
     }
 }

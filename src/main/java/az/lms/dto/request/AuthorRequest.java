@@ -10,7 +10,8 @@ package az.lms.dto.request;
 import az.lms.model.Book;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -25,7 +26,7 @@ public class AuthorRequest {
 
     private String biography;
 
-    private LocalDateTime birthDay;
+    private LocalDate birthDay;
 
-    private Set<Book> books;
+    private List<Book> books;
 }

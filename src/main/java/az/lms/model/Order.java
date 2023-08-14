@@ -23,9 +23,13 @@ public class Order {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
+   @Column(name = "student_id")
    private Long studentId;
+   @Column(name = "book_id")
    private Long bookId;
+   @Column(name = "order_time")
    private LocalDateTime orderTime;
+   @Column(name = "order_type")
    @Enumerated(EnumType.STRING)
    private OrderType orderType;
 

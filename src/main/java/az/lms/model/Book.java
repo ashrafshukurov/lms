@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,7 +38,7 @@ public class Book {
 
 
     @ManyToMany(mappedBy = "books")
-    private Set<Author> authors;
+    private List<Author> authors;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categories_id")
