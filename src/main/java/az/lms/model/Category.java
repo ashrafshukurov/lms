@@ -11,6 +11,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 @Getter
@@ -34,5 +35,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    private List<Book> book;
 }

@@ -10,7 +10,7 @@ package az.lms.dto.response;
 import az.lms.model.Book;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -19,13 +19,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorResponse {
+    private Long id;
+
     private String name;
 
     private String surname;
 
     private String biography;
 
-    private LocalDateTime birthDay;
+    private LocalDate birthDay;
 
     private Set<Book> books;
 }
