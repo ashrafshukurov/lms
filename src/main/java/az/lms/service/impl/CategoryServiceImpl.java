@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper mapper;
 
     @Override
-    public void create(CategoryRequest request) {
+    public void createCategory(CategoryRequest request) {
         repository.save(mapper.requestToModel(request));
     }
 
@@ -50,8 +51,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(CategoryRequest request) {
-
+    public void updateCategory(Long id, CategoryRequest request) {
+        Optional<Category> optionalCategory = repository.findById(id);
+        if (optionalCategory.isPresent()) {
+            Category category = optionalCategory.get();
+            if (request.getName() != null) {
+                category.setName(request.getName());
+            }
+            if (request.getDescription() != null) {
+                category.setDescription(request.getDescription());
+            }
+            repository.save(category);
+        }
     }
 
     @Override
@@ -61,6 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Book> getBooksByCategory(Long id) {
+        List<Book> bookList = new ArrayList<>();
         return null;
     }
 }

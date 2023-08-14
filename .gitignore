@@ -1,6 +1,6 @@
 HELP.md
 .gradle
-src/main/java/az/lms/model/Books.java
+src/main/java/az/lms/model/Book.java
 src/main/resources/application-db.properties
 
 

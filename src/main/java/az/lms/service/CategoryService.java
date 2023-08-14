@@ -22,13 +22,13 @@ public interface CategoryService {
     ● Delete
     ● Show category books
      */
-    void create(CategoryRequest request);
+    void createCategory(CategoryRequest request);
 
     List<CategoryResponse> getAllCategory();
 
     CategoryResponse getCategoryById(Long id);
 
-    void updateCategory(CategoryRequest request);
+    void updateCategory(Long id ,CategoryRequest request);
 
     void deleteCategoryById(Long id);
 

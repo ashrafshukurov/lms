@@ -7,6 +7,7 @@
 
 package az.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,7 +42,7 @@ public class Author {
     @Column(name = "birth_day")
     private LocalDate birthDay;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_book",
             joinColumns = @JoinColumn(name = "authors_id"),

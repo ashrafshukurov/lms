@@ -19,6 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorResponse {
+    private Long id;
+
     private String name;
 
     private String surname;

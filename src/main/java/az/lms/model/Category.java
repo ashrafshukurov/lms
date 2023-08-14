@@ -35,7 +35,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<Book> book;
 }
