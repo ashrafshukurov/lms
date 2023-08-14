@@ -12,6 +12,7 @@ import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
 import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
@@ -39,6 +41,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+        log.info("uploading file");
         String imageFileName=fileUtil.uploadFile(imageFile);
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
@@ -46,11 +49,13 @@ public class BookServiceImpl implements BookService {
 
         }
         book.setImage(imageFileName);
+        log.info("creating book");
         bookRepository.save(book);
     }
 
     @Override
     public List<BookResponse> getAllBooks() {
+        log.info("getting all books");
         List<Book> books = bookRepository.findAll();
         return books.stream().map(bookMapper::entityToResponse).toList();
     }
@@ -58,6 +63,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) throws NotFoundException {
         try {
+            log.info("deleting book");
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
@@ -71,11 +77,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse getBookById(Long id) throws NotFoundException {
         try {
+            log.info("getting book by id:{}",id);
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
+
             bookResponse.setCategory(category);
+
 
             return bookResponse;
         } catch (Exception e) {

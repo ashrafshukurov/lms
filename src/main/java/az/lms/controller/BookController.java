@@ -6,12 +6,14 @@ import az.lms.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -27,10 +29,29 @@ public class BookController {
     private final BookService bookService;
 
 
+//    @PostMapping("/add")
+//    public void addBook(
+//            @RequestParam MultipartFile file,
+//            @RequestParam String name,
+//            @RequestParam String isbn,
+//            @RequestParam int count,
+//            @RequestParam String authorName,
+//            @RequestParam Long categoriesId
+//    ) throws IOException {
+//        BookRequest bookRequest = new BookRequest();
+//        bookRequest.setName(name);
+//        bookRequest.setIsbn(isbn);
+//        bookRequest.setCount(count);
+//        bookRequest.setAuthorName(authorName);
+//        bookRequest.setCategoriesId(categoriesId);
+//        bookService.createBook(bookRequest, file);
+//    }
     @PostMapping("/add")
-    public void addBook(@RequestParam("file") MultipartFile file,@ModelAttribute BookRequest bookRequest) throws IOException {
-        bookService.createBook(bookRequest,file);
+    public void addBook(@RequestBody MultipartFile file,BookRequest bookRequest) throws IOException {
+        bookService.createBook(bookRequest, file);
     }
+
+
 
     @PutMapping("/update")
     public void updateBook(@RequestBody BookRequest bookRequest) {
@@ -41,12 +62,14 @@ public class BookController {
     public ResponseEntity<BookResponse> getBookByID(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
+
     @GetMapping("/all")
-    public ResponseEntity<List<BookResponse>> getBooks(){
+    public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
+
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Long id){
+    public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
 

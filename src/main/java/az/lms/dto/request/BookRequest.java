@@ -4,7 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.time.LocalDate;
 
 
@@ -25,6 +28,9 @@ public class BookRequest {
     private int count;
     private String image;
     private String authorName;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "yyyy-mm-dd")
     private LocalDate publishedTime;
+    private Long categoriesId;
 
 }
