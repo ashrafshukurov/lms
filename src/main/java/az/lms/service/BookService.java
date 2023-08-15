@@ -2,6 +2,7 @@ package az.lms.service;
 
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
+import az.lms.dto.response.CategoryResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,4 +21,6 @@ public interface BookService {
     BookResponse getBookById(Long id);
     void updateBook(BookRequest bookRequest);
     Resource downloadBookImage(String imageFileName);
+    CategoryResponse showCategoriesByBook(Long bookId);
+    void uploadFile(MultipartFile multipartFile) throws IOException;
 }

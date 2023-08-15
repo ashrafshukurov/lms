@@ -4,10 +4,12 @@ import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.BookResponse;
 
+import az.lms.dto.response.CategoryResponse;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.BookMapper;
+import az.lms.mapper.CategoryMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
@@ -22,11 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,19 +43,21 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
     private final FileUtil fileUtil;
     private final AuthorMapper authorMapper;
+    private final CategoryMapper categoryMapper;
     @Value("${file.directory}")
     private String directory;
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
-        String imageFileName = fileUtil.uploadFile(imageFile);
+//        String imageFileName = fileUtil.uploadFile(imageFile);
+        String fileName = UUID.randomUUID().toString().substring(0, 5) + "-" + imageFile.getOriginalFilename();
+
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
-
         }
-        book.setImage(imageFileName);
+        book.setImage(fileName);
         log.info("creating book");
         bookRepository.save(book);
     }
@@ -91,8 +94,6 @@ public class BookServiceImpl implements BookService {
             bookResponse.setCategory(category);
             final Set<Author> authors = book.getAuthors();
 
-           Resource resource= downloadBookImage(book.getImage());
-          bookResponse.setFile(resource.getFile());
             Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
             bookResponse.setAuthors(authorResponseSet);
 
@@ -113,8 +114,23 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Resource downloadBookImage(String imageFileName) {
-        Path imagePath = Paths.get(directory).resolve(imageFileName);
-        return fileUtil.load(imagePath.toString(), imagePath.getParent());
+        Path imagePath = Paths.get(directory);
+        return fileUtil.load(imageFileName,imagePath);
+    }
+
+    @Override
+    public CategoryResponse showCategoriesByBook(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new NotFoundException("Book with ID " + bookId + " not found"));
+        Category category = book.getCategories();
+        return categoryMapper.modelToResponse(category);
+
+    }
+
+    public void uploadFile(MultipartFile file) throws IOException {
+        String fileName = UUID.randomUUID().toString().substring(0,4) + "-" + file.getOriginalFilename();
+        Path filePath = Paths.get(directory).resolve(fileName);
+        Files.copy(file.getInputStream(), filePath);
     }
 
 

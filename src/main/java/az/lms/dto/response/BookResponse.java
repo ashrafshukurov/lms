@@ -31,7 +31,7 @@ public class BookResponse {
     private LocalDate publishedTime;
     private Category category;
     private Set<AuthorResponse> authors;
-    private File file;
+
 
 
 
