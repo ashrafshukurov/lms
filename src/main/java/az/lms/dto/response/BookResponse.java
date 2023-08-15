@@ -27,10 +27,10 @@ public class BookResponse {
     private String isbn;
     private int count;
     private String image;
-    private String authorName;
     private LocalDate publishedTime;
     private Category category;
     private Set<AuthorResponse> authors;
+    private String description;
 
 
 

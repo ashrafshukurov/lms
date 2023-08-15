@@ -11,7 +11,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.validation.constraints.Size;
 
 
 @Getter
@@ -28,13 +28,13 @@ public class Category {
     private Long id;
 
     @NotBlank
+    @Size(max = 25, min = 2)
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @NotBlank
+    @Size(max = 25, min = 5)
     @Column(name = "description")
     private String description;
-
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-    private List<Book> book;
 }
+

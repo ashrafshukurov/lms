@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -36,8 +38,9 @@ public class Book {
     private String name;
     @Column(name = "published_time")
     private LocalDate publishedTime;
-
-
+    @NotBlank
+    @Size(max = 25, min = 5)
+    private String description;
 
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
