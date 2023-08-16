@@ -27,10 +27,9 @@ public class BookRequest {
     private String isbn;
     private int count;
     private String image;
-    private String authorName;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(style = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publishedTime;
     private Long categoriesId;
+    private String description;
 
 }

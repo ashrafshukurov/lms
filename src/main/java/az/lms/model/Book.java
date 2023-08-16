@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -29,14 +32,15 @@ public class Book {
     @Column(name = "book_image")
     private String image;
     @Column(name = "book_count")
+    @Positive
     private int count;
     @Column(name = "book_name", nullable = false)
     private String name;
     @Column(name = "published_time")
     private LocalDate publishedTime;
-    @Column(name = "author_name", nullable = false)
-    private String authorName;
-
+    @NotBlank
+    @Size(max = 25, min = 5)
+    private String description;
 
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
@@ -44,6 +48,7 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categories_id")
+    @JsonBackReference
     private Category categories;
 
 }
