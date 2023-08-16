@@ -12,6 +12,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Getter
@@ -27,16 +28,18 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 25, min = 2)
+    @NotBlank(message = "Invalid Name: Empty name")
+    @Size(max = 25, min = 2,message = "Invalid Name: Must be of 2 - 255 characters")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @NotBlank
-    @Size(max = 255, min = 5)
-    @Column(name = "description")
+    @NotBlank(message = "Invalid Name: Empty description")
+    @Size(max = 255, min = 5,message = "Invalid Name: Must be of 5 - 255 characters")
+    @Column(name = "description",nullable = false)
     private String description;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "categories")
+    private List<Book> books;
     @Override
     public String toString() {
         return "Category{" +
