@@ -33,7 +33,16 @@ public class Category {
     private String name;
 
     @NotBlank
-    @Size(max = 25, min = 5)
+    @Size(max = 255, min = 5)
     @Column(name = "description")
     private String description;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
