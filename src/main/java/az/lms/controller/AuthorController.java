@@ -26,7 +26,7 @@ public class AuthorController {
     private final AuthorService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorRequest request) {
+    public ResponseEntity<String> addAuthor( @RequestBody AuthorRequest request) {
         service.createAuthor(request);
         return ResponseEntity.ok("Successfully added");
     }

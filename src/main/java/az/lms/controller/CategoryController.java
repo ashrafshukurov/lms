@@ -13,10 +13,12 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.CategoryResponse;
 import az.lms.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -26,13 +28,13 @@ public class CategoryController {
     private final CategoryService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCategory(@RequestBody CategoryRequest request) {
+    public ResponseEntity<String> addCategory(@Valid @RequestBody CategoryRequest request) {
         service.createCategory(request);
         return ResponseEntity.ok("Successfully added");
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> updateCategory(@PathVariable Long id, @RequestBody CategoryRequest request) {
+    public ResponseEntity<String> updateCategory(@Valid @PathVariable Long id, @RequestBody CategoryRequest request) {
         service.updateCategory(id, request);
         return ResponseEntity.ok("Successfully updated");
     }
