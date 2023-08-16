@@ -20,7 +20,6 @@ public interface BookService {
     void deleteBook(Long id);
     BookResponse getBookById(Long id);
     void updateBook(BookRequest bookRequest);
-    Resource downloadBookImage(String imageFileName);
     CategoryResponse showCategoriesByBook(Long bookId);
     void uploadFile(MultipartFile multipartFile) throws IOException;
 }

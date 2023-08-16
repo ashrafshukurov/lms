@@ -29,7 +29,7 @@ public class BookRequest {
     private String image;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publishedTime;
-    private Long categoriesId;
+    private Long categories_id;
     private String description;
 
 }

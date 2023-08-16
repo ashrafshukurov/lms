@@ -19,7 +19,6 @@ import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +40,6 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-    private final FileUtil fileUtil;
     private final AuthorMapper authorMapper;
     private final CategoryMapper categoryMapper;
     @Value("${file.directory}")
@@ -50,9 +48,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
-//        String imageFileName = fileUtil.uploadFile(imageFile);
-        String fileName = UUID.randomUUID().toString().substring(0, 5) + "-" + imageFile.getOriginalFilename();
-
+        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
+        uploadFile(imageFile);
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
@@ -79,6 +76,7 @@ public class BookServiceImpl implements BookService {
             bookRepository.delete(book);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete book with ID " + id, e);
+
         }
     }
 
@@ -110,12 +108,6 @@ public class BookServiceImpl implements BookService {
         Book newBook = bookMapper.requestToEntity(bookRequest);
         newBook.setId(book.getId());
         bookRepository.save(newBook);
-    }
-
-    @Override
-    public Resource downloadBookImage(String imageFileName) {
-        Path imagePath = Paths.get(directory);
-        return fileUtil.load(imageFileName,imagePath);
     }
 
     @Override

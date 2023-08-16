@@ -2,6 +2,7 @@ package az.lms.exception;
 
 import az.lms.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,8 +18,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler({
+    @ExceptionHandler(value = {
             AgeLimitException.class,
             NotFoundException.class,
             AlreadyExistsException.class,
@@ -34,17 +34,17 @@ public class GlobalExceptionHandler {
         errorResponse.setErrorMessage(ex.getMessage());
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
     }
-
     private HttpStatus getHttpStatus(Exception ex) {
-        if (ex instanceof AgeLimitException || ex instanceof MaxUploadSizeExceededException ) {
+        if ((ex instanceof AgeLimitException) || (ex instanceof MaxUploadSizeExceededException)) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
             return HttpStatus.NOT_FOUND;
-        } else if (ex instanceof AlreadyExistsException || ex instanceof InsufficientCount) {
+        } else if ((ex instanceof AlreadyExistsException) || (ex instanceof InsufficientCount)) {
             return HttpStatus.CONFLICT;
         } else {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
+
 
 }
