@@ -53,10 +53,7 @@ public class BookController {
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
-    @GetMapping("/download")
-    public ResponseEntity<Resource> download(@RequestParam String fileName) {
-      return ResponseEntity.ok(bookService.downloadBookImage(fileName));
-    }
+
     @GetMapping("/showCategory/{id}")
     public ResponseEntity<CategoryResponse> getCategoryByBook(@PathVariable Long id){
        return ResponseEntity.ok(bookService.showCategoriesByBook(id));

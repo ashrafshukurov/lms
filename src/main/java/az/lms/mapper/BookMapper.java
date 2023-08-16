@@ -4,6 +4,7 @@ import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
 import az.lms.model.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * @author ashraf
