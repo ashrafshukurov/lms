@@ -4,6 +4,8 @@ import az.lms.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @author ashraf
  * @project LMS
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-   Student findByFinCode(String finCode);
+   Optional<Student> findByFinCode(String finCode);
+
    boolean existsByFinCode(String finCode);
+
    void deleteByFinCode(String finCode);
 }

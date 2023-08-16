@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
       log.info("Starting to create a new borrow order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
-      if (book.getCount() < 0)
+      if (book.getCount() < 1)
          throw new InsufficientCount("This book is out of stock");
       String existingOrderType = orderRepository.getLastOrder(request.getStudentId(), request.getBookId());
       if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.ORDERED.name())) {
@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
    }
 
 
+   @Transactional
    @Override
    public OrderType returnOrder(OrderRequest request) {
       log.info("Starting to create a new return order");
