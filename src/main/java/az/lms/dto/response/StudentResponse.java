@@ -11,13 +11,9 @@ import java.time.LocalDate;
  */
 @Data
 public class StudentResponse {
-   @NotBlank
-   private String finCode;
-   @NotBlank
+   private String FIN;
    private String name;
-   @NotBlank
    private String surName;
-   @NotBlank
    private String studentGroup;
    private LocalDate birthDate;
    private String address;

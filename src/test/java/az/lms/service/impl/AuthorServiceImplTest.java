@@ -48,14 +48,12 @@ class AuthorServiceImplTest {
                 .count(5)
                 .name("Book Name")
                 .publishedTime(LocalDate.now())
-                .authorName(author.getName() + " " + author.getSurname())
                 .authors(new HashSet<>())
                 .categories(new Category())
                 .build();
         //act
         Mockito.when(repository.save(author)).thenReturn(author);
         //assert
-
     }
 
     @Test
