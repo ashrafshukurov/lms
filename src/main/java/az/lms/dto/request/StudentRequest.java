@@ -3,6 +3,7 @@ package az.lms.dto.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
@@ -11,8 +12,10 @@ import java.time.LocalDate;
  */
 @Data
 public class StudentRequest {
+   @Size(min = 7, max = 7)
    @NotBlank(message = "FIN cannot be empty")
    private String FIN;
+   @Size(min = 8)
    @NotBlank(message = "Password cannot be empty")
    private String password;
    @NotBlank(message = "Name cannot be empty")
