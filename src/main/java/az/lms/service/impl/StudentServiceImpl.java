@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Mehman Osmanov on 12.08.23
@@ -50,34 +51,39 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void update(StudentRequest request) {
       log.info("Updating student's fields");
-      Student student = studentRepository.findByFinCode(request.getFinCode());
-      if (student == null)
-         throw new NotFoundException("Student is not found with such fin code");
+      Optional<Student> student = studentRepository.findByFinCode(request.getFinCode());
+      if (student.isEmpty())
+         throw new NotFoundException("Student not found with fin code");
       Student newStudent = studentMapper.requestToEntity(request);
-      newStudent.setId(student.getId());
+      newStudent.setId(student.get().getId());
       studentRepository.save(newStudent);
    }
 
    @Override
    public StudentResponse getById(String fin) {
-      log.info("Getting student by fin {}",fin);
-      Student student = studentRepository.findByFinCode(fin);
-      if (student == null)
-         throw new NotFoundException("Student is not found with such fin code");
-      return studentMapper.entityToResponse(student);
+      log.info("Getting student by fin {}", fin);
+      Optional<Student> student = studentRepository.findByFinCode(fin);
+      if (student.isEmpty())
+         throw new NotFoundException("Student not found with fin code");
+      return studentMapper.entityToResponse(student.get());
    }
 
    @Override
    public void deleteById(String fin) {
       log.warn("Deleting student account");
-      studentRepository.deleteByFinCode(fin);
+      Optional<Student> student = studentRepository.findByFinCode(fin);
+      student.ifPresent(studentRepository::delete);
    }
 
    @Override
    public List<OrderResponse> getStudentOrders(String fin) {
       log.warn("Getting all student's orders");
-      Student student = studentRepository.findByFinCode(fin);
-      List<Order> orders = orderRepository.findOrderByStudentId(student.getId());
+      Optional<Student> student = studentRepository.findByFinCode(fin);
+      if (student.isEmpty())
+         throw new NotFoundException("Student not found with fin=" + fin);
+      List<Order> orders = orderRepository.findOrderByStudentId(student.get().getId());
       return orders.stream().map(orderMapper::entityToDto).toList();
    }
+
+
 }
