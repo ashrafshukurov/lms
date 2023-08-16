@@ -12,6 +12,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -36,6 +38,9 @@ public class Category {
     @Size(max = 255, min = 5)
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "categories")
+    public Set<Book> bookSet=new HashSet<>();
 
     @Override
     public String toString() {
