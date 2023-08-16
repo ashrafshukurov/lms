@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void create(StudentRequest request) {
       log.info("Creating new student account");
-      if (studentRepository.existsByFinCode(request.getFIN())) {
+      if (studentRepository.existsByFIN(request.getFIN())) {
          Student student = studentMapper.requestToEntity(request);
          studentRepository.save(student);
       } else throw new AlreadyExistsException("Student already exist with such fin code");
@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void update(StudentRequest request) {
       log.info("Updating student's fields");
-      Optional<Student> student = studentRepository.findByFinCode(request.getFIN());
+      Optional<Student> student = studentRepository.findByFIN(request.getFIN());
       if (student.isEmpty())
          throw new NotFoundException("Student not found with fin code");
       Student newStudent = studentMapper.requestToEntity(request);
@@ -62,7 +62,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public StudentResponse getById(String fin) {
       log.info("Getting student by fin {}", fin);
-      Optional<Student> student = studentRepository.findByFinCode(fin);
+      Optional<Student> student = studentRepository.findByFIN(fin);
       if (student.isEmpty())
          throw new NotFoundException("Student not found with fin code");
       return studentMapper.entityToResponse(student.get());
@@ -71,14 +71,14 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void deleteById(String fin) {
       log.warn("Deleting student account");
-      Optional<Student> student = studentRepository.findByFinCode(fin);
+      Optional<Student> student = studentRepository.findByFIN(fin);
       student.ifPresent(studentRepository::delete);
    }
 
    @Override
    public List<OrderResponse> getStudentOrders(String fin) {
       log.warn("Getting all student's orders");
-      Optional<Student> student = studentRepository.findByFinCode(fin);
+      Optional<Student> student = studentRepository.findByFIN(fin);
       if (student.isEmpty())
          throw new NotFoundException("Student not found with fin=" + fin);
       List<Order> orders = orderRepository.findOrderByStudentId(student.get().getId());

@@ -13,9 +13,8 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-   Optional<Student> findByFinCode(String finCode);
+   Optional<Student> findByFIN(String finCode);
 
-   boolean existsByFinCode(String finCode);
+   boolean existsByFIN(String finCode);
 
-   void deleteByFinCode(String finCode);
 }
