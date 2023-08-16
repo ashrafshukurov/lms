@@ -54,8 +54,6 @@ class AuthorServiceImplTest {
         //act
         Mockito.when(repository.save(author)).thenReturn(author);
         //assert
-
-        String s = "unnecessary";
     }
 
     @Test
