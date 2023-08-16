@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class AuthorController {
     private final AuthorService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAuthor(@RequestBody AuthorRequest request) {
+    public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorRequest request) {
         service.createAuthor(request);
         return ResponseEntity.ok("Successfully added");
     }
