@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -17,31 +18,36 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/student")
 @RequiredArgsConstructor
-public class StudentController  {
-    private final StudentService studentService;
+public class StudentController {
+   private final StudentService studentService;
 
-    @PostMapping("/add")
-    public void addStudent(@RequestBody StudentRequest studentRequest){
-        studentService.create(studentRequest);
-    }
-    @GetMapping("/{fin}")
-    public ResponseEntity<StudentResponse> getStudentById(@PathVariable String fin){
-        return ResponseEntity.ok(studentService.getById(fin));
-    }
-    @PutMapping("/update")
-    public void updateStudent(@RequestBody StudentRequest studentRequest){
-        studentService.update(studentRequest);
-    }
-    @GetMapping("/all")
-    public ResponseEntity<List<StudentResponse>> getAllStudents(){
-        return ResponseEntity.ok(studentService.getAll());
-    }
-    @DeleteMapping("/delete/{fin}")
-    public void deleteStudentByFin(@PathVariable String fin){
-        studentService.deleteById(fin);
-    }
-    @GetMapping("/orders/{fin}")
-    public ResponseEntity<List<OrderResponse>> getStudentOrders(@PathVariable String fin){
-        return ResponseEntity.ok(studentService.getStudentOrders(fin));
-    }
+   @PostMapping("/add")
+   public void addStudent(@Valid @RequestBody StudentRequest studentRequest) {
+      studentService.create(studentRequest);
+   }
+
+   @GetMapping("/{fin}")
+   public ResponseEntity<StudentResponse> getStudentById(@PathVariable String fin) {
+      return ResponseEntity.ok(studentService.getById(fin));
+   }
+
+   @PutMapping("/update")
+   public void updateStudent(@Valid @RequestBody StudentRequest studentRequest) {
+      studentService.update(studentRequest);
+   }
+
+   @GetMapping("/all")
+   public ResponseEntity<List<StudentResponse>> getAllStudents() {
+      return ResponseEntity.ok(studentService.getAll());
+   }
+
+   @DeleteMapping("/delete/{fin}")
+   public void deleteStudentByFin(@PathVariable String fin) {
+      studentService.deleteById(fin);
+   }
+
+   @GetMapping("/orders/{fin}")
+   public ResponseEntity<List<OrderResponse>> getStudentOrders(@PathVariable String fin) {
+      return ResponseEntity.ok(studentService.getStudentOrders(fin));
+   }
 }
