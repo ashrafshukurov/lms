@@ -28,10 +28,11 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Name cannot be empty")
     @Size(max = 25, min = 2)
     @Column(name = "first_name", length = 25, nullable = false)
     private String name;
+    
 
     @Size(max = 25)
     @Column(name = "last_name", length = 25)
@@ -42,10 +43,11 @@ public class Author {
     private String biography;
 
 
-    @NotNull
+    @NotNull(message = "Birthday cannot be null")
     @Past
     @Column(name = "birth_day")
     private LocalDate birthDay;
+
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
@@ -54,4 +56,16 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
     private Set<Book> books;
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", biography='" + biography + '\'' +
+                ", birthDay=" + birthDay +
+                ", books=" + books +
+                '}';
+    }
 }

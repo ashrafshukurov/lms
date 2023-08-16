@@ -37,12 +37,9 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.14'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
-
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-	testImplementation 'org.mockito:mockito-core:4.0.0'
-	testImplementation group: 'com.h2database', name: 'h2', version: '2.2.220'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+	testImplementation 'org.mockito:mockito-core:3.12.4'
+	testImplementation 'org.assertj:assertj-core:3.8.0'
 }
 
 dependencyManagement {
