@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void create(StudentRequest request) {
       log.info("Creating new student account");
-      if (studentRepository.existsByFinCode(request.getFinCode())) {
+      if (studentRepository.existsByFinCode(request.getFIN())) {
          Student student = studentMapper.requestToEntity(request);
          studentRepository.save(student);
       } else throw new AlreadyExistsException("Student already exist with such fin code");
@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void update(StudentRequest request) {
       log.info("Updating student's fields");
-      Optional<Student> student = studentRepository.findByFinCode(request.getFinCode());
+      Optional<Student> student = studentRepository.findByFinCode(request.getFIN());
       if (student.isEmpty())
          throw new NotFoundException("Student not found with fin code");
       Student newStudent = studentMapper.requestToEntity(request);
