@@ -14,25 +14,27 @@ import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Validated
 @RequestMapping("/v1/author")
 @RequiredArgsConstructor
 public class AuthorController {
     private final AuthorService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAuthor( @RequestBody AuthorRequest request) {
+    public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorRequest request) {
         service.createAuthor(request);
         return ResponseEntity.ok("Successfully added");
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> updateAuthor(@PathVariable Long id, @RequestBody AuthorRequest request) {
+    public ResponseEntity<String> updateAuthor(@Valid @PathVariable Long id, @RequestBody AuthorRequest request) {
         service.updateAuthors(id, request);
         return ResponseEntity.ok("Successfully updated");
     }

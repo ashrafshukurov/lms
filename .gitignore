@@ -2,7 +2,8 @@ HELP.md
 .gradle
 src/main/java/az/lms/model/Book.java
 src/main/resources/application-db.properties
-
+src/main/resources/static
+src/main/java/az/lms/controller/BookController.java
 
 build/
 !gradle/wrapper/gradle-wrapper.jar
