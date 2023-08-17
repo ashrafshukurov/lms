@@ -7,13 +7,11 @@
 
 package az.lms.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,28 +26,19 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name cannot be empty")
-    @Size(max = 25, min = 2, message = "Invalid Name: Must be of 2 - 25 characters")
     @Column(name = "first_name", length = 25, nullable = false)
     private String name;
 
-
-    @Size(max = 25,message = "Invalid Name: Must be of 3 - 30 characters")
     @Column(name = "last_name", length = 25)
     private String surname;
 
-    @Size(max = 200,message = "Invalid biography: Must be of max 200 characters")
     @Column(name = "biography")
     private String biography;
 
-
-    @NotNull(message = "Invalid birthday: Birthday is NULL")
-    @Past(message = "Date should not be in the future")
     @Column(name = "birth_day")
     private LocalDate birthDay;
 
-
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_book",
             joinColumns = @JoinColumn(name = "authors_id"),

@@ -7,6 +7,8 @@
 
 package az.lms.model;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,14 +29,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "Invalid Name: Empty name")
-    @Size(max = 25, min = 2,message = "Invalid Name: Must be of 2 - 255 characters")
+    @ApiModelProperty(name = "Category name",value = "Cavid")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @NotBlank(message = "Invalid Name: Empty description")
-    @Size(max = 255, min = 5,message = "Invalid Name: Must be of 5 - 255 characters")
+
     @Column(name = "description",nullable = false)
     private String description;
 

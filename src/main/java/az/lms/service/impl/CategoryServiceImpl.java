@@ -76,13 +76,22 @@ public class CategoryServiceImpl implements CategoryService {
             }
             repository.save(category);
             log.info("Category successfully updated");
-        } else log.error("Category is not present");
+        } else{
+            log.error("Category is not present");
+            throw new NotFoundException("Category id not found.ID: " + id);
+        }
     }
 
     @Override
     public void deleteCategoryById(Long id) {
-        repository.deleteById(id);
-        log.info("Category has been deleted successfully.Deleted category id {}", id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            log.info("Category has been deleted successfully.Deleted category id {}", id);
+            log.error("Category id not found");
+        } else {
+            log.error("Category id not found");
+           throw new NotFoundException("Category id not found");
+        }
     }
 
     @Override

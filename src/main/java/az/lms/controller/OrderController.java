@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,12 +30,12 @@ public class OrderController {
    }
 
    @PostMapping("/make")
-   public OrderType makeOrder(@RequestBody OrderRequest request) {
+   public OrderType makeOrder(@Valid @RequestBody OrderRequest request) {
       return orderService.createOrder(request);
    }
 
    @PostMapping("/return")
-   public OrderType returnOrder(@RequestBody OrderRequest request) {
+   public OrderType returnOrder(@Valid @RequestBody OrderRequest request) {
       return orderService.returnOrder(request);
    }
 
