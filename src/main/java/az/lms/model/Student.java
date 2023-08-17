@@ -38,9 +38,6 @@ public class Student {
     private String studentGroup;
     @Column(length = 100)
     private String address;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "books_id")
-    private Book borrowedBooks;
+
    
 }
