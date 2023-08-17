@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface BookMapper {
-     @Mapping(source = "categories_id",target = "categories.id")
+     @Mapping(target = "categories.id",source = "categories_id")
      Book requestToEntity(BookRequest request);
      BookResponse entityToResponse(Book book);
 }

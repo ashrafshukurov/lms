@@ -32,14 +32,11 @@ public class Book {
     @Column(name = "book_image")
     private String image;
     @Column(name = "book_count")
-    @Positive
     private int count;
     @Column(name = "book_name", nullable = false)
     private String name;
     @Column(name = "published_time")
     private LocalDate publishedTime;
-    @NotBlank
-    @Size(max = 25, min = 5)
     private String description;
 
     @ManyToMany(mappedBy = "books")

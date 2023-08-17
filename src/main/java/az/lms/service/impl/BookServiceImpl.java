@@ -46,15 +46,14 @@ public class BookServiceImpl implements BookService {
     private String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile){
         log.info("uploading file");
         String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
-        uploadFile(imageFile);
+
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
-        book.setImage(fileName);
         log.info("creating book");
         bookRepository.save(book);
     }
@@ -89,11 +88,11 @@ public class BookServiceImpl implements BookService {
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
-            bookResponse.setCategory(category);
-            final Set<Author> authors = book.getAuthors();
-
-            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-            bookResponse.setAuthors(authorResponseSet);
+//            bookResponse.setCategory(category);
+//            final Set<Author> authors = book.getAuthors();
+//
+//            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
+//            bookResponse.setAuthors(authorResponseSet);
 
             return bookResponse;
         } catch (Exception e) {
