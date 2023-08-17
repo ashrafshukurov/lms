@@ -7,6 +7,8 @@
 
 package az.lms.model;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +29,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ApiModelProperty(name = "Category name",value = "Cavid")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
