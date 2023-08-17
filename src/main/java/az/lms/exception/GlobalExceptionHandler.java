@@ -4,6 +4,7 @@ import az.lms.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -33,6 +34,7 @@ public class GlobalExceptionHandler {
             AlreadyExistsException.class,
             InsufficientCount.class,
             MaxUploadSizeExceededException.class,
+            DataIntegrityViolationException.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         log.error(ex.getMessage(), ex);
@@ -68,7 +70,9 @@ public class GlobalExceptionHandler {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
             return HttpStatus.NOT_FOUND;
-        } else if ((ex instanceof AlreadyExistsException) || (ex instanceof InsufficientCount)) {
+        } else if ((ex instanceof AlreadyExistsException) ||
+                (ex instanceof InsufficientCount) ||
+                (ex instanceof DataIntegrityViolationException)) {
             return HttpStatus.CONFLICT;
         } else {
             return HttpStatus.INTERNAL_SERVER_ERROR;
