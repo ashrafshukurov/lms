@@ -37,6 +37,7 @@ public class Category {
     @Column(name = "description",nullable = false)
     private String description;
 
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "categories")
     private List<Book> books;
     @Override
