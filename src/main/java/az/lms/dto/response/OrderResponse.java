@@ -2,8 +2,6 @@ package az.lms.dto.response;
 
 import az.lms.model.OrderType;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
