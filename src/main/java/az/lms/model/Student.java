@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * @project LMS
  */
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
