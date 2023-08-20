@@ -1,7 +1,6 @@
 package az.lms.service.impl;
 
 import az.lms.dto.request.BookRequest;
-import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.BookResponse;
 
 import az.lms.dto.response.CategoryResponse;
@@ -10,12 +9,10 @@ import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.BookMapper;
 import az.lms.mapper.CategoryMapper;
-import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
-import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,14 +43,16 @@ public class BookServiceImpl implements BookService {
     private String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest, MultipartFile imageFile){
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
         String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
-
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
+        book.setImage(fileName);
+        uploadFile(imageFile);
+
         log.info("creating book");
         bookRepository.save(book);
     }
@@ -122,6 +121,13 @@ public class BookServiceImpl implements BookService {
         String fileName = UUID.randomUUID().toString().substring(0,4) + "-" + file.getOriginalFilename();
         Path filePath = Paths.get(directory).resolve(fileName);
         Files.copy(file.getInputStream(), filePath);
+    }
+
+    @Override
+    public BookResponse getBookByName(String bookName) {
+        Book book=bookRepository.getBookByName(bookName)
+                .orElseThrow(()-> new NotFoundException("Not found book with this name:"+bookName));
+        return bookMapper.entityToResponse(book);
     }
 
 

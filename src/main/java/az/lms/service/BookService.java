@@ -22,4 +22,5 @@ public interface BookService {
     void updateBook(BookRequest bookRequest);
     CategoryResponse showCategoriesByBook(Long bookId);
     void uploadFile(MultipartFile multipartFile) throws IOException;
+    BookResponse getBookByName(String bookName);
 }
