@@ -1,0 +1,70 @@
+/*
+ *Created by Jaweed.Hajiyev
+ *Date:20.08.23
+ *TIME:11:35
+ *Project name:LMS
+ */
+
+package az.lms.service.impl;
+
+import az.lms.model.Author;
+import az.lms.model.Librarian;
+import az.lms.model.Student;
+import az.lms.repository.AuthorRepository;
+import az.lms.repository.LibrarianRepository;
+import az.lms.repository.StudentRepository;
+import az.lms.security.UserPricnipal.AuthorPrincipal;
+import az.lms.security.UserPricnipal.LibrarianPrincipal;
+import az.lms.security.UserPricnipal.StudentPrincipal;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class UserDetailServiceImpl implements UserDetailsService {
+    private final AuthorRepository authorRepository;
+    private final StudentRepository studentRepository;
+    private final LibrarianRepository librarianRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Author author = authorRepository.findByEmail(email);
+        Student student = studentRepository.findByEmail(email);
+        Librarian librarian = librarianRepository.findByEmail(email);
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        if (author != null) {
+            AuthorPrincipal authorPrincipal = new AuthorPrincipal();
+            authorPrincipal.setEmail(author.getEmail());
+            authorPrincipal.setPassword(author.getPassword());
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + author.getRoleType().name()));
+            authorPrincipal.setAuthorities(authorities);
+            return authorPrincipal;
+        }
+        if (student != null) {
+            StudentPrincipal studentPrincipal = new StudentPrincipal();
+            studentPrincipal.setEmail(student.getEmail());
+            studentPrincipal.setPassword(student.getPassword());
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + student.getRoleType().name()));
+            studentPrincipal.setAuthorities(authorities);
+            return studentPrincipal;
+        }
+        if (librarian != null) {
+            LibrarianPrincipal librarianPrincipal = new LibrarianPrincipal();
+            librarianPrincipal.setPassword(librarian.getPassword());
+            librarianPrincipal.setEmail(librarian.getEmail());
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + librarian.getRoleType().name()));
+            librarianPrincipal.setAuthorities(authorities);
+            return librarianPrincipal;
+        } else throw new UsernameNotFoundException("Username not found:" + email);
+    }
+}
