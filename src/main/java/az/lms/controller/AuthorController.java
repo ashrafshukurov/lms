@@ -26,7 +26,7 @@ import java.util.List;
 
 @Controller
 @Validated
-@RequestMapping("/v1/author")
+@RequestMapping("/author")
 @RequiredArgsConstructor
 public class AuthorController {
     private final AuthorService service;
@@ -37,7 +37,6 @@ public class AuthorController {
     })
     @PostMapping("/add")
     public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorRequest request) {
-
         service.createAuthor(request);
         return ResponseEntity.ok("Successfully created");
     }
@@ -63,6 +62,11 @@ public class AuthorController {
         return ResponseEntity.ok(service.getAllAuthors());
     }
 
+    @ApiOperation(value = "Get  author by id", notes = "Get author by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = AuthorResponse.class),
+            @ApiResponse(code = 404, message = "Not Found")
+    })
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getAuthorById(id));

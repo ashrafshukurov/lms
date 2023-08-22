@@ -33,13 +33,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
-    private final BookRepository bookRepository;
-    private final CategoryRepository categoryRepository;
 
     @Override
     public void createAuthor(AuthorRequest request) {
-        Long existAuthorId;
-        if (!repository.existsByNameAndSurnameAndBiographyAndBirthDay(request.getName(), request.getSurname(), request.getBiography(), request.getBirthDay())) {
+        if (!repository.existsByEmail(request.getEmail())) {
             Author author = repository.save(mapper.requestToModel(request));
             log.info("Created new author \n" + author);
         } else {
@@ -57,7 +54,6 @@ public class AuthorServiceImpl implements AuthorService {
         }
         log.info("Getting all authors.All author`s count {}", responses.size());
         return responses;
-
     }
 
     @Override
@@ -97,7 +93,11 @@ public class AuthorServiceImpl implements AuthorService {
             author.setBooks(request.getBooks());
             log.info("Author book updated.");
         }
-        repository.save(author);
+        if (request.getRoleType() != null) {
+            author.setRoleType((request.getRoleType()));
+            log.info("Author role type updated.");
+        }
+            repository.save(author);
         log.info("Author updated successfully");
     }
 

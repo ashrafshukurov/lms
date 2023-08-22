@@ -1,5 +1,6 @@
 package az.lms.model;
 
+import az.lms.enums.RoleType;
 import lombok.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * @author ashraf
@@ -27,6 +29,10 @@ public class Student {
 
     @Column(length = 55, unique = true)
     private String FIN;
+
+    @Column(name = "e_mail")
+    private String email;
+
     @Column(nullable = false)
     private String password;
     @Column(name = "first_name", length = 55)
@@ -39,5 +45,8 @@ public class Student {
     @Column(length = 100)
     private String address;
 
-   
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role_type")
+    private RoleType roleType;
+
 }

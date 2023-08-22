@@ -7,14 +7,12 @@
 
 package az.lms.dto.request;
 
+import az.lms.enums.RoleType;
 import az.lms.model.Book;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +27,13 @@ public class AuthorRequest {
     @Size(max = 25, min = 2, message = "Invalid Name: Must be of 2 - 25 characters")
     private String name;
 
+    @NotBlank(message = "Email cannot be empty")
+    @Email
+    private String email;
+
+    @NotBlank(message = "Password cannot be empty")
+    private String password;
+
     @Size(max = 25, message = "Invalid Name: Must be of 3 - 30 characters")
     private String surname;
 
@@ -39,6 +44,7 @@ public class AuthorRequest {
     @Past(message = "Date should not be in the future")
     private LocalDate birthDay;
 
+    private RoleType roleType;
 
     private Set<Book> books;
 }

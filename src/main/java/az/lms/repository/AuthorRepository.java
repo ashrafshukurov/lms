@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-    boolean existsByNameAndSurnameAndBiographyAndBirthDay(String name, String surname, String biography, LocalDate birthday);
+    Author findByEmail(String email);
 
-    Long getIdByNameAndSurnameAndBiographyAndBirthDay(String name, String surname, String biography, LocalDate birthday);
+    boolean existsByEmail(String email);
+
 }
