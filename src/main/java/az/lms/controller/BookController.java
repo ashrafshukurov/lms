@@ -41,7 +41,7 @@ public class BookController {
             @ApiResponse(code = 400, message = "Invalid insert")
     })
     @PostMapping("/add")
-    public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest") BookRequest bookRequest) throws IOException {
+    public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
         bookService.createBook(bookRequest, file);
     }
 

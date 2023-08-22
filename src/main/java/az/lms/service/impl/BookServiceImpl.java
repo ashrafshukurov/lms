@@ -1,6 +1,7 @@
 package az.lms.service.impl;
 
 import az.lms.dto.request.BookRequest;
+import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.BookResponse;
 
 import az.lms.dto.response.CategoryResponse;
@@ -9,6 +10,7 @@ import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.BookMapper;
 import az.lms.mapper.CategoryMapper;
+import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
@@ -87,11 +89,12 @@ public class BookServiceImpl implements BookService {
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
-//            bookResponse.setCategory(category);
-//            final Set<Author> authors = book.getAuthors();
-//
-//            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-//            bookResponse.setAuthors(authorResponseSet);
+            CategoryResponse categoryResponse=categoryMapper.modelToResponse(category);
+            bookResponse.setCategory(categoryResponse);
+            final Set<Author> authors = book.getAuthors();
+
+            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
+            bookResponse.setAuthors(authorResponseSet);
 
             return bookResponse;
         } catch (Exception e) {
