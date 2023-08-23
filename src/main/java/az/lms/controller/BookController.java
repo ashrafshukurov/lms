@@ -40,7 +40,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 400, message = "Invalid insert")
     })
-    @PostMapping("/add")
+    @PostMapping("/")
     public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
         bookService.createBook(bookRequest, file);
     }
@@ -60,7 +60,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting book by Id")
     })
-    @GetMapping("/getBook/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookByID(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
@@ -70,7 +70,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting books")
     })
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
@@ -80,7 +80,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid deleting book by Id")
     })
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
@@ -108,7 +108,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Not Found book")
     })
-    @GetMapping("/GetBookByName/{bookname}")
+    @GetMapping("/{bookname}")
     public ResponseEntity<BookResponse> getBookByName(@PathVariable String bookname) {
         return ResponseEntity.ok(bookService.getBookByName(bookname));
     }
