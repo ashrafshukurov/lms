@@ -64,6 +64,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             librarianPrincipal.setEmail(librarian.getEmail());
             authorities.add(new SimpleGrantedAuthority("ROLE_" + librarian.getRoleType().name()));
             librarianPrincipal.setAuthorities(authorities);
+            log.info(librarianPrincipal.getAuthorities().stream().findFirst().toString());
             return librarianPrincipal;
         } else throw new UsernameNotFoundException("Username not found:" + email);
     }

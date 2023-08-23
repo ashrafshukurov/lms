@@ -13,7 +13,9 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.LibrarianResponse;
 import az.lms.model.Author;
 import az.lms.model.Librarian;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface LibrarianMapper {
     LibrarianResponse modelToResponse(Librarian author);
     Librarian requestToModel(LibrarianRequest request);

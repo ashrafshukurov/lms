@@ -50,7 +50,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getById(fin));
     }
 
-    @RolesAllowed("ROLE_STUDENT")
+    @RolesAllowed({"ADMIN","LIBRARIAN","STUDENT"})
     @ApiOperation(value = "Update Student", notes = "Update Student based on fin")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -61,7 +61,7 @@ public class StudentController {
         studentService.update(studentRequest);
     }
 
-    @RolesAllowed("ROLE_STUDENT")
+    @RolesAllowed({"STUDENT","ADMIN","LIBRARIAN"})
     @ApiOperation(value = "Getting-All-Students", notes = "It Will return Student list", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -77,6 +77,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid deleting student by fin")
     })
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/delete/{fin}")
     public void deleteStudentByFin(@PathVariable String fin) {
         studentService.deleteById(fin);

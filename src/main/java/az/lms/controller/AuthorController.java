@@ -35,7 +35,7 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created")
     })
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorRequest request) {
         service.createAuthor(request);
         return ResponseEntity.ok("Successfully created");
@@ -46,7 +46,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Author id not found")
     })
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> updateAuthor(@Valid @PathVariable Long id, @RequestBody AuthorRequest request) {
         service.updateAuthors(id, request);
         return ResponseEntity.ok("Successfully updated");
@@ -57,7 +57,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "OK", response = AuthorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    @GetMapping("/get-all")
+    @GetMapping("/all")
     public ResponseEntity<List<AuthorResponse>> getAllAuthors() {
         return ResponseEntity.ok(service.getAllAuthors());
     }
@@ -67,7 +67,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "OK", response = AuthorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    @GetMapping("/get-by-id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getAuthorById(id));
     }
@@ -77,7 +77,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "Successfully deleted"),
             @ApiResponse(code = 404, message = "Author id not found")
     })
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAuthor(@PathVariable Long id) {
         service.deleteAuthor(id);
         return ResponseEntity.ok("Author with ID " + id + " has been successfully deleted.");
@@ -88,7 +88,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "OK", response = BookResponse.class),
             @ApiResponse(code = 404, message = "Author id not found")
     })
-    @GetMapping("/get-books-by-author-id/{id}")
+    @GetMapping("/{id}/book")
     public ResponseEntity<List<Book>> getBooksByAuthorId(@PathVariable(name = "id") Long authorId) {
         return ResponseEntity.ok(service.getBooksByAuthorId(authorId));
     }

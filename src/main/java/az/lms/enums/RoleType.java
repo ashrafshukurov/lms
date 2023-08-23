@@ -9,6 +9,7 @@ package az.lms.enums;
 
 public enum RoleType {
     ADMIN,
+    AUTHOR,
     LIBRARIAN,
     STUDENT,
     GUEST

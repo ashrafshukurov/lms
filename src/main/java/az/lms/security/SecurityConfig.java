@@ -51,8 +51,9 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**").anonymous()
-                .antMatchers("/student/**").hasRole("STUDENT")
+                .antMatchers("/auth/**","/author/all","/book/all").anonymous()
+                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
+                .antMatchers("/librarian").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
