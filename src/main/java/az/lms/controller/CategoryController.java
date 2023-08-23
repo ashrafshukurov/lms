@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-
+@RolesAllowed({"ADMIN","LIBRARIAN"})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created"),
             @ApiResponse(code = 404, message = "Not found"),
@@ -61,7 +62,6 @@ public class CategoryController {
     })
     @GetMapping("/get-all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
-
         return ResponseEntity.ok(service.getAllCategory());
     }
 
