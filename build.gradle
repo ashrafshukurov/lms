@@ -40,6 +40,9 @@ dependencies {
 
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.22.0'
+	implementation 'org.liquibase:liquibase-core'
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'

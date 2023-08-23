@@ -1,6 +1,5 @@
 package az.lms.dto.request;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
@@ -9,10 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
@@ -35,10 +31,11 @@ public class BookRequest {
     private String isbn;
     @Positive(message = "count can't be negative value")
     private int count;
-    @NotBlank(message = "Image can't be empty")
+//    @NotEmpty(message = "Image can't be empty")
     private String image;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "publishedTime can't be empty")
+//    @NotNull
+    @Past(message = "publishedTime should not be in the future")
     private LocalDate publishedTime;
     @NotNull
     private Long categories_id;
