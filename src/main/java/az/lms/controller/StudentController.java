@@ -7,6 +7,7 @@ import az.lms.dto.response.StudentResponse;
 import az.lms.enums.RoleType;
 import az.lms.service.StudentService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class StudentController {
             @ApiResponse(code = 404, message = "Invalid getting Student by fin")
     })
     @GetMapping("/getStudent/{fin}")
-    public ResponseEntity<StudentResponse> getStudentById(@PathVariable String fin) {
+    public ResponseEntity<StudentResponse> getStudentById(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         return ResponseEntity.ok(studentService.getById(fin));
     }
 
@@ -79,7 +80,7 @@ public class StudentController {
     })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/delete/{fin}")
-    public void deleteStudentByFin(@PathVariable String fin) {
+    public void deleteStudentByFin(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         studentService.deleteById(fin);
     }
     @ApiOperation(value = "Get Student's Orders", notes = "When you pass Student fin you will get student's Order")
@@ -88,7 +89,7 @@ public class StudentController {
             @ApiResponse(code = 404, message = "Invalid getting student's order by fin")
     })
     @GetMapping("/orders/{fin}")
-    public ResponseEntity<List<OrderResponse>> getStudentOrders(@PathVariable String fin) {
+    public ResponseEntity<List<OrderResponse>> getStudentOrders(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         return ResponseEntity.ok(studentService.getStudentOrders(fin));
     }
 }

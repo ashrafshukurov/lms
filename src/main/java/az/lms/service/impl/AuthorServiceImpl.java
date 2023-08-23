@@ -12,12 +12,14 @@ import az.lms.dto.response.AuthorResponse;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
+import az.lms.mapper.BookMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.repository.AuthorRepository;
 import az.lms.repository.BookRepository;
 import az.lms.repository.CategoryRepository;
 import az.lms.service.AuthorService;
+import az.lms.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
+
 
     @Override
     public void createAuthor(AuthorRequest request) {
