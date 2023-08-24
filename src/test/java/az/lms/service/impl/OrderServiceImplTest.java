@@ -17,9 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.stubbing.answers.ClonesArguments;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.SerializationUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,7 +50,7 @@ class OrderServiceImplTest {
       order = new Order();
       order.setStudentId(1L);
       order.setBookId(1L);
-      order.setOrderType(OrderType.ORDERED);
+      order.setOrderType(OrderType.BORROWED);
       order.setOrderTime(LocalDateTime.now());
       order.setId(1L);
 
@@ -70,7 +68,7 @@ class OrderServiceImplTest {
 
    @Test
    public void givenGetOrdersWhenFoundThenReturnOrderList() {
-//    arrange
+      //arrange
       OrderResponse orderResponse = new OrderResponse();
       orderResponse.setStudentId(order.getStudentId());
       orderResponse.setBookId(order.getBookId());
@@ -79,9 +77,11 @@ class OrderServiceImplTest {
 
       when(orderRepository.findAll()).thenReturn(List.of(order));
       when(orderMapper.entityToDto(order)).thenReturn(orderResponse);
-//    act
+
+      //act
       List<OrderResponse> responses = orderService.getOrders();
-//    assert
+
+      //assert
       assertNotNull(responses);
       assertTrue(responses.contains(orderResponse));
       assertEquals(responses.get(0).getOrderType(), order.getOrderType());
@@ -93,12 +93,12 @@ class OrderServiceImplTest {
 
    @Test
    public void givenGetOrdersWhenNotFoundThenReturnEmptyList() {
-//    arrange
+      //arrange
       List<Order> responses = new ArrayList<>();
       when(orderRepository.findAll()).thenReturn(responses);
-//    act
+      //act
       List<OrderResponse> orderResponses = orderService.getOrders();
-//    assert
+      //assert
       assertNotNull(orderResponses);
       assertTrue(orderResponses.isEmpty());
 
@@ -109,7 +109,7 @@ class OrderServiceImplTest {
    public void givenBorrowOrderWhenBorrowedThenReturnSuccessMessage() {
       //arrange
       OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setOrderType(OrderType.ORDERED);
+      orderRequest.setOrderType(OrderType.BORROWED);
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
@@ -128,7 +128,7 @@ class OrderServiceImplTest {
    public void givenBorrowOrderWhenNotBorrowedThenReturnBookNotFoundException() {
       //arrange
       OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setOrderType(OrderType.ORDERED);
+      orderRequest.setOrderType(OrderType.BORROWED);
       orderRequest.setBookId(100L);
       orderRequest.setStudentId(1L);
 
@@ -150,9 +150,8 @@ class OrderServiceImplTest {
                       .count(0)
                       .isbn("isbn")
                       .description("Test description").build();
-
       OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setOrderType(OrderType.ORDERED);
+      orderRequest.setOrderType(OrderType.BORROWED);
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
@@ -162,14 +161,13 @@ class OrderServiceImplTest {
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(InsufficientCount.class)
               .hasMessage("This book is out of stock");
-
    }
 
    @Test
    public void givenBorrowOrderWhenNotBorrowedThenReturnOrderAlreadyExistsException() {
       //arrange
       OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setOrderType(OrderType.ORDERED);
+      orderRequest.setOrderType(OrderType.BORROWED);
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
@@ -180,13 +178,12 @@ class OrderServiceImplTest {
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(AlreadyExistsException.class)
               .hasMessage("You have already taken the book!");
-
    }
+
 
    @Test
    public void givenReturnOrderWhenReturnThenReturnSuccessMessage() {
-//      arrange
-
+      //arrange
       OrderRequest returnRequest = new OrderRequest();
       returnRequest.setOrderType(OrderType.RETURNED);
       returnRequest.setBookId(1L);
@@ -195,13 +192,12 @@ class OrderServiceImplTest {
       when(bookRepository.findById(returnRequest.getBookId())).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(order.getOrderType().name());
       when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
-//      act
+      //act
 
       String response = orderService.returnOrder(returnRequest);
-//      assert
+      //assert
       assertNotNull(response);
       assertEquals("Successfully made return order", response);
-
    }
 
 
@@ -231,13 +227,11 @@ class OrderServiceImplTest {
 
       when(bookRepository.findById(returnRequest.getBookId())).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
-//      when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.returnOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("You have not taken the book!");
-
    }
 
 }

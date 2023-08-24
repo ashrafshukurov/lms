@@ -17,8 +17,8 @@ public interface OrderService {
 
    List<OrderResponse> getOrders();
 
-   OrderType createOrder(OrderRequest request);
+   String borrowOrder(OrderRequest request);
 
-   OrderType returnOrder(OrderRequest request);
+   String returnOrder(OrderRequest request);
 
 }
