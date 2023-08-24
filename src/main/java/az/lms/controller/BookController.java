@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/v1/book")
+@RequestMapping("/book")
 @RequiredArgsConstructor
 @Slf4j
 public class BookController {
@@ -108,7 +108,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Not Found book")
     })
-    @GetMapping("/{bookname}")
+    @GetMapping("/name/{bookname}")
     public ResponseEntity<BookResponse> getBookByName(@PathVariable String bookname) {
         return ResponseEntity.ok(bookService.getBookByName(bookname));
     }

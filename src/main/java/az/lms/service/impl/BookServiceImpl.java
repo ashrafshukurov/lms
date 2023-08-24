@@ -63,8 +63,34 @@ public class BookServiceImpl implements BookService {
     public List<BookResponse> getAllBooks() {
         log.info("getting all books");
         List<Book> books = bookRepository.findAll();
-        return books.stream().map(bookMapper::entityToResponse).toList();
+        List<Category> categories = new ArrayList<>();
+        List<Set<Author>> authorsList = new ArrayList<>();
+
+        for (Book book : books) {
+            categories.add(book.getCategories());
+            authorsList.add(book.getAuthors());
+        }
+
+        List<BookResponse> bookResponses = books.stream()
+                .map(bookMapper::entityToResponse)
+                .toList();
+
+        for (int i = 0; i < bookResponses.size(); i++) {
+            BookResponse bookResponse = bookResponses.get(i);
+            bookResponse.setCategory(categories.get(i).getName());
+
+            Set<Author> authors = authorsList.get(i);
+            List<String> authorsName = authors.stream()
+                    .map(author -> author.getName() + " " + author.getSurname())
+                    .collect(Collectors.toList());
+
+            bookResponse.setAuthorsName(authorsName);
+        }
+
+        return bookResponses;
     }
+
+
 
     @Override
     public void deleteBook(Long id) throws NotFoundException {
@@ -80,23 +106,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse getBookById(Long id) throws NotFoundException {
-        try {
             log.info("getting book by id:{}", id);
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
             CategoryResponse categoryResponse = categoryMapper.modelToResponse(category);
-            bookResponse.setCategory(categoryResponse);
+            bookResponse.setCategory(categoryResponse.getName());
             final Set<Author> authors = book.getAuthors();
-
             Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-            bookResponse.setAuthors(authorResponseSet);
-
+            List<String> authorsName=new ArrayList<>();
+            for (AuthorResponse authorResponse:authorResponseSet){
+                 authorsName.add(authorResponse.getName()+" "+authorResponse.getSurname());
+            }
+            bookResponse.setAuthorsName(authorsName);
             return bookResponse;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to fetch book with ID " + id, e);
-        }
+
     }
 
     @Override
@@ -125,9 +150,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse getBookByName(String bookName) {
         Book book = bookRepository.getBookByName(bookName)
-                .orElseThrow(() -> new NotFoundException("Not found book with this name:" + bookName));
-        return bookMapper.entityToResponse(book);
+                .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
+        BookResponse bookResponse = bookMapper.entityToResponse(book);
+        bookResponse.setCategory(categoryMapper.modelToResponse(book.getCategories()).getName());
+        List<String> authorsName = book.getAuthors().stream()
+                .map(authorMapper::modelToResponse)
+                .map(authorResponse -> authorResponse.getName() + " " + authorResponse.getSurname())
+                .collect(Collectors.toList());
+        bookResponse.setAuthorsName(authorsName);
+        return bookResponse;
     }
+
 
 
 }
