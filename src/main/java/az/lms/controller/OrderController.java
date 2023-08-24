@@ -3,6 +3,7 @@ package az.lms.controller;
 
 import az.lms.dto.request.OrderRequest;
 import az.lms.dto.response.OrderResponse;
+import az.lms.model.OrderType;
 import az.lms.service.OrderService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -43,8 +44,8 @@ public class OrderController {
            @ApiResponse(code = 400, message = "Invalid insert")
    })
    @PostMapping("/make")
-   public String makeOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
-      return orderService.borrowOrder(request);
+   public OrderType makeOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
+      return orderService.createOrder(request);
    }
 
    @ApiOperation(value = "Creating new return", notes = "Pass required order request to make successfully return")
@@ -53,7 +54,7 @@ public class OrderController {
            @ApiResponse(code = 400, message = "Invalid insert")
    })
    @PostMapping("/return")
-   public String returnOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
+   public OrderType returnOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
       return orderService.returnOrder(request);
    }
 
