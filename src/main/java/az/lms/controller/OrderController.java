@@ -3,7 +3,6 @@ package az.lms.controller;
 
 import az.lms.dto.request.OrderRequest;
 import az.lms.dto.response.OrderResponse;
-import az.lms.model.OrderType;
 import az.lms.service.OrderService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

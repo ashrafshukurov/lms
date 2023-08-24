@@ -2,8 +2,6 @@ package az.lms.service;
 
 import az.lms.dto.request.OrderRequest;
 import az.lms.dto.response.OrderResponse;
-import az.lms.model.OrderType;
-import jdk.dynalink.linker.LinkerServices;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

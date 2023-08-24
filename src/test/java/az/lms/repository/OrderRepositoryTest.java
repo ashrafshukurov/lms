@@ -1,6 +1,6 @@
 package az.lms.repository;
 
-import az.lms.model.OrderType;
+import az.lms.enums.OrderType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

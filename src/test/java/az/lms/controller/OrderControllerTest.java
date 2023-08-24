@@ -3,7 +3,7 @@
 //import az.lms.LmsApplication;
 //import az.lms.dto.request.OrderRequest;
 //import az.lms.dto.response.OrderResponse;
-//import az.lms.model.OrderType;
+//import az.lms.enums.OrderType;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import io.swagger.annotations.ApiKeyAuthDefinition;
 //import org.junit.jupiter.api.BeforeEach;
