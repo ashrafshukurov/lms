@@ -29,7 +29,7 @@ class OrderRepositoryTest {
 
 
    @Test
-   @Sql(scripts = "classpath:sql/order.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   @Sql(scripts = "classpath:sql/orders.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeOrdered() {
 //      //arrange
       Long studentId = 1L;
@@ -44,10 +44,10 @@ class OrderRepositoryTest {
    }
 
    @Test
-   @Sql(scripts = "classpath:sql/return.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   @Sql(scripts = "classpath:sql/returns.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeReturned() {
 //      //arrange
-      Long studentId = 1L;
+      Long studentId = 2L;
       Long bookId = 1L;
 //      //act
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
@@ -58,7 +58,6 @@ class OrderRepositoryTest {
    }
 
    @Test
-   @Sql(scripts = "classpath:sql/return.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenNotFoundThenDo() {
 //      //arrange
       Long studentId = 100L;
