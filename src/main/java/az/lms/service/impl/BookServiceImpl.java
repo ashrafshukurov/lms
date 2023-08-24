@@ -15,7 +15,6 @@ import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
-import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,14 +45,16 @@ public class BookServiceImpl implements BookService {
     private String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest, MultipartFile imageFile){
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
         String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
-
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
+        book.setImage(fileName);
+        uploadFile(imageFile);
+
         log.info("creating book");
         bookRepository.save(book);
     }
@@ -67,16 +68,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(Long id) throws NotFoundException {
-        try {
+
             log.info("deleting book");
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
             bookRepository.delete(book);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to delete book with ID " + id, e);
 
-        }
     }
 
 
@@ -88,18 +86,18 @@ public class BookServiceImpl implements BookService {
                     .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
             Category category = book.getCategories();
             BookResponse bookResponse = bookMapper.entityToResponse(book);
-//            bookResponse.setCategory(category);
-//            final Set<Author> authors = book.getAuthors();
-//
-//            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-//            bookResponse.setAuthors(authorResponseSet);
+            CategoryResponse categoryResponse = categoryMapper.modelToResponse(category);
+            bookResponse.setCategory(categoryResponse);
+            final Set<Author> authors = book.getAuthors();
+
+            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
+            bookResponse.setAuthors(authorResponseSet);
 
             return bookResponse;
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch book with ID " + id, e);
         }
     }
-
 
     @Override
     public void updateBook(BookRequest bookRequest) {
@@ -119,9 +117,16 @@ public class BookServiceImpl implements BookService {
     }
 
     public void uploadFile(MultipartFile file) throws IOException {
-        String fileName = UUID.randomUUID().toString().substring(0,4) + "-" + file.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + file.getOriginalFilename();
         Path filePath = Paths.get(directory).resolve(fileName);
         Files.copy(file.getInputStream(), filePath);
+    }
+
+    @Override
+    public BookResponse getBookByName(String bookName) {
+        Book book = bookRepository.getBookByName(bookName)
+                .orElseThrow(() -> new NotFoundException("Not found book with this name:" + bookName));
+        return bookMapper.entityToResponse(book);
     }
 
 

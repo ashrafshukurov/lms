@@ -7,10 +7,10 @@
 
 package az.lms.model;
 
+import az.lms.enums.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -18,13 +18,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "authors")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "e_mail",unique = true)
+    private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "first_name", length = 25, nullable = false)
     private String name;
@@ -45,6 +51,10 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
     private Set<Book> books;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_type", nullable = false)
+    private RoleType roleType;
 
     @Override
     public String toString() {

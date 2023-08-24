@@ -47,7 +47,7 @@
 //
 //   @Test
 //   @Sql(scripts = "classpath:sql/category.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//   @Sql(scripts = "classpath:sql/book.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   @Sql(scripts = "classpath:sql/book2.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   @Sql(scripts = "classpath:sql/student.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   @Sql(scripts = "classpath:sql/orders.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   public void givenGetOrdersWhenFoundReturnList() {
@@ -69,7 +69,7 @@
 //
 //   @Test
 //   @Sql(scripts = "classpath:sql/category.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//   @Sql(scripts = "classpath:sql/book.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   @Sql(scripts = "classpath:sql/book2.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   @Sql(scripts = "classpath:sql/student.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   public void givenBorrowOrderWhenOrderedThenReturnOrderTypeOrdered() {
 //      //arrange
@@ -90,7 +90,7 @@
 //
 //   @Test
 //   @Sql(scripts = "classpath:sql/category.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//   @Sql(scripts = "classpath:sql/book.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   @Sql(scripts = "classpath:sql/book2.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   @Sql(scripts = "classpath:sql/student.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //   public void givenReturnOrderWhenOrderedThenReturnOrderTypeReturned() {
 //      //arrange

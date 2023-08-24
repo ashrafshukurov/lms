@@ -32,9 +32,4 @@ public class BookResponse {
     private Set<AuthorResponse> authors;
     private String description;
 
-
-
-
-
-
 }

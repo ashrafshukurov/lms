@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class StudentResponse {
    private String FIN;
    private String name;
+   private String email;
    private String surName;
    private String studentGroup;
    private LocalDate birthDate;

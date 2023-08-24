@@ -4,6 +4,7 @@ import az.lms.dto.request.StudentRequest;
 import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.OrderResponse;
 import az.lms.dto.response.StudentResponse;
+import az.lms.enums.RoleType;
 import az.lms.service.StudentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -11,8 +12,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,7 +24,7 @@ import java.util.List;
  * @project LMS
  */
 @RestController
-@RequestMapping("/v1/student")
+@RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
@@ -31,11 +34,13 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 400, message = "Invalid insert")
     })
+    @RolesAllowed("ROLE_ADMIN")
     @PostMapping("/add")
     public void addStudent(@Valid @RequestBody StudentRequest studentRequest) {
         studentService.create(studentRequest);
     }
 
+    @RolesAllowed("ROLE_LIBRARIAN")
     @ApiOperation(value = "Get-Student-By-fin", notes = "When you enter fin it will get Student", response = StudentResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -46,6 +51,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getById(fin));
     }
 
+    @RolesAllowed({"ADMIN","LIBRARIAN","STUDENT"})
     @ApiOperation(value = "Update Student", notes = "Update Student based on fin")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -56,6 +62,7 @@ public class StudentController {
         studentService.update(studentRequest);
     }
 
+    @RolesAllowed({"STUDENT","ADMIN","LIBRARIAN"})
     @ApiOperation(value = "Getting-All-Students", notes = "It Will return Student list", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -71,6 +78,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid deleting student by fin")
     })
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/delete/{fin}")
     public void deleteStudentByFin(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         studentService.deleteById(fin);

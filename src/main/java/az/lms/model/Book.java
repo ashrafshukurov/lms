@@ -43,8 +43,8 @@ public class Book {
     @JsonBackReference
     private Set<Author> authors;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categories_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
     @JsonBackReference
     private Category categories;
 

@@ -22,6 +22,8 @@ import java.util.Set;
 public class AuthorResponse {
     private Long id;
 
+    private String email;
+
     private String name;
 
     private String surname;
