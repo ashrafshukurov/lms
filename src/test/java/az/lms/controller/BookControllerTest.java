@@ -1,7 +1,5 @@
 package az.lms.controller;
 
-import az.lms.dto.response.AuthorResponse;
-import az.lms.dto.response.BookResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
@@ -31,7 +28,7 @@ class BookControllerTest {
         this.url="http://localhost:"+port+"/lms";
     }
     @Test
-    @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/book2.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenGetBookByIdWhenFoundThenReturnResult(){
 
 

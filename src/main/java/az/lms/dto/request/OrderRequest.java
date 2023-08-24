@@ -1,6 +1,6 @@
 package az.lms.dto.request;
 
-import az.lms.model.OrderType;
+import az.lms.enums.OrderType;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
