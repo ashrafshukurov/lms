@@ -19,7 +19,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
    List<Order> findOrderByStudentId(Long id);
 
-   @Query(value = " select o.order_type from lms_schema.orders o where student_id=?1 and book_id=?2 order by order_time desc limit 1"
+   @Query(value = " select o.order_type from orders o where student_id=?1 and book_id=?2 order by order_time desc limit 1"
            , nativeQuery = true)
    String getLastOrder(Long studentId, Long bookId);
 }
