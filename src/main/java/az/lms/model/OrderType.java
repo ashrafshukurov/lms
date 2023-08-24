@@ -5,5 +5,5 @@ package az.lms.model;
  * @project LMS
  */
 public enum OrderType {
-   ORDERED, RETURNED
+   BORROWED, RETURNED
 }

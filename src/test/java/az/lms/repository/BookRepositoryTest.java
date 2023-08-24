@@ -27,7 +27,7 @@ class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Test
-    @Sql(scripts = "classpath:sql/book.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/book2.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenFindByIsbnWhenFoundThenReturnEntity() {
         //arrange
         String isbn = "1234f";
