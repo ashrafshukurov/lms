@@ -1,11 +1,10 @@
 package az.lms.model;
 
+import az.lms.enums.OrderType;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * @author Mehman Osmanov on 11.08.23
