@@ -38,7 +38,7 @@ class OrderRepositoryTest {
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
 //      //assert
       assertNotNull(lastOrderType);
-      assertEquals(OrderType.ORDERED.name(), lastOrderType);
+      assertEquals(OrderType.BORROWED.name(), lastOrderType);
       orderRepository.findOrderByStudentId(1L).forEach((a)-> System.out.println(a.getOrderTime()));
 
    }
