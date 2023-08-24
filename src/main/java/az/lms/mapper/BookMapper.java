@@ -19,6 +19,6 @@ public interface BookMapper {
     @Mapping(target = "categories.id", source = "categories_id")
     Book requestToEntity(BookRequest request);
 
-    @Mapping(target = "category.id", source = "categories.id")
+//    @Mapping(target = "category.id", source = "categories.id")
     BookResponse entityToResponse(Book book);
 }

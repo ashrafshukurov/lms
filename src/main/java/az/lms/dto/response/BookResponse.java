@@ -28,8 +28,11 @@ public class BookResponse {
     private int count;
     private String image;
     private LocalDate publishedTime;
-    private CategoryResponse category;
-    private Set<AuthorResponse> authors;
+//    private CategoryResponse category;
+    private String category;
+//    private Set<AuthorResponse> authors;
+    private List<String> authorsName;
     private String description;
+
 
 }
