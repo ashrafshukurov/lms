@@ -1,4 +1,4 @@
-package az.lms.model;
+package az.lms.enums;
 
 /**
  * @author Mehman Osmanov on 11.08.23

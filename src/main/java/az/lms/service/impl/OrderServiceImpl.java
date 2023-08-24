@@ -8,7 +8,7 @@ import az.lms.exception.NotFoundException;
 import az.lms.mapper.OrderMapper;
 import az.lms.model.Book;
 import az.lms.model.Order;
-import az.lms.model.OrderType;
+import az.lms.enums.OrderType;
 import az.lms.repository.BookRepository;
 import az.lms.repository.OrderRepository;
 import az.lms.service.OrderService;
