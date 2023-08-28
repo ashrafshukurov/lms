@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body style="background-image: url('https://img.freepik.com/premium-photo/modern-big-library-design-black-wooden-library-with-wooden-parquet-realistic-3d-rendering_626958-37.jpg'); background-size: cover; background-repeat: no-repeat; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+<div class="container p-5" style="background-color: rgba(100, 100, 100, 0.6); border-radius: 10px;">
+    <h1 class="text-center">Sign Up</h1>
+    <hr>
+    <h2 class="text-center">Save Student</h2>
+    <form action="#" th:action="@{/web/save}" th:object="${registerDto}" method="POST" class="row justify-content-center">
+
+        <div class="col-12 col-md-6 mb-4">
+            <input type="text" th:field="*{name}" placeholder="Name" class="form-control">
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <input type="text" th:field="*{surName}" placeholder="Surname" class="form-control">
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <input type="password" th:field="*{password}" placeholder="Password" class="form-control">
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <input type="email" th:field="*{email}" placeholder="Email" class="form-control">
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <input type="text" th:field="*{studentGroup}" placeholder="Student group" class="form-control">
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <input type="text" th:field="*{birthDate}" placeholder="Birth date" class="form-control">
+        </div>
+        <div class="col-12 mb-4">
+            <input type="text" th:field="*{address}" placeholder="Address" class="form-control">
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-info col-6 col-md-4" >Sign Up</button>
+        </div>
+    </form>
+    <hr>
+    <div class="col-12 text-center">
+        <a th:href="@{/web/}"> Back to Library</a>
+    </div>
+</div>
+</body>
+</html>

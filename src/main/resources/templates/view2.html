@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Webpage</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/479/101/113/germany-saxony-gorlitz-hall-historical-literature-wallpaper-preview.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            color: #333; /* Default text color */
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background for navbar */
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .jumbotron {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background for jumbotron */
+            color: #ffffff;
+            padding: 4rem 2rem;
+            margin-top: 50px; /* Add some space from the top */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">Library</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">View All Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Categories</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sign In</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+    <h1>Welcome to the Library</h1>
+    <p>Explore our vast collection of books and discover your next reading adventure.</p>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="text-center">
+            <form class="form-inline" id="search-form">
+                <div class="input-group">
+                    <input class="form-control rounded-pill py-4 px-4" type="search" id="search-input"
+                           placeholder="Search your book" aria-label="Search"
+                           style="font-size: 20px; padding: 20px; width: 400px;">
+                    <div class="input-group-append">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Content goes here -->
+</div>
+<div class="container mt-4">
+    <!-- Content goes here -->
+</div>
+
+<!-- Link to Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
