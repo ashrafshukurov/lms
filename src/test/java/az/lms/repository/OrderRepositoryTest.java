@@ -29,7 +29,7 @@ class OrderRepositoryTest {
 
 
    @Test
-   @Sql(scripts = "classpath:sql/orders.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   @Sql(scripts = "classpath:sql/borrows.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeOrdered() {
 //      //arrange
       Long studentId = 1L;
@@ -39,7 +39,6 @@ class OrderRepositoryTest {
 //      //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.BORROWED.name(), lastOrderType);
-      orderRepository.findOrderByStudentId(1L).forEach((a)-> System.out.println(a.getOrderTime()));
 
    }
 

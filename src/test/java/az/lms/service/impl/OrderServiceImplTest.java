@@ -172,7 +172,7 @@ class OrderServiceImplTest {
       orderRequest.setStudentId(1L);
 
       when(bookRepository.findById(orderRequest.getBookId())).thenReturn(Optional.of(book));
-      when(orderRepository.getLastOrder(1L, 1L)).thenReturn("ORDERED");
+      when(orderRepository.getLastOrder(1L, 1L)).thenReturn("BORROWED");
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
