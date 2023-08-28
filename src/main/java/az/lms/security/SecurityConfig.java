@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**","/author/all","/book/**").anonymous()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
