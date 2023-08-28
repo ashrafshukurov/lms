@@ -85,11 +85,6 @@ public class BookController {
         bookService.deleteBook(id);
     }
 
-    @GetMapping("/showCategory/{id}")
-    public ResponseEntity<CategoryResponse> getCategoryByBook(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.showCategoriesByBook(id));
-    }
-
     @ApiOperation(value = "Upload Book_picture", notes = "Upload Book_picture you have to add file to do that")
 
     @ApiResponses(value = {

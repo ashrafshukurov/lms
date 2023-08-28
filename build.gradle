@@ -43,6 +43,8 @@ dependencies {
 	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.22.0'
 	implementation 'org.liquibase:liquibase-core'
 
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
