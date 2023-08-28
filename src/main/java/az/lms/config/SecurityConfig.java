@@ -1,5 +1,8 @@
-package az.lms.security;
+package az.lms.config;
 
+import az.lms.security.JwtAuthenticationEntryPoint;
+import az.lms.security.JwtAuthenticationFilter;
+import az.lms.security.PasswordCoderConfig;
 import az.lms.service.impl.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +40,7 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordCoderConfig.getPasswordEncoder());
-       // var authenticationManager = authManagerBuilder.build();
+        // var authenticationManager = authManagerBuilder.build();
 
 
         http.exceptionHandling()
