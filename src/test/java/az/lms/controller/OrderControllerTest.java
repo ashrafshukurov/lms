@@ -82,16 +82,13 @@ class OrderControllerTest {
    @Test
    @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenReturnOrderWhenOrderedThenReturnOrderTypeReturned() {
-//      //arrange
+      //arrange
       OrderRequest orderRequest = new OrderRequest();
       orderRequest.setStudentId(1L);
       orderRequest.setBookId(1L);
       orderRequest.setOrderType(OrderType.RETURNED);
-
       //act
       String response = restTemplate.postForObject(url + "/return", orderRequest, String.class);
-//      restTemplate.postForEntity()
-//      restTemplate.postForObject()
       //assert
       assertNotNull(response);
       assertEquals("Successfully made return order", response);

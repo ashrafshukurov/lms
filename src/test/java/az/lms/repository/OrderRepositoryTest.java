@@ -31,12 +31,12 @@ class OrderRepositoryTest {
    @Test
    @Sql(scripts = "classpath:sql/borrows.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeOrdered() {
-//      //arrange
+      //arrange
       Long studentId = 1L;
       Long bookId = 1L;
-//      //act
+      //act
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
-//      //assert
+      //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.BORROWED.name(), lastOrderType);
 
@@ -45,12 +45,12 @@ class OrderRepositoryTest {
    @Test
    @Sql(scripts = "classpath:sql/returns.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeReturned() {
-//      //arrange
+      //arrange
       Long studentId = 2L;
       Long bookId = 1L;
-//      //act
+      //act
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
-//      //assert
+      //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.RETURNED.name(), lastOrderType);
 
@@ -58,10 +58,10 @@ class OrderRepositoryTest {
 
    @Test
    public void givenGetLastOrderWhenNotFoundThenDo() {
-//      //arrange
+      //arrange
       Long studentId = 100L;
       Long bookId = 100L;
-//      //act & assert
+      //act & assert
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
       assertNull(lastOrderType);
 

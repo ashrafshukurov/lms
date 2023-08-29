@@ -1,7 +1,6 @@
 package az.lms.dto.response;
 
 import az.lms.enums.OrderType;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
