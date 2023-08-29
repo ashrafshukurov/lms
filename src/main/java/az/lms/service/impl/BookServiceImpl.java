@@ -40,7 +40,6 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
-    private final CategoryMapper categoryMapper;
     @Value("${file.directory}")
     private String directory;
 
@@ -65,16 +64,13 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.findAll();
         List<Category> categories = new ArrayList<>();
         List<Set<Author>> authorsList = new ArrayList<>();
-
         for (Book book : books) {
             categories.add(book.getCategories());
             authorsList.add(book.getAuthors());
         }
-
         List<BookResponse> bookResponses = books.stream()
                 .map(bookMapper::entityToResponse)
                 .toList();
-
         for (int i = 0; i < bookResponses.size(); i++) {
             BookResponse bookResponse = bookResponses.get(i);
             bookResponse.setCategory(categories.get(i).getName());
@@ -86,41 +82,38 @@ public class BookServiceImpl implements BookService {
 
             bookResponse.setAuthorsName(authorsName);
         }
-
         return bookResponses;
     }
-
 
 
     @Override
     public void deleteBook(Long id) throws NotFoundException {
 
-            log.info("deleting book");
-            Book book = bookRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
+        log.info("deleting book");
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
-            bookRepository.delete(book);
+        bookRepository.delete(book);
 
     }
 
 
     @Override
     public BookResponse getBookById(Long id) throws NotFoundException {
-            log.info("getting book by id:{}", id);
-            Book book = bookRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
-            Category category = book.getCategories();
-            BookResponse bookResponse = bookMapper.entityToResponse(book);
-            CategoryResponse categoryResponse = categoryMapper.modelToResponse(category);
-            bookResponse.setCategory(categoryResponse.getName());
-            final Set<Author> authors = book.getAuthors();
-            Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-            List<String> authorsName=new ArrayList<>();
-            for (AuthorResponse authorResponse:authorResponseSet){
-                 authorsName.add(authorResponse.getName()+" "+authorResponse.getSurname());
-            }
-            bookResponse.setAuthorsName(authorsName);
-            return bookResponse;
+        log.info("getting book by id:{}", id);
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
+        Category category = book.getCategories();
+        BookResponse bookResponse = bookMapper.entityToResponse(book);
+        bookResponse.setCategory(category.getName());
+        final Set<Author> authors = book.getAuthors();
+        Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
+        List<String> authorsName = new ArrayList<>();
+        for (AuthorResponse authorResponse : authorResponseSet) {
+            authorsName.add(authorResponse.getName() + " " + authorResponse.getSurname());
+        }
+        bookResponse.setAuthorsName(authorsName);
+        return bookResponse;
 
     }
 
@@ -130,15 +123,6 @@ public class BookServiceImpl implements BookService {
         Book newBook = bookMapper.requestToEntity(bookRequest);
         newBook.setId(book.getId());
         bookRepository.save(newBook);
-    }
-
-    @Override
-    public CategoryResponse showCategoriesByBook(Long bookId) {
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new NotFoundException("Book with ID " + bookId + " not found"));
-        Category category = book.getCategories();
-        return categoryMapper.modelToResponse(category);
-
     }
 
     public void uploadFile(MultipartFile file) throws IOException {
@@ -152,7 +136,8 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.getBookByName(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
         BookResponse bookResponse = bookMapper.entityToResponse(book);
-        bookResponse.setCategory(categoryMapper.modelToResponse(book.getCategories()).getName());
+        Category category=book.getCategories();
+        bookResponse.setCategory(category.getName());
         List<String> authorsName = book.getAuthors().stream()
                 .map(authorMapper::modelToResponse)
                 .map(authorResponse -> authorResponse.getName() + " " + authorResponse.getSurname())
@@ -160,7 +145,6 @@ public class BookServiceImpl implements BookService {
         bookResponse.setAuthorsName(authorsName);
         return bookResponse;
     }
-
 
 
 }
