@@ -17,9 +17,9 @@ import java.util.List;
 public interface BookService {
     void createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
     List<BookResponse> getAllBooks();
-    void deleteBook(Long id);
+    String deleteBook(Long id);
     BookResponse getBookById(Long id);
-    void updateBook(BookRequest bookRequest);
+    String updateBook(BookRequest bookRequest);
     void uploadFile(MultipartFile multipartFile) throws IOException;
     BookResponse getBookByName(String bookName);
 }

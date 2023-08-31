@@ -87,13 +87,14 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void deleteBook(Long id) throws NotFoundException {
+    public String deleteBook(Long id) throws NotFoundException {
 
         log.info("deleting book");
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
         bookRepository.delete(book);
+        return "Book is deleted";
 
     }
 
@@ -118,11 +119,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(BookRequest bookRequest) {
+    public String updateBook(BookRequest bookRequest) {
         Book book = bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(() -> new NotFoundException("invalid book"));
         Book newBook = bookMapper.requestToEntity(bookRequest);
         newBook.setId(book.getId());
+        newBook.setIsbn(book.getIsbn());
+        newBook.setCategories(book.getCategories());
         bookRepository.save(newBook);
+        return "Book is updated";
     }
 
     public void uploadFile(MultipartFile file) throws IOException {
