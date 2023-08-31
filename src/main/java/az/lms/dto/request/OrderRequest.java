@@ -5,9 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
