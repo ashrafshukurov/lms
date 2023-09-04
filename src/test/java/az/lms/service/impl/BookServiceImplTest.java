@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,18 +78,24 @@ class BookServiceImplTest {
     @Test
     public void createBook_WithValidInput_ShouldUploadFileAndSaveBook() throws IOException {
         //arrange
-        BookRequest bookRequest = new BookRequest();
+
         MultipartFile imageFile = new MockMultipartFile("image.jpg", new byte[0]);
-        String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "-image.jpg";
+        String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "image.jpg";
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setIsbn("1234f");
+        bookRequest.setName("book1");
+        bookRequest.setImage(fakeFileName);
+
         Book fakeBook = new Book();
-        fakeBook.setIsbn("12345");
+        fakeBook.setIsbn("1234f");
         fakeBook.setImage(fakeFileName);
         Mockito.when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
         Mockito.when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
         //act
-        bookService.createBook(bookRequest, imageFile);
+        String responseEntity=bookService.createBook(bookRequest, imageFile);
 
         //assert
+        assertEquals("Book successfully added",responseEntity);
         Mockito.verify(bookMapper).requestToEntity(bookRequest);
         Mockito.verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
         Mockito.verify(bookRepository).save(fakeBook);
@@ -291,7 +298,7 @@ class BookServiceImplTest {
         when(bookRepository.findByIsbn(invalidIsbn)).thenReturn(Optional.empty());
         //act & assert
         assertThrows(NotFoundException.class,()->bookService.updateBook(bookRequest));
-
     }
+
 
 }

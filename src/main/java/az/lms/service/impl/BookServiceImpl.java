@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
     private String directory;
 
     @Override
-    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+    public String createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
         String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
         Book book = bookMapper.requestToEntity(bookRequest);
@@ -56,6 +56,7 @@ public class BookServiceImpl implements BookService {
 
         log.info("creating book");
         bookRepository.save(book);
+        return "Book successfully added";
     }
 
     @Override
