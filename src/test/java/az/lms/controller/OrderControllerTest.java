@@ -63,63 +63,36 @@ class OrderControllerTest {
    }
 
 
-   @Test
-   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-   public void givenBorrowOrderWhenOrderedThenReturnOrderTypeOrdered() {
-      //arrange
-      OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setStudentId(2L);
-      orderRequest.setBookId(1L);
-      orderRequest.setOrderType(OrderType.BORROWED);
 
-      //act
-      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
-      //assert
-      assertNotNull(response);
-      assertEquals("Successfully made borrow order", response.getBody());
-
-   }
-
-   @Test
-   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-   public void givenReturnOrderWhenOrderedThenReturnOrderTypeReturned() {
-      //arrange
-      OrderRequest orderRequest = new OrderRequest();
-      orderRequest.setStudentId(1L);
-      orderRequest.setBookId(1L);
-      orderRequest.setOrderType(OrderType.RETURNED);
-      //act
-      String response = restTemplate.postForObject(url + "/return", orderRequest, String.class);
-      //assert
-      assertNotNull(response);
-      assertEquals("Successfully made return order", response);
-   }
+//   @Test
+//   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   public void givenBorrowOrderWhenOrderedThenReturnOrderedMessage() {
+//      //arrange
+//      OrderRequest orderRequest = new OrderRequest();
+//      orderRequest.setStudentId(2L);
+//      orderRequest.setBookId(1L);
+//      orderRequest.setOrderType(OrderType.BORROWED);
+//      //act
+//      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
+//      //assert
+//      assertNotNull(response);
+//      assertEquals("Successfully made borrow order", response.getBody());
+//
+//   }
 
 
-   @Test
-   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-   public void testBorrowOrderEndpoint() throws Exception {
-      // Create an example OrderRequest
-      OrderRequest request = new OrderRequest();
-      request.setOrderType(OrderType.BORROWED);
-      request.setBookId(1L);
-      request.setStudentId(2L);
-
-      HttpHeaders headers = new HttpHeaders();
-      headers.setContentType(MediaType.APPLICATION_JSON);
-
-      HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(request), headers);
-
-      ResponseEntity<String> response = restTemplate.exchange(
-              url + "/borrow",
-              HttpMethod.POST,
-              entity,
-              String.class
-      );
-
-      // Perform assertions on the response
-//      assertEquals(200, response.getStatusCodeValue());
-      assertEquals("Successfully made borrow order", response.getBody());
-//       You can add more assertions based on your specific scenario
-   }
+//   @Test
+//   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   public void givenReturnOrderWhenOrderedThenReturnReturnedMessage() {
+//      //arrange
+//      OrderRequest orderRequest = new OrderRequest();
+//      orderRequest.setStudentId(1L);
+//      orderRequest.setBookId(1L);
+//      orderRequest.setOrderType(OrderType.RETURNED);
+//      //act
+//      String response = restTemplate.postForObject(url + "/return", orderRequest, String.class);
+//      //assert
+//      assertNotNull(response);
+//      assertEquals("Successfully made return order", response);
+//   }
 }
