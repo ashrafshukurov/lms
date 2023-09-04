@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true)
    private Long id;
 
    @Column(name = "student_id")

@@ -71,6 +71,7 @@ class OrderControllerTest {
       orderRequest.setStudentId(2L);
       orderRequest.setBookId(1L);
       orderRequest.setOrderType(OrderType.BORROWED);
+
       //act
       ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
       //assert
