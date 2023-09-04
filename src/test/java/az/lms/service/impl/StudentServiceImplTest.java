@@ -1,7 +1,9 @@
 package az.lms.service.impl;
 
+import az.lms.dto.request.StudentRequest;
 import az.lms.dto.response.StudentResponse;
 import az.lms.enums.RoleType;
+import az.lms.exception.AlreadyExistsException;
 import az.lms.mapper.StudentMapper;
 import az.lms.model.Book;
 import az.lms.model.Student;
@@ -84,5 +86,35 @@ class StudentServiceImplTest {
         assertNotNull(studentResponses);
         assertTrue(studentResponses.isEmpty());
     }
+    @Test
+    public void validCreatingStudent(){
+        //arrange
+        String fin="123L";
+        Student student1=new Student();
+        student1.setFIN(fin);
+        StudentRequest request=new StudentRequest();
+        request.setFIN(fin);
+        when(studentRepository.existsByFIN(fin)).thenReturn(true);
+        when(studentMapper.requestToEntity(request)).thenReturn(student1);
+        //act
+        studentService.create(request);
+        verify(studentRepository, times(1)).existsByFIN(request.getFIN());
+        verify(studentMapper, times(1)).requestToEntity(request);
+        verify(studentRepository, times(1)).save(any(Student.class));
+    }
+    @Test
+    public void givenCreateStudentWhenThrowAlreadyException(){
+       //arrange
+        String fin="123L";
+        StudentRequest studentRequest=new StudentRequest();
+        studentRequest.setFIN(fin);
+        when(studentRepository.existsByFIN(fin)).thenReturn(false);
+        //act & assert
+        assertThrows(AlreadyExistsException.class,()->studentService.create(studentRequest));
+        verify(studentRepository, times(1)).existsByFIN(studentRequest.getFIN());
+        verify(studentMapper, never()).requestToEntity(any());
+        verify(studentRepository, never()).save(any(Student.class));
+    }
+
 
 }

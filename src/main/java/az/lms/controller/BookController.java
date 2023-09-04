@@ -41,8 +41,8 @@ public class BookController {
             @ApiResponse(code = 400, message = "Invalid insert")
     })
     @PostMapping("/")
-    public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
-        bookService.createBook(bookRequest, file);
+    public ResponseEntity<String> addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
+        return ResponseEntity.ok(bookService.createBook(bookRequest, file));
     }
 
     @ApiOperation(value = "Update Book", notes = "Update Book based on id")
@@ -94,9 +94,7 @@ public class BookController {
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         bookService.uploadFile(file);
-
     }
-
     @ApiOperation(value = "GetBookByName ", notes = "you can search book by name")
 
     @ApiResponses(value = {

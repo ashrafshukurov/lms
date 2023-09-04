@@ -49,6 +49,7 @@ class BookControllerTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenGetBookByIdWhenFoundThenReturnResult(){
         Long id=1L;
@@ -76,6 +77,7 @@ class BookControllerTest {
 
     }
     @Test
+    @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenUpdateBookWhenFoundThenUpdate() throws JsonProcessingException {
         //arrange
@@ -99,34 +101,16 @@ class BookControllerTest {
         assertEquals("Book is updated",responseEntity.getBody());
     }
     @Test
+    @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenGetAllBookWhenFoundThenReturnList(){
-        //arrange
-//        Long id=1L;
-//        BookResponse bookResponse=new BookResponse();
-//        bookResponse.setId(id);
-//        bookResponse.setName("book");
-//        bookResponse.setCount(4);
-//        bookResponse.setImage("image");
-//        bookResponse.setIsbn("1234d");
-//        bookResponse.setPublishedTime(LocalDate.of(2000,1,2));
-//        Category category=new Category();
-//        category.setName("category1");
-//        category.setId(1L);
-//        bookResponse.setCategory(category.getName());
-//        List<String> authorSet=new ArrayList<>();
-//        Author author=new Author();
-//        author.setSurname("Authorov");
-//        author.setName("Author");
-//        authorSet.add(author.getName()+" "+author.getSurname());
-//        bookResponse.setAuthorsName(authorSet);
-//        List<BookResponse> bookResponses=new ArrayList<>();
-//        bookResponses.add(bookResponse);
+        //act &assert
         ResponseEntity<List> responseEntity = testRestTemplate.getForEntity(url+"/", List.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
+    @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenDeleteBookByIdWhenFoundThenDelete(){
         //arrange
@@ -136,6 +120,7 @@ class BookControllerTest {
         assertEquals(200,responseEntity.getStatusCodeValue());
     }
     @Test
+    @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenGetBookByNameWhenFoundThenReturnResponse(){
         BookResponse bookResponse=new BookResponse();
