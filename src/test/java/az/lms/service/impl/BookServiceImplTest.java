@@ -298,7 +298,7 @@ class BookServiceImplTest {
         when(bookRepository.findByIsbn(invalidIsbn)).thenReturn(Optional.empty());
         //act & assert
         assertThrows(NotFoundException.class,()->bookService.updateBook(bookRequest));
-
     }
+
 
 }

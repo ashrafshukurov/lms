@@ -4,6 +4,7 @@ import az.lms.dto.request.StudentRequest;
 import az.lms.dto.response.StudentResponse;
 import az.lms.enums.RoleType;
 import az.lms.exception.AlreadyExistsException;
+import az.lms.exception.NotFoundException;
 import az.lms.mapper.StudentMapper;
 import az.lms.model.Book;
 import az.lms.model.Student;
@@ -115,6 +116,63 @@ class StudentServiceImplTest {
         verify(studentMapper, never()).requestToEntity(any());
         verify(studentRepository, never()).save(any(Student.class));
     }
+    @Test
+    public void givenUpdateStudentThenUpdate(){
+        //arrange
+        Student student1=new Student();
+        student1.setFIN("1234F");
+        student1.setId(1234L);
+        StudentRequest studentRequest=new StudentRequest();
+        studentRequest.setFIN("1234F");
 
+        //act
 
-}
+        when(studentRepository.findByFIN(student1.getFIN())).thenReturn(Optional.of(student1));
+        when(studentMapper.requestToEntity(studentRequest)).thenReturn(student1);
+        studentService.update(studentRequest);
+        //assert
+        verify(studentRepository, times(1)).findByFIN(student1.getFIN());
+        verify(studentMapper, times(1)).requestToEntity(studentRequest);
+        verify(studentRepository, times(1)).save(student1);
+    }
+    @Test
+    public void givenUpdateStudentWhenThrowEmpty(){
+        StudentRequest studentRequest=new StudentRequest();
+        studentRequest.setFIN("1234F");
+        when(studentRepository.findByFIN(studentRequest.getFIN())).thenReturn(Optional.empty());
+        //act && assert
+        assertThrows(NotFoundException.class,()->studentService.update(studentRequest));
+        verify(studentRepository, times(1)).findByFIN(studentRequest.getFIN());
+        verify(studentMapper, never()).requestToEntity(studentRequest);
+        verify(studentRepository, never()).save(any(Student.class));
+    }
+    @Test
+    public void givenGetByIdWhenFoundThenReturnResult(){
+        //arrange
+        String fin="1232F";
+        Student student1=new Student();
+        student1.setId(12L);
+        student1.setFIN(fin);
+        StudentResponse studentResponse=new StudentResponse();
+        studentResponse.setFIN(fin);
+        when(studentRepository.findByFIN(fin)).thenReturn(Optional.of(student1));
+        when(studentMapper.entityToResponse(student1)).thenReturn(studentResponse);
+        //act
+        StudentResponse studentResponse1=studentService.getById(fin);
+        //assert
+        assertEquals(fin,studentResponse1.getFIN());
+        verify(studentRepository,times(1)).findByFIN(studentResponse.getFIN());
+    }
+    @Test
+    public void givenGetByIdWhenNotFoundThenThrow404(){
+        //arrange
+        String fin="123d";
+        Student student1=new Student();
+        student1.setFIN(fin);
+        when(studentRepository.findByFIN(fin)).thenReturn(Optional.empty());
+        //act && assert
+        assertThrows(NotFoundException.class,()->studentService.getById(fin));
+        verify(studentRepository, times(1)).findByFIN(student1.getFIN());
+    }
+
+};
