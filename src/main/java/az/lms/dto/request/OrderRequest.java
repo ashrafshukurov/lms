@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Mehman Osmanov on 11.08.23
@@ -15,12 +15,12 @@ import javax.validation.constraints.NotBlank;
 public class OrderRequest {
    @ApiParam()
    @ApiModelProperty(notes = "Student ID", example = "123", required = true)
-   @NotBlank(message = "Student ID cannot be empty")
+   @NotNull(message = "Student ID cannot be empty")
    private Long studentId;
    @ApiModelProperty(notes = "Book ID", example = "123", required = true)
-   @NotBlank(message = "Book ID cannot be empty")
+   @NotNull(message = "Book ID cannot be empty")
    private Long bookId;
    @ApiModelProperty(notes = "Order type", example = "ORDERED", required = true)
-   @NotBlank(message = "Order type cannot be empty")
+   @NotNull(message = "Order type cannot be empty")
    private OrderType orderType;
 }
