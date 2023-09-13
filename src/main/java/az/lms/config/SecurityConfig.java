@@ -54,6 +54,7 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").anonymous()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**","/student/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
