@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+<h1>Book List</h1>
+
+<ul id="bookList">
+    <!-- Book names will be displayed here -->
+</ul>
+
+<script>
+        // Function to fetch and display the list of books
+        async function fetchBooks() {
+            try {
+                const response = await fetch('http://localhost:8080/lms/v1/book/');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch books');
+                }
+                const data = await response.json();
+
+                const bookList = document.getElementById('bookList');
+                data.forEach(book => {
+                    const listItem = document.createElement('li');
+                    const bookLink = document.createElement('a');
+                    bookLink.textContent = book.name;
+                   bookLink.href = 'http://localhost:8080/lms/v1/book/' + book.id;
+
+                    bookLink.onclick = function() {
+                        showBookDetails(book.id); // Call a function to handle the book details based on its ID
+                        return false; // Prevent the default link behavior
+                    };
+                    listItem.appendChild(bookLink);
+                    bookList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Function to show book details based on the ID
+        function showBookDetails(id) {
+            // Construct the dynamic URL for the book details page
+            var dynamicUrl = 'http://localhost:8080/lms/v1/book/' + id;
+            const response = await fetch(dynamicUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch books');
+                }
+                const data = await response.json();
+                var parsed_data = JSON.parse(data);
+                  console.log(parsed_data);
+            parsed_data.forEach( json_data_set =>{
+          var tr = document.createElement("tr");
+          Object.keys(json_data_set).forEach( key =>{
+
+                var td = document.createElement("td")
+            td.innerText = json_data_set[key] ;
+            tr.appendChild(td);
+  })
+
+          document.querySelector("tbody").appendChild(tr);
+
+}
+        }
+
+        // Call the function to fetch and display the list of books
+        fetchBooks();
+    </script>
+</body>
+</html>
+

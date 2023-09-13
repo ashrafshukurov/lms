@@ -27,7 +27,7 @@ import java.util.List;
 
 @Controller
 @Validated
-@RequestMapping("/v1/category")
+@RequestMapping("/category")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
@@ -60,6 +60,8 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "All category returned"),
             @ApiResponse(code = 404, message = "Category not found")
     })
+
+    @CrossOrigin
     @GetMapping("/get-all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
         return ResponseEntity.ok(service.getAllCategory());
@@ -87,4 +89,6 @@ public class CategoryController {
         service.deleteCategoryById(id);
         return ResponseEntity.ok("Category with ID " + id + " has been successfully deleted.");
     }
+
+
 }

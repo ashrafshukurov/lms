@@ -7,7 +7,11 @@
 
 package az.lms.dto.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,4 +22,5 @@ public class CategoryResponse {
     private Long id;
     private String name;
     private String description;
+    private String type;
 }
