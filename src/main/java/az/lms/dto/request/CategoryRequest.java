@@ -31,4 +31,10 @@ public class CategoryRequest {
     @Size(max = 255, min = 5, message = "Invalid Name: Must be of 5 - 255 characters")
     @ApiModelProperty(name = "Category description")
     private String description;
+
+
+    @NotBlank(message = "Invalid Name: Empty description")
+    @Size(max = 255, min = 5, message = "Invalid Name: Must be of 5 - 255 characters")
+    @ApiModelProperty(name = "Category type: Fiction / Non-fiction")
+    private String type;
 }

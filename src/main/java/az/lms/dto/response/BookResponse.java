@@ -33,6 +33,6 @@ public class BookResponse {
 //    private Set<AuthorResponse> authors;
     private List<String> authorsName;
     private String description;
-
+    private String details;
 
 }

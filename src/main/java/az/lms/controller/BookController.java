@@ -3,6 +3,7 @@ package az.lms.controller;
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.CategoryResponse;
+import az.lms.mapper.BookMapper;
 import az.lms.service.BookService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,6 +35,7 @@ import java.util.List;
 @Slf4j
 public class BookController {
     private final BookService bookService;
+    private final BookMapper mapper;
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
     @ApiResponses(value = {
@@ -70,6 +72,8 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting books")
     })
+
+    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
@@ -105,6 +109,4 @@ public class BookController {
     public ResponseEntity<BookResponse> getBookByName(@PathVariable String bookname) {
         return ResponseEntity.ok(bookService.getBookByName(bookname));
     }
-
-
 }

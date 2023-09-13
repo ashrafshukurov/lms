@@ -4,12 +4,10 @@ import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.BookResponse;
 
-import az.lms.dto.response.CategoryResponse;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.BookMapper;
-import az.lms.mapper.CategoryMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
@@ -150,6 +148,5 @@ public class BookServiceImpl implements BookService {
         bookResponse.setAuthorsName(authorsName);
         return bookResponse;
     }
-
 
 }

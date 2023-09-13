@@ -33,6 +33,7 @@ public class BookRequest {
     private int count;
 //    @NotEmpty(message = "Image can't be empty")
     private String image;
+    private String details;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @NotNull
     @Past(message = "publishedTime should not be in the future")
