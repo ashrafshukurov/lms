@@ -1,7 +1,8 @@
 package az.lms.dto.response;
 
-import az.lms.model.OrderType;
-import lombok.Data;
+import az.lms.enums.OrderType;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +10,8 @@ import java.time.LocalDateTime;
  * @author Mehman Osmanov on 11.08.23
  * @project LMS
  */
-@Data
+@Setter
+@Getter
 public class OrderResponse {
    private Long studentId;
    private Long bookId;

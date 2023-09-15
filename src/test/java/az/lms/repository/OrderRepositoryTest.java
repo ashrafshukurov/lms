@@ -1,6 +1,6 @@
 package az.lms.repository;
 
-import az.lms.model.OrderType;
+import az.lms.enums.OrderType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,41 +29,39 @@ class OrderRepositoryTest {
 
 
    @Test
-   @Sql(scripts = "classpath:sql/order.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   @Sql(scripts = "classpath:sql/borrows.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeOrdered() {
-//      //arrange
+      //arrange
       Long studentId = 1L;
       Long bookId = 1L;
-//      //act
+      //act
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
-//      //assert
+      //assert
       assertNotNull(lastOrderType);
-      assertEquals(OrderType.ORDERED.name(), lastOrderType);
-      orderRepository.findOrderByStudentId(1L).forEach((a)-> System.out.println(a.getOrderTime()));
+      assertEquals(OrderType.BORROWED.name(), lastOrderType);
 
    }
 
    @Test
-   @Sql(scripts = "classpath:sql/return.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   @Sql(scripts = "classpath:sql/returns.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenFoundThenReturnOrderTypeReturned() {
-//      //arrange
-      Long studentId = 1L;
+      //arrange
+      Long studentId = 2L;
       Long bookId = 1L;
-//      //act
+      //act
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
-//      //assert
+      //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.RETURNED.name(), lastOrderType);
 
    }
 
    @Test
-   @Sql(scripts = "classpath:sql/return.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
    public void givenGetLastOrderWhenNotFoundThenDo() {
-//      //arrange
+      //arrange
       Long studentId = 100L;
       Long bookId = 100L;
-//      //act & assert
+      //act & assert
       String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
       assertNull(lastOrderType);
 

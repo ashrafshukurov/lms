@@ -1,6 +1,8 @@
-package az.lms.security;
+package az.lms.config;
 
-import az.lms.enums.RoleType;
+import az.lms.security.JwtAuthenticationEntryPoint;
+import az.lms.security.JwtAuthenticationFilter;
+import az.lms.security.PasswordCoderConfig;
 import az.lms.service.impl.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailServiceImpl userDetailsService;
-    private final JwtAuthentificationEntryPoint jwtAuthentificationEntryPoint;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final PasswordCoderConfig passwordCoderConfig;
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -38,11 +40,11 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordCoderConfig.getPasswordEncoder());
-       // var authenticationManager = authManagerBuilder.build();
+        // var authenticationManager = authManagerBuilder.build();
 
 
         http.exceptionHandling()
-                .authenticationEntryPoint(jwtAuthentificationEntryPoint)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -51,7 +53,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**","/author/all","/book/all").anonymous()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();

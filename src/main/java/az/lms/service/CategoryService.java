@@ -15,12 +15,12 @@ import java.util.List;
 
 public interface CategoryService {
     /*
-    ● ShowAllCategory
-    ● Create
-    ● Update
-    ● ShowCategoryById
-    ● Delete
-    ● Show category books
+    ShowAllCategory
+    Create
+    Update
+    ShowCategoryById
+    Delete
+    Show category books
      */
     void createCategory(CategoryRequest request);
 

@@ -3,6 +3,7 @@ package az.lms.controller;
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.CategoryResponse;
+import az.lms.mapper.BookMapper;
 import az.lms.service.BookService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,11 +30,12 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/v1/book")
+@RequestMapping("/book")
 @RequiredArgsConstructor
 @Slf4j
 public class BookController {
     private final BookService bookService;
+    private final BookMapper mapper;
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
     @ApiResponses(value = {
@@ -41,8 +43,8 @@ public class BookController {
             @ApiResponse(code = 400, message = "Invalid insert")
     })
     @PostMapping("/")
-    public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
-        bookService.createBook(bookRequest, file);
+    public ResponseEntity<String> addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
+        return ResponseEntity.ok(bookService.createBook(bookRequest, file));
     }
 
     @ApiOperation(value = "Update Book", notes = "Update Book based on id")
@@ -50,9 +52,9 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid update")
     })
-    @PutMapping("/update")
-    public void updateBook(@Valid @RequestBody BookRequest bookRequest) {
-        bookService.updateBook(bookRequest);
+    @PutMapping("/")
+    public ResponseEntity<String> updateBook(@Valid @RequestBody BookRequest bookRequest) {
+        return ResponseEntity.ok(bookService.updateBook(bookRequest));
     }
 
     @ApiOperation(value = "Get-Book-By-Id", notes = "When you enter id it will return book", response = BookResponse.class)
@@ -70,6 +72,8 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting books")
     })
+
+    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
@@ -81,13 +85,8 @@ public class BookController {
             @ApiResponse(code = 404, message = "Invalid deleting book by Id")
     })
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Long id) {
-        bookService.deleteBook(id);
-    }
-
-    @GetMapping("/showCategory/{id}")
-    public ResponseEntity<CategoryResponse> getCategoryByBook(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.showCategoriesByBook(id));
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        return ResponseEntity.ok(bookService.deleteBook(id));
     }
 
     @ApiOperation(value = "Upload Book_picture", notes = "Upload Book_picture you have to add file to do that")
@@ -99,19 +98,15 @@ public class BookController {
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         bookService.uploadFile(file);
-
     }
-
     @ApiOperation(value = "GetBookByName ", notes = "you can search book by name")
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Not Found book")
     })
-    @GetMapping("/{bookname}")
+    @GetMapping("/name/{bookname}")
     public ResponseEntity<BookResponse> getBookByName(@PathVariable String bookname) {
         return ResponseEntity.ok(bookService.getBookByName(bookname));
     }
-
-
 }

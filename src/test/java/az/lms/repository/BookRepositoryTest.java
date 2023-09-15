@@ -1,5 +1,6 @@
 package az.lms.repository;
 
+import az.lms.LmsApplication;
 import az.lms.model.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * @author ashraf
  * @project LMS
  */
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = LmsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "test")
 @EnableConfigurationProperties
 @EnableJpaRepositories

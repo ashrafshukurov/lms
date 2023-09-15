@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+<ul id="myList"></ul>
+<script>
+           let displayList = [];
+
+fetch(`https://localhost:8080//v1/category/get-all`)
+    .then(function(response){
+        return response.json();
+    })
+    .then((data) => {
+        var list = document.getElementById("myList");
+        data.results.forEach((item) => {
+            displayList.push(item.name);
+            let li = document.createElement("li");
+
+            // Create a link element
+            let link = document.createElement("a");
+            link.href = `https://localhost:8080//v1/category/get-all//get-by-id/${item.id}/`;
+            link.textContent = item.name;
+
+            // Append the link to the list item
+            li.appendChild(link);
+
+            list.appendChild(li);
+        });
+        console.log(displayList);
+    })
+    .catch((err) => {
+        console.log(`Error fetching: ${err}`);
+    });
+        </script>
+
+</body>
+</html>

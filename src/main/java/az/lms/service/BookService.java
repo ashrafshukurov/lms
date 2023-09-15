@@ -3,6 +3,8 @@ package az.lms.service;
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.CategoryResponse;
+import az.lms.model.Book;
+import az.lms.model.Category;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +17,12 @@ import java.util.List;
  */
 
 public interface BookService {
-    void createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
+    String createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
     List<BookResponse> getAllBooks();
-    void deleteBook(Long id);
+    String deleteBook(Long id);
     BookResponse getBookById(Long id);
-    void updateBook(BookRequest bookRequest);
-    CategoryResponse showCategoriesByBook(Long bookId);
+    String updateBook(BookRequest bookRequest);
     void uploadFile(MultipartFile multipartFile) throws IOException;
     BookResponse getBookByName(String bookName);
+
 }

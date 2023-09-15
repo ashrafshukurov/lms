@@ -51,21 +51,17 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void update(StudentRequest request) {
       log.info("Updating student's fields");
-      Optional<Student> student = studentRepository.findByFIN(request.getFIN());
-      if (student.isEmpty())
-         throw new NotFoundException("Student not found with fin code");
+      Student student = studentRepository.findByFIN(request.getFIN()).orElseThrow(() -> new NotFoundException("Student not found with fin code"));
       Student newStudent = studentMapper.requestToEntity(request);
-      newStudent.setId(student.get().getId());
+      newStudent.setId(student.getId());
       studentRepository.save(newStudent);
    }
 
    @Override
    public StudentResponse getById(String fin) {
       log.info("Getting student by fin {}", fin);
-      Optional<Student> student = studentRepository.findByFIN(fin);
-      if (student.isEmpty())
-         throw new NotFoundException("Student not found with fin code");
-      return studentMapper.entityToResponse(student.get());
+      Student student = studentRepository.findByFIN(fin).orElseThrow(() -> new NotFoundException("Student not found with fin code " + fin));
+      return studentMapper.entityToResponse(student);
    }
 
    @Override
@@ -78,10 +74,8 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public List<OrderResponse> getStudentOrders(String fin) {
       log.warn("Getting all student's orders");
-      Optional<Student> student = studentRepository.findByFIN(fin);
-      if (student.isEmpty())
-         throw new NotFoundException("Student not found with fin=" + fin);
-      List<Order> orders = orderRepository.findOrderByStudentId(student.get().getId());
+      Student student = studentRepository.findByFIN(fin).orElseThrow(() -> new NotFoundException("Student not found with fin=" + fin));
+      List<Order> orders = orderRepository.findOrderByStudentId(student.getId());
       return orders.stream().map(orderMapper::entityToDto).toList();
    }
 

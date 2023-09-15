@@ -37,6 +37,8 @@ public class Book {
     private String name;
     @Column(name = "published_time")
     private LocalDate publishedTime;
+    @Column(name = "details")
+    private String details;
     private String description;
 
     @ManyToMany(mappedBy = "books")

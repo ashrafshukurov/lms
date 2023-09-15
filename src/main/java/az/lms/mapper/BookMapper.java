@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 /**
  * @author ashraf
  * @project LMS
@@ -19,6 +21,6 @@ public interface BookMapper {
     @Mapping(target = "categories.id", source = "categories_id")
     Book requestToEntity(BookRequest request);
 
-    @Mapping(target = "category.id", source = "categories.id")
+//    @Mapping(target = "category.id", source = "categories.id")
     BookResponse entityToResponse(Book book);
 }

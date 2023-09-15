@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic URL Example</title>
+</head>
+<body>
+<h1>Dynamic URL Example</h1>
+
+
+<!-- Placeholder for displaying the current URL -->
+<p>Current URL: <span id="currentUrl"></span></p>
+
+<script>
+        // Function to update the URL based on an ID
+        function updateURL(id) {
+            // Define the base URL
+            var baseUrl = 'https://localhost:8080/book/';
+
+            // Construct the dynamic URL
+            var dynamicUrl = baseUrl + id;
+
+            // Set the new URL
+            window.location.href = dynamicUrl;
+
+            // Display the new URL on the page
+            document.getElementById('currentUrl').textContent = dynamicUrl;
+        }
+);
+    </script>
+</body>
+</html>
