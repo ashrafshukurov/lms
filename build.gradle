@@ -37,21 +37,33 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.22.0'
 	implementation 'org.liquibase:liquibase-core'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 	testImplementation 'org.mockito:mockito-core:3.12.4'
 	testImplementation 'org.assertj:assertj-core:3.8.0'
+	testImplementation 'com.h2database:h2:2.2.220'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+	implementation 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	testImplementation 'com.h2database:h2:2.2.220'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter'
+
 }
 
 dependencyManagement {
@@ -63,4 +75,3 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
