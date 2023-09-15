@@ -31,13 +31,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-@RolesAllowed({"ADMIN","LIBRARIAN"})
+    @RolesAllowed({"ADMIN","LIBRARIAN"})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created"),
             @ApiResponse(code = 404, message = "Not found"),
     })
     @ApiOperation(value = "Create new category", notes = "Category name must be unique")
-    @PostMapping("/")
+    @PostMapping("/add")
     public ResponseEntity<String> addCategory(@ApiParam(name = "request", value = "Category request object", required = true)
                                               @Valid @RequestBody CategoryRequest request) {
         service.createCategory(request);
@@ -49,7 +49,7 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Category id not found")
     })
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<String> updateCategory(@Valid @PathVariable Long id, @RequestBody CategoryRequest request) {
         service.updateCategory(id, request);
         return ResponseEntity.ok("Successfully updated");
@@ -60,7 +60,9 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "All category returned"),
             @ApiResponse(code = 404, message = "Category not found")
     })
-    @GetMapping("/all")
+
+    @CrossOrigin
+    @GetMapping("/get-all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
         return ResponseEntity.ok(service.getAllCategory());
     }
@@ -71,7 +73,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Category id not found"),
 
     })
-    @GetMapping("/{id}")
+    @GetMapping("/get-by-id/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getCategoryById(id));
     }
@@ -82,9 +84,11 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Category id not found"),
             @ApiResponse(code = 409, message = "Could not execute statement")
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
         service.deleteCategoryById(id);
         return ResponseEntity.ok("Category with ID " + id + " has been successfully deleted.");
     }
+
+
 }

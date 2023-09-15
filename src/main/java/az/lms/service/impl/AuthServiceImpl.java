@@ -14,6 +14,7 @@ import az.lms.dto.response.TokenResponse;
 import az.lms.enums.RoleType;
 import az.lms.enums.TokenType;
 import az.lms.exception.AlreadyExistsException;
+import az.lms.exception.NotFoundException;
 import az.lms.mapper.StudentMapper;
 import az.lms.model.Student;
 import az.lms.repository.StudentRepository;
@@ -29,9 +30,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -39,43 +37,37 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordCoderConfig passwordEncoder;
-    private final StudentRepository repository;
-    private final StudentMapper mapper;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
     @Override
     public StudentResponse registration(StudentRequest user) {
-        if (repository.existsByFIN(user.getFIN()) || repository.existsByEmail(user.getEmail())) {
-            log.error("The email address or fin code you entered is already available");
-            throw new AlreadyExistsException("The email address or fin code you entered is already available!!!");
-        }
-        Student student = new Student();
-        student.setEmail(user.getEmail());
+        log.info("Start to find if student account is already exist");
+        studentRepository.findByEmail(user.getEmail()).ifPresent(student -> {
+            throw new AlreadyExistsException("Registration is already exist with email '" + user.getEmail() + "'");
+        });
+        Student student = studentMapper.requestToEntity(user);
         student.setPassword(passwordEncoder.passwordEncode(user.getPassword()));
-        student.setFIN(user.getFIN());
-        student.setStudentGroup(user.getStudentGroup());
-        student.setBirthDate(user.getBirthDate());
-        student.setName(user.getName());
-        student.setSurName(user.getSurName());
-        student.setAddress(user.getAddress());
         student.setRoleType(RoleType.STUDENT);
-        Student registeredStudent = repository.save(student);
-        log.info("Student registered successfully.Registered student: " + registeredStudent);
-        return mapper.entityToResponse(registeredStudent);
+        return studentMapper.entityToResponse(studentRepository.save(student));
     }
 
     @Override
     public TokenResponse login(LoginRequest request) {
+        log.info("Start to find if user is exist");
+        Student student = studentRepository.findByEmail(request.getEmail()).orElseThrow(() ->
+                new NotFoundException("User not found with email '" + request.getEmail() + "'"));
+        if (student == null)
+            throw new NotFoundException("User Not Found");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("Successfully login");
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setAccessToken(jwtTokenProvider.generateToken((UserDetails) authentication.getPrincipal(), TokenType.ACCESS_TOKEN));
         tokenResponse.setRefreshToken(jwtTokenProvider.generateToken((UserDetails) authentication.getPrincipal(), TokenType.REFRESH_TOKEN));
-        log.info("Access token : " + tokenResponse.getAccessToken());
-        log.info("Refresh token: " + tokenResponse.getRefreshToken());
         return tokenResponse;
     }
 }
