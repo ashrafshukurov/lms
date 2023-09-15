@@ -53,7 +53,7 @@ public class LibrarianController {
         return ResponseEntity.ok("Successfully updated");
     }
 
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_ADMIN")
     @ApiOperation(value = "Get all librarian", notes = "Get all librarian")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LibrarianResponse.class),

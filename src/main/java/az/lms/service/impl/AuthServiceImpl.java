@@ -13,6 +13,7 @@ import az.lms.dto.response.StudentResponse;
 import az.lms.dto.response.TokenResponse;
 import az.lms.enums.RoleType;
 import az.lms.enums.TokenType;
+import az.lms.exception.AlreadyExistsException;
 import az.lms.mapper.StudentMapper;
 import az.lms.model.Student;
 import az.lms.repository.StudentRepository;
@@ -43,6 +44,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public StudentResponse registration(StudentRequest user) {
+        if (repository.existsByFIN(user.getFIN()) || repository.existsByEmail(user.getEmail())) {
+            log.error("The email address or fin code you entered is already available");
+            throw new AlreadyExistsException("The email address or fin code you entered is already available!!!");
+        }
         Student student = new Student();
         student.setEmail(user.getEmail());
         student.setPassword(passwordEncoder.passwordEncode(user.getPassword()));
@@ -53,19 +58,24 @@ public class AuthServiceImpl implements AuthService {
         student.setSurName(user.getSurName());
         student.setAddress(user.getAddress());
         student.setRoleType(RoleType.STUDENT);
-        return mapper.entityToResponse(repository.save(student));
+        Student registeredStudent = repository.save(student);
+        log.info("Student registered successfully.Registered student: " + registeredStudent);
+        return mapper.entityToResponse(registeredStudent);
     }
+
     @Override
     public TokenResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info("Successfully login");
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setAccessToken(jwtTokenProvider.generateToken((UserDetails) authentication.getPrincipal(), TokenType.ACCESS_TOKEN));
         tokenResponse.setRefreshToken(jwtTokenProvider.generateToken((UserDetails) authentication.getPrincipal(), TokenType.REFRESH_TOKEN));
+        log.info("Access token : " + tokenResponse.getAccessToken());
+        log.info("Refresh token: " + tokenResponse.getRefreshToken());
         return tokenResponse;
     }
 }

@@ -96,10 +96,6 @@ public class AuthorServiceImpl implements AuthorService {
             author.setBooks(request.getBooks());
             log.info("Author book updated.");
         }
-        if (request.getRoleType() != null) {
-            author.setRoleType((request.getRoleType()));
-            log.info("Author role type updated.");
-        }
             repository.save(author);
         log.info("Author updated successfully");
     }
