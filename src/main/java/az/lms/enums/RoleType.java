@@ -12,5 +12,4 @@ public enum RoleType {
     AUTHOR,
     LIBRARIAN,
     STUDENT,
-    GUEST
 }

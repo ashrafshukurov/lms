@@ -34,7 +34,8 @@ public class GlobalExceptionHandler {
             AlreadyExistsException.class,
             InsufficientCount.class,
             MaxUploadSizeExceededException.class,
-            DataIntegrityViolationException.class
+            DataIntegrityViolationException.class,
+            IncorrectRoleTypeException.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         log.error(ex.getMessage(), ex);
@@ -45,6 +46,7 @@ public class GlobalExceptionHandler {
         errorResponse.setErrorMessage(ex.getMessage());
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -60,7 +62,7 @@ public class GlobalExceptionHandler {
         error.setErrorCode(HttpStatus.BAD_REQUEST.value());
         error.setDate(LocalDateTime.now());
         error.setStatus(HttpStatus.BAD_REQUEST);
-        log.error("Validation failed for argument: "+errorMessage);
+        log.error("Validation failed for argument: " + errorMessage);
         return error;
     }
 

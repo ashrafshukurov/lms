@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ public class StudentRequest {
    @NotBlank(message = "FIN cannot be empty")
    private String FIN;
 
+   @Email(regexp = "^[a-zA-Z0-9]+@gmail\\.com$", message = "Invalid email address")
    private String email;
 
    @Size(min = 8)

@@ -28,7 +28,7 @@ public class AuthorRequest {
     private String name;
 
     @NotBlank(message = "Email cannot be empty")
-    @Email
+    @Email(regexp = "^[a-zA-Z0-9]+@gmail\\.com$", message = "Invalid email address")
     private String email;
 
     @NotBlank(message = "Password cannot be empty")
@@ -44,9 +44,5 @@ public class AuthorRequest {
     @Past(message = "Date should not be in the future")
     private LocalDate birthDay;
 
-    private RoleType roleType;
-
     private Set<Book> books;
-
-
 }

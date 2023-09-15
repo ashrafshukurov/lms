@@ -31,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-@RolesAllowed({"ADMIN","LIBRARIAN"})
+    @RolesAllowed({"ADMIN","LIBRARIAN"})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created"),
             @ApiResponse(code = 404, message = "Not found"),

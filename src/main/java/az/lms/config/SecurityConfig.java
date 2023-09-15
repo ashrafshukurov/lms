@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
-                .antMatchers("/librarian").hasAnyRole("ADMIN","LIBRARIAN")
+                .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
