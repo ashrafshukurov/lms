@@ -41,35 +41,6 @@ public class AuthServiceImpl implements AuthService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
-    @Override
-    public StudentResponse registration(StudentRequest user) {
-        log.info("Start to find if student account is already exist");
-        studentRepository.findByEmail(user.getEmail()).ifPresent(student -> {
-            throw new AlreadyExistsException("Registration is already exist with email '" + user.getEmail() + "'");
-        });
-        Student student = studentMapper.requestToEntity(user);
-        student.setPassword(passwordEncoder.passwordEncode(user.getPassword()));
-        student.setRoleType(RoleType.STUDENT);
-        return studentMapper.entityToResponse(studentRepository.save(student));
-    }
-
-    @Override
-    public TokenResponse login(LoginRequest request) {
-        log.info("Start to find if user is exist");
-        Student student = studentRepository.findByEmail(request.getEmail()).orElseThrow(() ->
-                new NotFoundException("User not found with email '" + request.getEmail() + "'"));
-        if (student == null)
-            throw new NotFoundException("User Not Found");
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()));
-=======
-   private final AuthenticationManager authenticationManager;
-   private final JwtTokenProvider jwtTokenProvider;
-   private final PasswordCoderConfig passwordEncoder;
-   private final StudentRepository studentRepository;
-   private final StudentMapper studentMapper;
 
    @Override
    public StudentResponse registration(StudentRequest user) {
@@ -82,7 +53,6 @@ public class AuthServiceImpl implements AuthService {
       student.setRoleType(RoleType.STUDENT);
       return studentMapper.entityToResponse(studentRepository.save(student));
    }
->>>>>>> src/main/java/az/lms/service/impl/AuthServiceImpl.java
 
    @Override
    public TokenResponse login(LoginRequest request) {
