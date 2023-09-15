@@ -8,12 +8,10 @@
 package az.lms.dto.request;
 
 import az.lms.enums.RoleType;
-import az.lms.validator.EnumNamePattern;
 import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Setter
@@ -38,6 +36,5 @@ public class LibrarianRequest {
     @Size(max = 25, message = "Invalid Name: Must be of 2 - 25 characters")
     private String surname;
 
-    @EnumNamePattern
     private RoleType roleType;
 }

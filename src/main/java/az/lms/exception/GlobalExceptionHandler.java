@@ -35,7 +35,6 @@ public class GlobalExceptionHandler {
             InsufficientCount.class,
             MaxUploadSizeExceededException.class,
             DataIntegrityViolationException.class,
-            IncorrectRoleTypeException.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         log.error(ex.getMessage(), ex);
