@@ -63,21 +63,21 @@ class OrderControllerTest {
    }
 
 
-//   @Test
-//   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//   public void givenBorrowOrderWhenOrderedThenReturnOrderedMessage() {
-//      //arrange
-//      OrderRequest orderRequest = new OrderRequest();
-//      orderRequest.setStudentId(2L);
-//      orderRequest.setBookId(1L);
-//      orderRequest.setOrderType(OrderType.BORROWED);
-//      //act
-//      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
-//      //assert
-//      assertNotNull(response);
-//      assertEquals("Successfully made borrow order", response.getBody());
-//
-//   }
+   @Test
+   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+   public void givenBorrowOrderWhenOrderedThenReturnOrderedMessage() {
+      //arrange
+      OrderRequest orderRequest = new OrderRequest();
+      orderRequest.setStudentId(2L);
+      orderRequest.setBookId(1L);
+      orderRequest.setOrderType(OrderType.BORROWED);
+      //act
+      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
+      //assert
+      assertNotNull(response);
+      assertEquals("Successfully made borrow order", response.getBody());
+
+   }
 
 //   @Test
 //   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
