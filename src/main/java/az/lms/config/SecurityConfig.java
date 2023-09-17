@@ -34,11 +34,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    private static final String[] SWAGGER_WHITELIST = {
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -58,14 +53,10 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
+                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
                 .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").anonymous()
-                .antMatchers("/auth/**","/author/**","/book/**", "/order/**","/student/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
-                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
-                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/librarian").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
