@@ -56,10 +56,25 @@ public class OrderServiceImpl implements OrderService {
          throw new AlreadyExistsException("You have already taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-      order.setOrderTime(LocalDateTime.now());
+
 
       book.setCount(book.getCount() - 1);
-      bookRepository.save(book);
+      bookRepository.save(book);//   @Test
+//   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//   public void givenBorrowOrderWhenOrderedThenReturnOrderedMessage() {
+//      //arrange
+//      OrderRequest orderRequest = new OrderRequest();
+//      orderRequest.setStudentId(2L);
+//      orderRequest.setBookId(1L);
+//      orderRequest.setOrderType(OrderType.BORROWED);
+//      //act
+//      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
+//      //assert
+//      assertNotNull(response);
+//      assertEquals("Successfully made borrow order", response.getBody());
+//
+//   }
+      order.setId(9999L);
       orderRepository.save(order);
       log.info("Successfully made borrow order");
       return "Successfully made borrow order";

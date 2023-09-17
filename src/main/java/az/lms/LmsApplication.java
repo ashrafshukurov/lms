@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @SpringBootApplication
 @EnableWebSecurity
-
 public class LmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LmsApplication.class, args);
