@@ -2,6 +2,7 @@ package az.lms.model;
 
 import az.lms.enums.OrderType;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class Order {
    private Long studentId;
    @Column(name = "book_id")
    private Long bookId;
+//   @CreationTimestamp
    @Column(name = "order_time")
    private LocalDateTime orderTime;
    @Column(name = "order_type")
