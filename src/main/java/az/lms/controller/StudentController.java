@@ -91,6 +91,5 @@ public class StudentController {
     @GetMapping("/orders/{fin}")
     public ResponseEntity<List<OrderResponse>> getStudentOrders(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         return ResponseEntity.ok(studentService.getStudentOrders(fin));
-
     }
 }

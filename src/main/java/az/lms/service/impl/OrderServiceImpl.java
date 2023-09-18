@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
    @Transactional
    @Override
-   public String borrowOrder(OrderRequest request) {
+   public void borrowOrder(OrderRequest request) {
       log.info("Starting to create a new borrow order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
@@ -56,34 +56,16 @@ public class OrderServiceImpl implements OrderService {
          throw new AlreadyExistsException("You have already taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-
-
       book.setCount(book.getCount() - 1);
-      bookRepository.save(book);//   @Test
-//   @Sql(scripts = "classpath:sql/order-test-query.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//   public void givenBorrowOrderWhenOrderedThenReturnOrderedMessage() {
-//      //arrange
-//      OrderRequest orderRequest = new OrderRequest();
-//      orderRequest.setStudentId(2L);
-//      orderRequest.setBookId(1L);
-//      orderRequest.setOrderType(OrderType.BORROWED);
-//      //act
-//      ResponseEntity<String> response = restTemplate.postForEntity(url + "/borrow", orderRequest, String.class);
-//      //assert
-//      assertNotNull(response);
-//      assertEquals("Successfully made borrow order", response.getBody());
-//
-//   }
-      order.setId(9999L);
+      bookRepository.save(book);
       orderRepository.save(order);
       log.info("Successfully made borrow order");
-      return "Successfully made borrow order";
    }
 
 
    @Transactional
    @Override
-   public String returnOrder(OrderRequest request) {
+   public void returnOrder(OrderRequest request) {
       log.info("Starting to create a new return order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
@@ -93,13 +75,11 @@ public class OrderServiceImpl implements OrderService {
          throw new NotFoundException("You have not taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-      order.setOrderTime(LocalDateTime.now());
 
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       orderRepository.save(order);
       log.info("Successfully made return order");
-      return "Successfully made return order";
    }
 
 }
