@@ -35,7 +35,6 @@ import java.util.List;
 @Slf4j
 public class BookController {
     private final BookService bookService;
-    private final BookMapper mapper;
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
     @ApiResponses(value = {
@@ -43,8 +42,8 @@ public class BookController {
             @ApiResponse(code = 400, message = "Invalid insert")
     })
     @PostMapping("/")
-    public ResponseEntity<String> addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
-        return ResponseEntity.ok(bookService.createBook(bookRequest, file));
+    public void addBook(@RequestBody MultipartFile file, @Valid @ApiParam(name = "Object", value = "BookRequest")  BookRequest bookRequest) throws IOException {
+        bookService.createBook(bookRequest, file);
     }
 
     @ApiOperation(value = "Update Book", notes = "Update Book based on id")
@@ -53,8 +52,8 @@ public class BookController {
             @ApiResponse(code = 404, message = "Invalid update")
     })
     @PutMapping("/")
-    public ResponseEntity<String> updateBook(@Valid @RequestBody BookRequest bookRequest) {
-        return ResponseEntity.ok(bookService.updateBook(bookRequest));
+    public void updateBook(@Valid @RequestBody BookRequest bookRequest) {
+        bookService.updateBook(bookRequest);
     }
 
     @ApiOperation(value = "Get-Book-By-Id", notes = "When you enter id it will return book", response = BookResponse.class)
@@ -85,8 +84,8 @@ public class BookController {
             @ApiResponse(code = 404, message = "Invalid deleting book by Id")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.deleteBook(id));
+    public void deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
     }
 
     @ApiOperation(value = "Upload Book_picture", notes = "Upload Book_picture you have to add file to do that")
