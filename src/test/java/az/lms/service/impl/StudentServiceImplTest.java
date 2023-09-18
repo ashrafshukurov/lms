@@ -174,5 +174,21 @@ class StudentServiceImplTest {
         assertThrows(NotFoundException.class,()->studentService.getById(fin));
         verify(studentRepository, times(1)).findByFIN(student1.getFIN());
     }
+    @Test
+    public void givenDeleteStudentByIdWhenFoundThenDelete(){
+        //arrange
+        String fin="123df";
+        Student student1=new Student();
+        student1.setFIN(fin);
+        when(studentRepository.findByFIN(fin)).thenReturn(Optional.of(student1));
+        //act
+        studentService.deleteById(fin);
+        //assert
+        verify(studentRepository,times(1)).findByFIN(fin);
+    }
+    @Test
+    public void givenDeleteStudentByIdWhenNotFoundThenThrow404(){
 
-};
+    }
+
+}

@@ -56,12 +56,10 @@ public class OrderServiceImpl implements OrderService {
          throw new AlreadyExistsException("You have already taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-
       book.setCount(book.getCount() - 1);
       bookRepository.save(book);
       orderRepository.save(order);
       log.info("Successfully made borrow order");
-//      return "Successfully made borrow order";
    }
 
 
@@ -82,7 +80,6 @@ public class OrderServiceImpl implements OrderService {
       bookRepository.save(book);
       orderRepository.save(order);
       log.info("Successfully made return order");
-//      return "Successfully made return order";
    }
 
 }

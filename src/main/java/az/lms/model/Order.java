@@ -21,15 +21,14 @@ import java.time.LocalDateTime;
 public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true)
    private Long id;
 
    @Column(name = "student_id")
    private Long studentId;
    @Column(name = "book_id")
    private Long bookId;
-//   @CreationTimestamp
    @Column(name = "order_time")
+   @CreationTimestamp
    private LocalDateTime orderTime;
    @Column(name = "order_type")
    @Enumerated(EnumType.STRING)
