@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +43,7 @@ public class BookServiceImpl implements BookService {
     private String directory;
 
     @Override
-    public String createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+    public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
         String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
         Book book = bookMapper.requestToEntity(bookRequest);
@@ -54,7 +55,6 @@ public class BookServiceImpl implements BookService {
 
         log.info("creating book");
         bookRepository.save(book);
-        return "Book successfully added";
     }
 
     @Override
@@ -84,17 +84,15 @@ public class BookServiceImpl implements BookService {
         return bookResponses;
     }
 
-
+    @Transactional
     @Override
-    public String deleteBook(Long id) throws NotFoundException {
+    public void deleteBook(Long id) throws NotFoundException {
 
         log.info("deleting book");
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book with ID " + id + " not found"));
 
         bookRepository.delete(book);
-        return "Book is deleted";
-
     }
 
 
@@ -118,14 +116,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String updateBook(BookRequest bookRequest) {
+    public void updateBook(BookRequest bookRequest) {
         Book book = bookRepository.findByIsbn(bookRequest.getIsbn()).orElseThrow(() -> new NotFoundException("invalid book"));
         Book newBook = bookMapper.requestToEntity(bookRequest);
         newBook.setId(book.getId());
         newBook.setIsbn(book.getIsbn());
         newBook.setCategories(book.getCategories());
         bookRepository.save(newBook);
-        return "Book is updated";
     }
 
     public void uploadFile(MultipartFile file) throws IOException {
@@ -139,7 +136,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.getBookByName(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
         BookResponse bookResponse = bookMapper.entityToResponse(book);
-        Category category=book.getCategories();
+        Category category = book.getCategories();
         bookResponse.setCategory(category.getName());
         List<String> authorsName = book.getAuthors().stream()
                 .map(authorMapper::modelToResponse)
