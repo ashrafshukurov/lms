@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -75,7 +74,6 @@ public class OrderServiceImpl implements OrderService {
          throw new NotFoundException("You have not taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       orderRepository.save(order);
