@@ -57,10 +57,6 @@ public class OrderServiceImpl implements OrderService {
       Order order = orderMapper.dtoToEntity(request);
       book.setCount(book.getCount() - 1);
       bookRepository.save(book);
-<<<<<<< HEAD
-      order.setId(9999L);
-=======
->>>>>>> main
       orderRepository.save(order);
       log.info("Successfully made borrow order");
    }
