@@ -117,11 +117,12 @@ class OrderServiceImplTest {
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
       when(orderMapper.dtoToEntity(orderRequest)).thenReturn(order);
       //act
-
-      String response = orderService.borrowOrder(orderRequest);
+      int bookCount = book.getCount();
+      orderService.borrowOrder(orderRequest);
       //assert
-      assertNotNull(response);
-      assertEquals("Successfully made borrow order", response);
+      assertEquals(bookCount - 1, book.getCount());
+      verify(bookRepository, times(1)).save(book);
+      verify(orderRepository, times(1)).save(order);
    }
 
    @Test
@@ -144,12 +145,12 @@ class OrderServiceImplTest {
    public void givenBorrowOrderWhenNotBorrowedThenReturnInsufficientCountException() {
       //arrange
       Book book = Book.builder()
-                      .id(1L)
-                      .name("Test Book")
-                      .image("Test image")
-                      .count(0)
-                      .isbn("isbn")
-                      .description("Test description").build();
+              .id(1L)
+              .name("Test Book")
+              .image("Test image")
+              .count(0)
+              .isbn("isbn")
+              .description("Test description").build();
       OrderRequest orderRequest = new OrderRequest();
       orderRequest.setOrderType(OrderType.BORROWED);
       orderRequest.setBookId(1L);
@@ -193,11 +194,12 @@ class OrderServiceImplTest {
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(order.getOrderType().name());
       when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
       //act
-
-      String response = orderService.returnOrder(returnRequest);
+      int bookCount = book.getCount();
+      orderService.returnOrder(returnRequest);
       //assert
-      assertNotNull(response);
-      assertEquals("Successfully made return order", response);
+      assertEquals(bookCount + 1, book.getCount());
+      verify(bookRepository, times(1)).save(book);
+      verify(orderRepository, times(1)).save(order);
    }
 
 

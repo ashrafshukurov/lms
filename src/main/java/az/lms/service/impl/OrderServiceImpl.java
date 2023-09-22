@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
    @Transactional
    @Override
-   public String borrowOrder(OrderRequest request) {
+   public void borrowOrder(OrderRequest request) {
       log.info("Starting to create a new borrow order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
@@ -58,16 +57,18 @@ public class OrderServiceImpl implements OrderService {
       Order order = orderMapper.dtoToEntity(request);
       book.setCount(book.getCount() - 1);
       bookRepository.save(book);
+<<<<<<< HEAD
       order.setId(9999L);
+=======
+>>>>>>> main
       orderRepository.save(order);
       log.info("Successfully made borrow order");
-      return "Successfully made borrow order";
    }
 
 
    @Transactional
    @Override
-   public String returnOrder(OrderRequest request) {
+   public void returnOrder(OrderRequest request) {
       log.info("Starting to create a new return order");
       Book book = bookRepository.findById(request.getBookId()).orElseThrow(
               () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
@@ -77,13 +78,10 @@ public class OrderServiceImpl implements OrderService {
          throw new NotFoundException("You have not taken the book!");
       }
       Order order = orderMapper.dtoToEntity(request);
-      order.setOrderTime(LocalDateTime.now());
-
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       orderRepository.save(order);
       log.info("Successfully made return order");
-      return "Successfully made return order";
    }
 
 }

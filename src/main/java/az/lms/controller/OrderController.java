@@ -44,7 +44,8 @@ public class OrderController {
    })
    @PostMapping("/borrow")
    public ResponseEntity<String> borrowOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
-      return ResponseEntity.ok(orderService.borrowOrder(request));
+      orderService.borrowOrder(request);
+      return ResponseEntity.ok("Successfully ordered");
    }
 
    @ApiOperation(value = "Creating new return", notes = "Pass required order request to make successfully return")
@@ -54,7 +55,8 @@ public class OrderController {
    })
    @PostMapping("/return")
    public ResponseEntity<String> returnOrder(@ApiParam(name = "request", value = "Order request object") @Valid @RequestBody OrderRequest request) {
-      return ResponseEntity.ok(orderService.returnOrder(request));
+      orderService.returnOrder(request);
+      return ResponseEntity.ok("Successfully returned");
    }
 
 }
