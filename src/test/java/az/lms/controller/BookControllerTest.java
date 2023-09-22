@@ -51,6 +51,7 @@ class BookControllerTest {
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+
     public void givenGetBookByIdWhenFoundThenReturnResult(){
         Long id=1L;
         BookResponse bookResponse=new BookResponse();
