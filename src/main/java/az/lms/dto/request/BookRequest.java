@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class    BookRequest {
+public class BookRequest {
 
     @NotBlank(message = "name can't be empty")
     private String name;
@@ -44,5 +44,6 @@ public class    BookRequest {
     @NotBlank(message = "description can't be empty")
     @Size(max = 25, min = 5)
     private String description;
+    private Long author_id;
 
 }
