@@ -5,6 +5,7 @@ import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.CategoryResponse;
 import az.lms.mapper.BookMapper;
 import az.lms.service.BookService;
+import az.lms.util.FileUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -35,6 +36,7 @@ import java.util.List;
 @Slf4j
 public class BookController {
     private final BookService bookService;
+    private final FileUtil fileUtil;
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
     @ApiResponses(value = {
@@ -96,7 +98,7 @@ public class BookController {
     })
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        bookService.uploadFile(file);
+        fileUtil.uploadFile(file);
     }
     @ApiOperation(value = "GetBookByName ", notes = "you can search book by name")
 

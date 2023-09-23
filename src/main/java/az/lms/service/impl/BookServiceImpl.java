@@ -13,6 +13,7 @@ import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
+import az.lms.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,8 +40,8 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
-    @Value("${file.directory}")
-    private String directory;
+    private final FileUtil fileUtil;
+
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
@@ -51,7 +52,7 @@ public class BookServiceImpl implements BookService {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
         book.setImage(fileName);
-        uploadFile(imageFile);
+        fileUtil.uploadFile(imageFile);
 
         log.info("creating book");
         bookRepository.save(book);
@@ -124,13 +125,6 @@ public class BookServiceImpl implements BookService {
         newBook.setCategories(book.getCategories());
         bookRepository.save(newBook);
     }
-
-    public void uploadFile(MultipartFile file) throws IOException {
-        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + file.getOriginalFilename();
-        Path filePath = Paths.get(directory).resolve(fileName);
-        Files.copy(file.getInputStream(), filePath);
-    }
-
     @Override
     public BookResponse getBookByName(String bookName) {
         Book book = bookRepository.getBookByName(bookName)

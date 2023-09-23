@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookRequest {
+public class    BookRequest {
 
     @NotBlank(message = "name can't be empty")
     private String name;
@@ -31,11 +31,12 @@ public class BookRequest {
     private String isbn;
     @Positive(message = "count can't be negative value")
     private int count;
-//    @NotEmpty(message = "Image can't be empty")
+//    @NotBlank(message = "Image can't be empty")
     private String image;
+    @NotBlank(message = "details shouldn't be empty")
     private String details;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @NotNull
+    @NotNull
     @Past(message = "publishedTime should not be in the future")
     private LocalDate publishedTime;
     @NotNull
