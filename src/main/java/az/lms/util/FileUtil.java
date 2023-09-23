@@ -1,12 +1,19 @@
 package az.lms.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 
 /**
@@ -16,6 +23,8 @@ import java.nio.file.Path;
 @Component
 @Slf4j
 public class FileUtil {
+    @Value("${file.directory}")
+    private String directory;
 
     public Resource load(String filename,Path root) {
         try {
@@ -32,6 +41,11 @@ public class FileUtil {
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
+    }
+    public void uploadFile(MultipartFile file) throws IOException {
+        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + file.getOriginalFilename();
+        Path filePath = Paths.get(directory).resolve(fileName);
+        Files.copy(file.getInputStream(), filePath);
     }
 
 

@@ -17,12 +17,11 @@ import java.util.List;
  */
 
 public interface BookService {
-    String createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
+    void createBook(BookRequest bookRequest, MultipartFile imageFileName) throws IOException;
     List<BookResponse> getAllBooks();
-    String deleteBook(Long id);
+    void deleteBook(Long id);
     BookResponse getBookById(Long id);
-    String updateBook(BookRequest bookRequest);
-    void uploadFile(MultipartFile multipartFile) throws IOException;
+    void updateBook(BookRequest bookRequest);
     BookResponse getBookByName(String bookName);
 
 }

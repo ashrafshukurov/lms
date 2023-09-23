@@ -92,10 +92,9 @@ class BookServiceImplTest {
         Mockito.when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
         Mockito.when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
         //act
-        String responseEntity=bookService.createBook(bookRequest, imageFile);
+        bookService.createBook(bookRequest, imageFile);
 
         //assert
-        assertEquals("Book successfully added",responseEntity);
         Mockito.verify(bookMapper).requestToEntity(bookRequest);
         Mockito.verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
         Mockito.verify(bookRepository).save(fakeBook);

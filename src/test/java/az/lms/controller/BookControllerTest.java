@@ -51,6 +51,7 @@ class BookControllerTest {
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+
     public void givenGetBookByIdWhenFoundThenReturnResult(){
         Long id=1L;
         BookResponse bookResponse=new BookResponse();
@@ -98,7 +99,7 @@ class BookControllerTest {
         ResponseEntity<String> responseEntity=testRestTemplate.exchange(url+"/",HttpMethod.PUT,requestEntity,String.class);
         //assert
         assertEquals(200,responseEntity.getStatusCodeValue());
-        assertEquals("Book is updated",responseEntity.getBody());
+
     }
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -115,7 +116,6 @@ class BookControllerTest {
     public void givenDeleteBookByIdWhenFoundThenDelete(){
         //arrange
         Long id=1L;
-
         ResponseEntity<String> responseEntity=testRestTemplate.exchange(url+"/"+id,HttpMethod.DELETE,null,String.class);
         assertEquals(200,responseEntity.getStatusCodeValue());
     }
