@@ -126,18 +126,24 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(newBook);
     }
     @Override
-    public BookResponse getBookByName(String bookName) {
-        Book book = bookRepository.getBookByName(bookName)
+    public List<BookResponse> getBookByName(String bookName) {
+        List<Book> books = bookRepository.getBookByName(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
-        BookResponse bookResponse = bookMapper.entityToResponse(book);
-        Category category = book.getCategories();
-        bookResponse.setCategory(category.getName());
-        List<String> authorsName = book.getAuthors().stream()
-                .map(authorMapper::modelToResponse)
-                .map(authorResponse -> authorResponse.getName() + " " + authorResponse.getSurname())
-                .collect(Collectors.toList());
-        bookResponse.setAuthorsName(authorsName);
-        return bookResponse;
+        List<BookResponse> bookResponses = new ArrayList<>();
+        for (Book book : books) {
+            BookResponse bookResponse = bookMapper.entityToResponse(book);
+            Category category = book.getCategories();
+            bookResponse.setCategory(category.getName());
+            List<String> authorsName = book.getAuthors().stream()
+                    .map(authorMapper::modelToResponse)
+                    .map(authorResponse -> authorResponse.getName() + " " + authorResponse.getSurname())
+                    .collect(Collectors.toList());
+            bookResponse.setAuthorsName(authorsName);
+            bookResponses.add(bookResponse);
+        }
+        return bookResponses;
     }
+
+
 
 }
