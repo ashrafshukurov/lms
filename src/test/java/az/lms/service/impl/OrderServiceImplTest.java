@@ -118,7 +118,7 @@ class OrderServiceImplTest {
       when(orderMapper.dtoToEntity(orderRequest)).thenReturn(order);
       //act
       int bookCount = book.getCount();
-      orderService.borrowOrder(orderRequest);
+      assertDoesNotThrow(() -> orderService.borrowOrder(orderRequest));
       //assert
       assertEquals(bookCount - 1, book.getCount());
       verify(bookRepository, times(1)).save(book);
@@ -195,7 +195,7 @@ class OrderServiceImplTest {
       when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
       //act
       int bookCount = book.getCount();
-      orderService.returnOrder(returnRequest);
+      assertDoesNotThrow(() -> orderService.returnOrder(returnRequest));
       //assert
       assertEquals(bookCount + 1, book.getCount());
       verify(bookRepository, times(1)).save(book);

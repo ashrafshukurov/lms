@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void create(StudentRequest request) {
       log.info("Creating new student account");
-      if (studentRepository.existsByFIN(request.getFIN())) {
+      if (!studentRepository.existsByFIN(request.getFIN())) {
          Student student = studentMapper.requestToEntity(request);
          studentRepository.save(student);
       } else throw new AlreadyExistsException("Student already exist with such fin code");
