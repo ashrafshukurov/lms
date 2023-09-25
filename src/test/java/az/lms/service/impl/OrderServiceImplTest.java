@@ -88,7 +88,8 @@ class OrderServiceImplTest {
       assertEquals(responses.get(0).getStudentId(), order.getStudentId());
       assertEquals(responses.get(0).getBookId(), order.getBookId());
       assertEquals(responses.get(0).getOrderTime(), order.getOrderTime());
-
+      verify(orderRepository, times(1)).findAll();
+      verify(orderMapper, times(1)).entityToDto(order);
    }
 
    @Test
@@ -113,7 +114,7 @@ class OrderServiceImplTest {
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
-      when(bookRepository.findById(orderRequest.getBookId())).thenReturn(Optional.of(book));
+      when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
       when(orderMapper.dtoToEntity(orderRequest)).thenReturn(order);
       //act
@@ -133,12 +134,13 @@ class OrderServiceImplTest {
       orderRequest.setBookId(100L);
       orderRequest.setStudentId(1L);
 
-      when(bookRepository.findById(orderRequest.getBookId())).thenReturn(Optional.empty());
+      when(bookRepository.findById(100L)).thenReturn(Optional.empty());
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("Book with ID " + orderRequest.getBookId() + " not found");
+      verify(bookRepository, times(1)).findById(100L);
    }
 
    @Test
@@ -156,12 +158,13 @@ class OrderServiceImplTest {
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
-      when(bookRepository.findById(orderRequest.getBookId())).thenReturn(Optional.of(book));
+      when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(InsufficientCount.class)
               .hasMessage("This book is out of stock");
+      verify(bookRepository, times(1)).findById(1L);
    }
 
    @Test
@@ -172,13 +175,15 @@ class OrderServiceImplTest {
       orderRequest.setBookId(1L);
       orderRequest.setStudentId(1L);
 
-      when(bookRepository.findById(orderRequest.getBookId())).thenReturn(Optional.of(book));
+      when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn("BORROWED");
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(AlreadyExistsException.class)
               .hasMessage("You have already taken the book!");
+      verify(bookRepository, times(1)).findById(1L);
+      verify(orderRepository, times(1)).getLastOrder(1L, 1L);
    }
 
 
@@ -190,7 +195,7 @@ class OrderServiceImplTest {
       returnRequest.setBookId(1L);
       returnRequest.setStudentId(1L);
 
-      when(bookRepository.findById(returnRequest.getBookId())).thenReturn(Optional.of(book));
+      when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(order.getOrderType().name());
       when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
       //act
@@ -211,12 +216,13 @@ class OrderServiceImplTest {
       returnRequest.setBookId(100L);
       returnRequest.setStudentId(1L);
 
-      when(bookRepository.findById(returnRequest.getBookId())).thenReturn(Optional.empty());
+      when(bookRepository.findById(100L)).thenReturn(Optional.empty());
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("Book with ID " + returnRequest.getBookId() + " not found");
+      verify(bookRepository, times(1)).findById(100L);
    }
 
    @Test
@@ -227,13 +233,15 @@ class OrderServiceImplTest {
       returnRequest.setBookId(1L);
       returnRequest.setStudentId(1L);
 
-      when(bookRepository.findById(returnRequest.getBookId())).thenReturn(Optional.of(book));
+      when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
       when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.returnOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("You have not taken the book!");
+      verify(bookRepository, times(1)).findById(1L);
+      verify(orderRepository, times(1)).getLastOrder(1L, 1L);
    }
 
 }
