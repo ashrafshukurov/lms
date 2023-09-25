@@ -107,7 +107,7 @@ public class BookController {
             @ApiResponse(code = 404, message = "Not Found book")
     })
     @GetMapping("/name/{bookname}")
-    public ResponseEntity<BookResponse> getBookByName(@PathVariable String bookname) {
+    public ResponseEntity<List<BookResponse>> getBookByName(@PathVariable String bookname) {
         return ResponseEntity.ok(bookService.getBookByName(bookname));
     }
 }

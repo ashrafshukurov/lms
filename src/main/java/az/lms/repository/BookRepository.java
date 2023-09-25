@@ -20,7 +20,8 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book,Long>{
     boolean existsByIsbn(String isbn);
     Optional<Book> findByIsbn(String isbn);
-    Optional<Book> getBookByName(String bookName);
+    @Query(value = "SELECT b FROM Book b WHERE b.name LIKE %:bookName%")
+    Optional<List<Book>> getBookByName(@Param("bookName") String bookName);
 
 
 

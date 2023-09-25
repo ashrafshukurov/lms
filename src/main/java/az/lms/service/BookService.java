@@ -22,6 +22,6 @@ public interface BookService {
     void deleteBook(Long id);
     BookResponse getBookById(Long id);
     void updateBook(BookRequest bookRequest);
-    BookResponse getBookByName(String bookName);
+    List<BookResponse> getBookByName(String bookName);
 
 }
