@@ -113,7 +113,6 @@ public class BookServiceImpl implements BookService {
         }
         bookResponse.setAuthorsName(authorsName);
         return bookResponse;
-
     }
 
     @Override

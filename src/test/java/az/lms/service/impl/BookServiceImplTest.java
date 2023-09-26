@@ -154,8 +154,8 @@ class BookServiceImplTest {
         //act
         bookService.deleteBook(id);
         //assert
-        Mockito.verify(bookRepository, times(1)).findById(id);
-        Mockito.verify(bookRepository, times(1)).delete(book1);
+        verify(bookRepository, times(1)).findById(id);
+        verify(bookRepository, times(1)).delete(book1);
     }
 
     @Test
@@ -212,6 +212,8 @@ class BookServiceImplTest {
         assertEquals(2, bookResponses.size());
         assertEquals("Category1", bookResponses.get(0).getCategory());
         assertEquals("Category2", bookResponses.get(1).getCategory());
+        verify(bookRepository,times(1)).findAll();
+        verify(bookMapper,times(2)).entityToResponse(any());
 
     }
 
@@ -253,6 +255,9 @@ class BookServiceImplTest {
         assertNotNull(bookResponse1);
         assertEquals(book.getId(), bookResponse1.getId());
         assertEquals(category.getName(), bookResponse1.getCategory());
+        verify(bookRepository,times(1)).findById(any());
+        verify(bookMapper,times(1)).entityToResponse(any());
+        verify(authorMapper,times(1)).modelToResponse(any());
 
 
     }
@@ -300,6 +305,9 @@ class BookServiceImplTest {
         assertEquals(category.getName(), bookResponse1.get(0).getCategory());
         assertEquals(book.getIsbn(), bookResponse1.get(0).getIsbn());
         assertEquals(book.getCount(), bookResponse1.get(0).getCount());
+        verify(bookRepository,times(1)).getBookByName(anyString());
+        verify(bookMapper,times(1)).entityToResponse(any());
+        verify(authorMapper,times(1)).modelToResponse(any());
 
     }
 
