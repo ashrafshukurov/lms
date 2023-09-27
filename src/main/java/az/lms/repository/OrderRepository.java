@@ -17,5 +17,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
    @Query(value = " select o.order_type from orders o where student_id=?1 and book_id=?2 order by order_time desc limit 1"
            , nativeQuery = true)
-   String getLastOrder(Long studentId, Long bookId);
+   String getTypeOfLastOrder(Long studentId, Long bookId);
 }
