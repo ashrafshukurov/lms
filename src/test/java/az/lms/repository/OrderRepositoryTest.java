@@ -35,7 +35,7 @@ class OrderRepositoryTest {
       Long studentId = 1L;
       Long bookId = 1L;
       //act
-      String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
+      String lastOrderType = orderRepository.getTypeOfLastOrder(studentId, bookId);
       //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.BORROWED.name(), lastOrderType);
@@ -49,7 +49,7 @@ class OrderRepositoryTest {
       Long studentId = 2L;
       Long bookId = 1L;
       //act
-      String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
+      String lastOrderType = orderRepository.getTypeOfLastOrder(studentId, bookId);
       //assert
       assertNotNull(lastOrderType);
       assertEquals(OrderType.RETURNED.name(), lastOrderType);
@@ -62,7 +62,7 @@ class OrderRepositoryTest {
       Long studentId = 100L;
       Long bookId = 100L;
       //act & assert
-      String lastOrderType = orderRepository.getLastOrder(studentId, bookId);
+      String lastOrderType = orderRepository.getTypeOfLastOrder(studentId, bookId);
       assertNull(lastOrderType);
 
    }

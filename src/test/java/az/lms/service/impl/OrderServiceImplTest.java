@@ -115,7 +115,7 @@ class OrderServiceImplTest {
       orderRequest.setStudentId(1L);
 
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-      when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
+      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn(null);
       when(orderMapper.dtoToEntity(orderRequest)).thenReturn(order);
       //act
       int bookCount = book.getCount();
@@ -176,14 +176,14 @@ class OrderServiceImplTest {
       orderRequest.setStudentId(1L);
 
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-      when(orderRepository.getLastOrder(1L, 1L)).thenReturn("BORROWED");
+      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn("BORROWED");
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(AlreadyExistsException.class)
               .hasMessage("You have already taken the book!");
       verify(bookRepository, times(1)).findById(1L);
-      verify(orderRepository, times(1)).getLastOrder(1L, 1L);
+      verify(orderRepository, times(1)).getTypeOfLastOrder(1L, 1L);
    }
 
 
@@ -196,7 +196,7 @@ class OrderServiceImplTest {
       returnRequest.setStudentId(1L);
 
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-      when(orderRepository.getLastOrder(1L, 1L)).thenReturn(order.getOrderType().name());
+      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn(order.getOrderType().name());
       when(orderMapper.dtoToEntity(returnRequest)).thenReturn(order);
       //act
       int bookCount = book.getCount();
@@ -234,14 +234,14 @@ class OrderServiceImplTest {
       returnRequest.setStudentId(1L);
 
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-      when(orderRepository.getLastOrder(1L, 1L)).thenReturn(null);
+      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn(null);
 
       //act & assert
       Assertions.assertThatThrownBy(() -> orderService.returnOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("You have not taken the book!");
       verify(bookRepository, times(1)).findById(1L);
-      verify(orderRepository, times(1)).getLastOrder(1L, 1L);
+      verify(orderRepository, times(1)).getTypeOfLastOrder(1L, 1L);
    }
 
 }
