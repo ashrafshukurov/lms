@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /**
@@ -64,24 +65,22 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.findAll();
         List<Category> categories = new ArrayList<>();
         List<Set<Author>> authorsList = new ArrayList<>();
-        for (Book book : books) {
+        books.forEach(book -> {
             categories.add(book.getCategories());
             authorsList.add(book.getAuthors());
-        }
+        });
         List<BookResponse> bookResponses = books.stream()
                 .map(bookMapper::entityToResponse)
                 .toList();
-        for (int i = 0; i < bookResponses.size(); i++) {
+        IntStream.range(0, bookResponses.size()).forEach(i -> {
             BookResponse bookResponse = bookResponses.get(i);
             bookResponse.setCategory(categories.get(i).getName());
-
             Set<Author> authors = authorsList.get(i);
             List<String> authorsName = authors.stream()
                     .map(author -> author.getName() + " " + author.getSurname())
                     .collect(Collectors.toList());
-
             bookResponse.setAuthorsName(authorsName);
-        }
+        });
         return bookResponses;
     }
 
@@ -107,10 +106,7 @@ public class BookServiceImpl implements BookService {
         bookResponse.setCategory(category.getName());
         final Set<Author> authors = book.getAuthors();
         Set<AuthorResponse> authorResponseSet = authors.stream().map(authorMapper::modelToResponse).collect(Collectors.toSet());
-        List<String> authorsName = new ArrayList<>();
-        for (AuthorResponse authorResponse : authorResponseSet) {
-            authorsName.add(authorResponse.getName() + " " + authorResponse.getSurname());
-        }
+        List<String> authorsName = authorResponseSet.stream().map(authorResponse -> authorResponse.getName() + " " + authorResponse.getSurname()).collect(Collectors.toList());
         bookResponse.setAuthorsName(authorsName);
         return bookResponse;
     }
@@ -129,7 +125,7 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.getBookByName(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
         List<BookResponse> bookResponses = new ArrayList<>();
-        for (Book book : books) {
+        books.forEach(book -> {
             BookResponse bookResponse = bookMapper.entityToResponse(book);
             Category category = book.getCategories();
             bookResponse.setCategory(category.getName());
@@ -139,7 +135,7 @@ public class BookServiceImpl implements BookService {
                     .collect(Collectors.toList());
             bookResponse.setAuthorsName(authorsName);
             bookResponses.add(bookResponse);
-        }
+        });
         return bookResponses;
     }
 
