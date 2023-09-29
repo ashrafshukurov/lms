@@ -86,7 +86,6 @@ class BookServiceImplTest {
     @Test
     public void createBook_WithValidInput_ShouldUploadFileAndSaveBook() throws IOException {
         //arrange
-
         MultipartFile imageFile = new MockMultipartFile("image.jpg", new byte[0]);
         String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "image.jpg";
         BookRequest bookRequest = new BookRequest();
@@ -109,14 +108,14 @@ class BookServiceImplTest {
         fakeBook.setCount(12);
         when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
         when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
-        doNothing().when(fileUtil).uploadFile(imageFile);
+        doNothing().when(fileUtil).uploadFile(anyString(),anyString(),imageFile);
         //act
         bookService.createBook(bookRequest, imageFile);
 
         //assert
         verify(bookMapper).requestToEntity(bookRequest);
         verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
-        verify(fileUtil).uploadFile(imageFile);
+        verify(fileUtil).uploadFile(anyString(),anyString(),imageFile);
         verify(bookRepository).save(fakeBook);
 
     }

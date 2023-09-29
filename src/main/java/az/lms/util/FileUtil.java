@@ -1,13 +1,20 @@
 package az.lms.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 
 import java.nio.file.Files;
@@ -23,29 +30,17 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class FileUtil {
-    @Value("${file.directory}")
-    private String directory;
+    @Autowired
+    private S3Client s3Client;
+    public void uploadFile(String bucketName, String objectKey, MultipartFile multipartFile) throws IOException {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            PutObjectRequest request = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .build();
 
-    public Resource load(String filename,Path root) {
-        try {
-            Path file = root.resolve(filename);
-            log.info("path:{}",file);
-
-            Resource resource = new UrlResource(file.toUri());
-            log.info("resource:{}",resource);
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Could not read the file!");
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+            PutObjectResponse response = s3Client.putObject(request, RequestBody.fromInputStream(inputStream, multipartFile.getSize()));
         }
-    }
-    public void uploadFile(MultipartFile file) throws IOException {
-        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + file.getOriginalFilename();
-        Path filePath = Paths.get(directory).resolve(fileName);
-        Files.copy(file.getInputStream(), filePath);
     }
 
 

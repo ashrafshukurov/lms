@@ -37,6 +37,8 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final FileUtil fileUtil;
+    private final String bucketName="library.s3.amazonaws.com";
+
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
     @ApiResponses(value = {
@@ -89,7 +91,6 @@ public class BookController {
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
-
     @ApiOperation(value = "Upload Book_picture", notes = "Upload Book_picture you have to add file to do that")
 
     @ApiResponses(value = {
@@ -98,7 +99,8 @@ public class BookController {
     })
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        fileUtil.uploadFile(file);
+        String objectKey = "images/" + file.getOriginalFilename();
+        fileUtil.uploadFile(bucketName,objectKey,file);
     }
     @ApiOperation(value = "GetBookByName ", notes = "you can search book by name")
 

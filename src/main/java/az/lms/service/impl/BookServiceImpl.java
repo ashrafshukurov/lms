@@ -42,7 +42,8 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
     private final FileUtil fileUtil;
-
+    @Value("${aws.bucketname}")
+    private  String bucketName;
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
@@ -53,8 +54,8 @@ public class BookServiceImpl implements BookService {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
         book.setImage(fileName);
-        fileUtil.uploadFile(imageFile);
-
+        String objectKey = "images/" + imageFile.getOriginalFilename();
+        fileUtil.uploadFile(bucketName,objectKey,imageFile);
         log.info("creating book");
         bookRepository.save(book);
     }
