@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
-                .antMatchers("/auth/**","/author/**","/book/**", "/category/**").anonymous()
+                .antMatchers("/auth/**","/author/**","/book/**", "/category/**","/student/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .antMatchers("/order/").hasAnyRole("ADMIN","LIBRARIAN")

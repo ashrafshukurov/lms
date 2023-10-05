@@ -78,7 +78,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid deleting student by fin")
     })
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @DeleteMapping("/{fin}")
     public void deleteStudentByFin(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         studentService.deleteById(fin);
