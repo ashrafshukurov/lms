@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class GlobalExceptionHandler {
             InsufficientCount.class,
             MaxUploadSizeExceededException.class,
             DataIntegrityViolationException.class,
+            S3Exception.class
     })
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         log.error(ex.getMessage(), ex);
@@ -67,7 +69,7 @@ public class GlobalExceptionHandler {
 
     private HttpStatus getHttpStatus(Exception ex) {
 
-        if ((ex instanceof AgeLimitException) || (ex instanceof MaxUploadSizeExceededException)) {
+        if ((ex instanceof AgeLimitException) || (ex instanceof MaxUploadSizeExceededException) || ex instanceof S3Exception) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NotFoundException) {
             return HttpStatus.NOT_FOUND;
