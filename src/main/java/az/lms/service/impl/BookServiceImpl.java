@@ -42,8 +42,8 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
     private final FileUtil fileUtil;
-    @Value("${aws.bucketname}")
-    private  String bucketName;
+
+    private final String bucketName="library.s3.amazonaws.com";
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {

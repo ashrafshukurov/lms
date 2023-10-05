@@ -1,5 +1,6 @@
 package az.lms.util;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,9 +30,15 @@ import java.util.UUID;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class FileUtil {
-    @Autowired
     private S3Client s3Client;
+
+    @Autowired
+    public FileUtil(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
     public void uploadFile(String bucketName, String objectKey, MultipartFile multipartFile) throws IOException {
         try (InputStream inputStream = multipartFile.getInputStream()) {
             PutObjectRequest request = PutObjectRequest.builder()
