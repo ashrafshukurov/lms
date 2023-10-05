@@ -67,8 +67,8 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void deleteById(String fin) {
       log.warn("Deleting student account");
-      Optional<Student> student = studentRepository.findByFIN(fin);
-      student.ifPresent(studentRepository::delete);
+      Student student = studentRepository.findByFIN(fin).orElseThrow(()->new NotFoundException("Student not found with fin code "+fin));
+      studentRepository.delete(student);
    }
 
    @Override
