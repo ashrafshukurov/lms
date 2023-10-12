@@ -46,7 +46,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting Student by fin")
     })
-    @GetMapping("/getStudent/{fin}")
+    @GetMapping("/{fin}")
     public ResponseEntity<StudentResponse> getStudentById(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         return ResponseEntity.ok(studentService.getById(fin));
     }
@@ -57,7 +57,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid update")
     })
-    @PutMapping("/update")
+    @PutMapping("/")
     public void updateStudent(@Valid @RequestBody StudentRequest studentRequest) {
         studentService.update(studentRequest);
     }
@@ -68,7 +68,7 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid getting Students")
     })
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<StudentResponse>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAll());
     }
@@ -78,8 +78,8 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Invalid deleting student by fin")
     })
-    @RolesAllowed("ADMIN")
-    @DeleteMapping("/delete/{fin}")
+//    @RolesAllowed("ADMIN")
+    @DeleteMapping("/{fin}")
     public void deleteStudentByFin(@ApiParam(name = "FIN",value = "Student FIN",example = "5jh2ak8") @PathVariable String fin) {
         studentService.deleteById(fin);
     }

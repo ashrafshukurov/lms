@@ -1,6 +1,6 @@
-INSERT INTO categories (description, name)
-VALUES ('Books about history and civilization', 'History'),
-       ('Books that explore imaginary worlds', 'Fantasy');
+INSERT INTO categories (description, name,type)
+VALUES ('Books about history and civilization', 'History','type1'),
+       ('Books that explore imaginary worlds', 'Fantasy','type2');
 
 INSERT INTO books (book_count, description, book_image, isbn, book_name, published_time, category_id)
 VALUES (5, 'A fascinating book about history', 'book1.jpg', '978-1234567890', 'History Book', '2022-01-15', 1),

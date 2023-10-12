@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,7 +35,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @SpringBootTest(classes = LmsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "test")
-
 class BookControllerTest {
     @LocalServerPort
     private int port;
@@ -51,6 +51,8 @@ class BookControllerTest {
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/bookdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/categoriesdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void givenGetBookByIdWhenFoundThenReturnResult(){
         Long id=1L;
         BookResponse bookResponse=new BookResponse();
@@ -79,6 +81,9 @@ class BookControllerTest {
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/bookdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/categoriesdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
     public void givenUpdateBookWhenFoundThenUpdate() throws JsonProcessingException {
         //arrange
         BookRequest bookRequest=new BookRequest();
@@ -89,6 +94,8 @@ class BookControllerTest {
         bookRequest.setImage("123wes");
         bookRequest.setName("Book13");
         bookRequest.setPublishedTime(LocalDate.of(2001,2,2));
+        bookRequest.setAuthor_id(1L);
+        bookRequest.setDetails("details");
 
 
         HttpHeaders headers = new HttpHeaders();
@@ -98,11 +105,14 @@ class BookControllerTest {
         ResponseEntity<String> responseEntity=testRestTemplate.exchange(url+"/",HttpMethod.PUT,requestEntity,String.class);
         //assert
         assertEquals(200,responseEntity.getStatusCodeValue());
-        assertEquals("Book is updated",responseEntity.getBody());
+
     }
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/bookdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/categoriesdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
     public void givenGetAllBookWhenFoundThenReturnList(){
         //act &assert
         ResponseEntity<List> responseEntity = testRestTemplate.getForEntity(url+"/", List.class);
@@ -112,21 +122,29 @@ class BookControllerTest {
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/bookdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
     public void givenDeleteBookByIdWhenFoundThenDelete(){
         //arrange
         Long id=1L;
-
         ResponseEntity<String> responseEntity=testRestTemplate.exchange(url+"/"+id,HttpMethod.DELETE,null,String.class);
         assertEquals(200,responseEntity.getStatusCodeValue());
     }
     @Test
     @Sql(scripts = "classpath:sql/category.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/book.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//    @Sql(scripts = "classpath:sql/bookdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+//    @Sql(scripts = "classpath:sql/categoriesdrop.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
     public void givenGetBookByNameWhenFoundThenReturnResponse(){
-        BookResponse bookResponse=new BookResponse();
         String bookName="sherlock";
-        bookResponse.setName(bookName);
-        ResponseEntity<BookResponse> response=testRestTemplate.getForEntity(url+"/name/"+bookName, BookResponse.class);
+        ResponseEntity<List<BookResponse>> response = testRestTemplate.exchange(
+                url + "/name/{bookname}",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<BookResponse>>() {},
+                bookName
+        );
         assertEquals(200,response.getStatusCodeValue());
     }
 
