@@ -2,8 +2,6 @@ package az.lms.controller;
 
 import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.BookResponse;
-import az.lms.dto.response.CategoryResponse;
-import az.lms.mapper.BookMapper;
 import az.lms.service.BookService;
 import az.lms.util.FileUtil;
 import io.swagger.annotations.ApiOperation;
@@ -12,9 +10,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.core.io.Resource;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
 /**

@@ -1,10 +1,8 @@
 package az.lms.controller;
 
 import az.lms.dto.request.StudentRequest;
-import az.lms.dto.response.BookResponse;
 import az.lms.dto.response.OrderResponse;
 import az.lms.dto.response.StudentResponse;
-import az.lms.enums.RoleType;
 import az.lms.service.StudentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -12,7 +10,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;

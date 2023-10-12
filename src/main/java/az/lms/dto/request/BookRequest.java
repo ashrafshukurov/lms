@@ -5,14 +5,10 @@ import lombok.Setter;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
-import java.time.LocalDate;
 
 /**
  * @author ashraf
@@ -31,7 +27,6 @@ public class BookRequest {
     private String isbn;
     @Positive(message = "count can't be negative value")
     private int count;
-//    @NotBlank(message = "Image can't be empty")
     private String image;
     @NotBlank(message = "details shouldn't be empty")
     private String details;
