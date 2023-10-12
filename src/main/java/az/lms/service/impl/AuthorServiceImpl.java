@@ -21,6 +21,7 @@ import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,14 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void updateAuthors(Long id, AuthorRequest request) {
         Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found"));
-        if (request.getName() != null) {
+        Author newAuthor = mapper.requestToModel(request);
+        newAuthor.setId(author.getId());
+        newAuthor.setRoleType(RoleType.AUTHOR);
+        newAuthor.setBooks(author.getBooks());
+        newAuthor.setPassword(author.getPassword());
+        newAuthor.setEmail(author.getEmail());
+        log.info("CHANGED");
+        /* if (request.getName() != null) {
             author.setName(request.getName());
             log.info("Author name updated.");
         }
@@ -90,8 +98,8 @@ public class AuthorServiceImpl implements AuthorService {
         if (request.getBirthDay() != null) {
             author.setBirthDay(request.getBirthDay());
             log.info("Author birthday updated.");
-        }
-            repository.save(author);
+        }*/
+        repository.save(newAuthor);
         log.info("Author updated successfully");
     }
 

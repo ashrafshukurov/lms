@@ -62,7 +62,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
          return studentPrincipal;
       }
       if (librarianOptional.isPresent()) {
-         log.info("Librarian found");
          Librarian librarian = librarianOptional.get();
          LibrarianPrincipal librarianPrincipal = new LibrarianPrincipal();
          librarianPrincipal.setPassword(librarian.getPassword());
