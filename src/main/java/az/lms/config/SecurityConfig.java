@@ -53,13 +53,13 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
                 .antMatchers("/auth/**","/author/**","/book/**", "/category/**","/student/**").anonymous()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .antMatchers("/order/").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
-
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

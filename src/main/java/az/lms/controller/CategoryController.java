@@ -37,7 +37,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Not found"),
     })
     @ApiOperation(value = "Create new category", notes = "Category name must be unique")
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<String> addCategory(@ApiParam(name = "request", value = "Category request object", required = true)
                                               @Valid @RequestBody CategoryRequest request) {
         service.createCategory(request);
@@ -49,7 +49,7 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Category id not found")
     })
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> updateCategory(@Valid @PathVariable Long id, @RequestBody CategoryRequest request) {
         service.updateCategory(id, request);
         return ResponseEntity.ok("Successfully updated");
@@ -62,7 +62,7 @@ public class CategoryController {
     })
 
     @CrossOrigin
-    @GetMapping("/get-all")
+    @GetMapping("/all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
         return ResponseEntity.ok(service.getAllCategory());
     }
@@ -73,7 +73,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Category id not found"),
 
     })
-    @GetMapping("/get-by-id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getCategoryById(id));
     }
@@ -84,7 +84,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Category id not found"),
             @ApiResponse(code = 409, message = "Could not execute statement")
     })
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
         service.deleteCategoryById(id);
         return ResponseEntity.ok("Category with ID " + id + " has been successfully deleted.");
