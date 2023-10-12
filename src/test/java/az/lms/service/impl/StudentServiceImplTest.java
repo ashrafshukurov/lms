@@ -237,10 +237,6 @@ class StudentServiceImplTest {
         assertEquals(orderResponses.get(0).getOrderType(), orderResponse.getOrderType());
         assertEquals(orderResponses.get(0).getBookId(), orderResponse.getBookId());
 
-//       verify(studentRepository.findByFIN(fin));
-//       verify(orderRepository.findOrderByStudentId(student.getId()));
-//       verify(orderMapper.entityToDto(order));
-
 
     }
     @Test

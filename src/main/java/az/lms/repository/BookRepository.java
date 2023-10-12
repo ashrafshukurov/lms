@@ -1,7 +1,6 @@
 package az.lms.repository;
 
 import az.lms.model.Book;
-import az.lms.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
