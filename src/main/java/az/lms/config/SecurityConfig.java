@@ -53,11 +53,10 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").anonymous()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**", "/category/**").permitAll()
                 .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();
-
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

@@ -24,7 +24,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/librarian")
 @RequiredArgsConstructor
 public class LibrarianController {
@@ -80,7 +80,7 @@ public class LibrarianController {
             @ApiResponse(code = 404, message = "Librarian id not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAuthor(@PathVariable Long id) {
+    public ResponseEntity<String> deleteLibrarian(@PathVariable Long id) {
         service.deleteLibrarian(id);
         return ResponseEntity.ok("Librarian with ID " + id + " has been successfully deleted.");
     }
