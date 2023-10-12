@@ -7,6 +7,7 @@
 
 package az.lms.service.impl;
 
+import az.lms.exception.NotFoundException;
 import az.lms.model.Author;
 import az.lms.model.Librarian;
 import az.lms.model.Student;
@@ -22,7 +23,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -38,12 +38,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
    private final LibrarianRepository librarianRepository;
 
    @Override
-   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-      Author author = authorRepository.findByEmail(email);
+   public UserDetails loadUserByUsername(String email) throws NotFoundException {
+      Optional<Author> authorOptional = authorRepository.findByEmail(email);
       Optional<Student> studentOptional = studentRepository.findByEmail(email);
-      Librarian librarian = librarianRepository.findByEmail(email);
+      Optional<Librarian> librarianOptional = librarianRepository.findByEmail(email);
       Set<GrantedAuthority> authorities = new HashSet<>();
-      if (author != null) {
+      if (authorOptional.isPresent()) {
+         Author author = authorOptional.get();
          AuthorPrincipal authorPrincipal = new AuthorPrincipal();
          authorPrincipal.setEmail(author.getEmail());
          authorPrincipal.setPassword(author.getPassword());
@@ -60,7 +61,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
          studentPrincipal.setAuthorities(authorities);
          return studentPrincipal;
       }
-      if (librarian != null) {
+      if (librarianOptional.isPresent()) {
+         log.info("Librarian found");
+         Librarian librarian = librarianOptional.get();
          LibrarianPrincipal librarianPrincipal = new LibrarianPrincipal();
          librarianPrincipal.setPassword(librarian.getPassword());
          librarianPrincipal.setEmail(librarian.getEmail());
@@ -68,6 +71,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
          librarianPrincipal.setAuthorities(authorities);
          log.info(librarianPrincipal.getAuthorities().stream().findFirst().toString());
          return librarianPrincipal;
-      } else throw new UsernameNotFoundException("Username not found:" + email);
+      } else {
+         throw new NotFoundException( email+  "  not found");
+      }
    }
 }
