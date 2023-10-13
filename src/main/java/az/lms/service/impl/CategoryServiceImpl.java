@@ -63,23 +63,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategory(Long id, CategoryRequest request) {
-        Optional<Category> optionalCategory = repository.findById(id);
-        if (optionalCategory.isPresent()) {
-            Category category = optionalCategory.get();
-            if (request.getName() != null) {
-                category.setName(request.getName());
-                log.info("Category name updated");
-            }
-            if (request.getDescription() != null) {
-                category.setDescription(request.getDescription());
-                log.info("Category description updated");
-            }
-            repository.save(category);
-            log.info("Category successfully updated");
-        } else{
-            log.error("Category is not present");
-            throw new NotFoundException("Category id not found.ID: " + id);
-        }
+        Category category = repository.findById(id).orElseThrow(() -> new NotFoundException("Category id not found.ID: " + id));
+        Category newCategory = mapper.requestToModel(request);
+        newCategory.setId(category.getId());
+        repository.save(newCategory);
+        log.info("Category successfully updated");
     }
 
     @Override

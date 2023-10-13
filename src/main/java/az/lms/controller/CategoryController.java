@@ -31,7 +31,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-    @RolesAllowed({"ADMIN","LIBRARIAN"})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created"),
             @ApiResponse(code = 404, message = "Not found"),
@@ -49,7 +48,7 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Category id not found")
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(@Valid @PathVariable Long id, @RequestBody CategoryRequest request) {
         service.updateCategory(id, request);
         return ResponseEntity.ok("Successfully updated");
@@ -61,7 +60,6 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "Category not found")
     })
 
-    @CrossOrigin
     @GetMapping("/all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
         return ResponseEntity.ok(service.getAllCategory());
@@ -89,6 +87,4 @@ public class CategoryController {
         service.deleteCategoryById(id);
         return ResponseEntity.ok("Category with ID " + id + " has been successfully deleted.");
     }
-
-
 }

@@ -18,6 +18,7 @@ import az.lms.model.Author;
 import az.lms.model.Librarian;
 import az.lms.repository.AuthorRepository;
 import az.lms.repository.LibrarianRepository;
+import az.lms.security.PasswordCoderConfig;
 import az.lms.service.LibrarianService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ import java.util.List;
 public class LibrarianServiceImpl implements LibrarianService {
     private final LibrarianRepository repository;
     private final LibrarianMapper mapper;
+    private final PasswordCoderConfig passwordCoderConfig;
 
     @Override
     public void createLibrarian(LibrarianRequest request) {
@@ -73,23 +75,11 @@ public class LibrarianServiceImpl implements LibrarianService {
     public void updateLibrarian(Long id, LibrarianRequest request) {
         Librarian librarian = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Librarian not found"));
-        if (request.getName() != null) {
-            librarian.setName(request.getName());
-            log.info("Librarian name updated.");
-        }
-        if (request.getSurname() != null) {
-            librarian.setSurname(request.getSurname());
-            log.info("Librarian surname updated.");
-        }
-        if (request.getPassword() != null) {
-            librarian.setPassword(request.getPassword());
-            log.info("Librarian password updated.");
-        }
-        if (request.getRoleType() != null) {
-            librarian.setRoleType((request.getRoleType()));
-            log.info("Librarian role type updated.");
-        }
-        repository.save(librarian);
+        Librarian newLibrarian = mapper.requestToModel(request);
+        newLibrarian.setId(librarian.getId());
+        newLibrarian.setEmail(librarian.getEmail());
+        newLibrarian.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
+        repository.save(newLibrarian);
         log.info("Librarian updated successfully");
     }
 }

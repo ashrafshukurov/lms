@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/auth")
 @Configuration
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class AuthController {
     private final AuthService authService;
 
@@ -33,7 +32,6 @@ public class AuthController {
     }
 
     @PostMapping("/student/registration")
-    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<StudentResponse> studentRegistration(@RequestBody StudentRequest request) {
         return ResponseEntity.ok(authService.registration(request));
     }
