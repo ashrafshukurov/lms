@@ -30,7 +30,6 @@ import java.util.List;
 public class LibrarianController {
     private final LibrarianService service;
 
-    @RolesAllowed("ADMIN")
     @ApiOperation(value = "Create new librarian", notes = "Create new librarian")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created")
@@ -41,19 +40,17 @@ public class LibrarianController {
         return ResponseEntity.ok("Successfully created");
     }
 
-    @RolesAllowed("ADMIN")
     @ApiOperation(value = "Update librarian by id", notes = "Update librarian by id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Librarian id not found")
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateLibrarian(@Valid @PathVariable Long id, @RequestBody LibrarianRequest request) {
         service.updateLibrarian(id, request);
         return ResponseEntity.ok("Successfully updated");
     }
 
-    @RolesAllowed("ROLE_ADMIN")
     @ApiOperation(value = "Get all librarian", notes = "Get all librarian")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LibrarianResponse.class),
@@ -63,7 +60,6 @@ public class LibrarianController {
     public ResponseEntity<List<LibrarianResponse>> getAllLibrarian() {
         return ResponseEntity.ok(service.getAllLibrarian());
     }
-    @RolesAllowed("ADMIN")
     @ApiOperation(value = "Get  librarian by id", notes = "Get librarian by id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = AuthorResponse.class),
@@ -73,7 +69,6 @@ public class LibrarianController {
     public ResponseEntity<LibrarianResponse> getLibrarianById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getLibrarianById(id));
     }
-    @RolesAllowed("ADMIN")
     @ApiOperation(value = "Delete librarian by id", notes = "Delete librarian by id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted"),
@@ -85,4 +80,3 @@ public class LibrarianController {
         return ResponseEntity.ok("Librarian with ID " + id + " has been successfully deleted.");
     }
 }
-

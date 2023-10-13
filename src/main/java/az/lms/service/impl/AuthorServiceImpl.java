@@ -79,26 +79,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author newAuthor = mapper.requestToModel(request);
         newAuthor.setId(author.getId());
         newAuthor.setRoleType(RoleType.AUTHOR);
-        newAuthor.setBooks(author.getBooks());
-        newAuthor.setPassword(author.getPassword());
         newAuthor.setEmail(author.getEmail());
-        log.info("CHANGED");
-        /* if (request.getName() != null) {
-            author.setName(request.getName());
-            log.info("Author name updated.");
-        }
-        if (request.getSurname() != null) {
-            author.setSurname(request.getSurname());
-            log.info("Author surname updated.");
-        }
-        if (request.getBiography() != null) {
-            author.setBiography(request.getBiography());
-            log.info("Author biography updated.");
-        }
-        if (request.getBirthDay() != null) {
-            author.setBirthDay(request.getBirthDay());
-            log.info("Author birthday updated.");
-        }*/
         repository.save(newAuthor);
         log.info("Author updated successfully");
     }
