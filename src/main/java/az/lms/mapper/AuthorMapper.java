@@ -11,12 +11,18 @@ import az.lms.dto.request.AuthorRequest;
 import az.lms.dto.response.AuthorResponse;
 import az.lms.model.Author;
 import az.lms.security.PasswordCoderConfig;
-import lombok.RequiredArgsConstructor;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import static az.lms.enums.RoleType.AUTHOR;
+
 
 @Mapper(componentModel = "spring")
 public interface AuthorMapper {
-    AuthorResponse modelToResponse(Author author);
-    Author requestToModel(AuthorRequest request);
 
+    AuthorResponse modelToResponse(Author author);
+
+    Author requestToModel(AuthorRequest request);
 }

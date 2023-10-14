@@ -17,9 +17,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.rmi.AlreadyBoundException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -30,26 +32,26 @@ class AuthorServiceImplTest {
     private AuthorRepository repository;
     @InjectMocks
     private AuthorServiceImpl service;
-
     @Mock
     private PasswordCoderConfig passwordCoderConfig;
-
     @Mock
     AuthorMapper mapper;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-/*
-    Author author = new Author();
+     /*   Author author = new Author();
         author.setId(1L);
         author.setName("Author1");
         author.setSurname("SurnameAuthor");
-        author.setPassword("Aa123123");
+        author.setPassword(passwordCoderConfig.passwordEncode("Aa123123"));
         author.setBiography("Author biography");
         author.setEmail("author1@gmail.com");
-        author.setBirthDay(LocalDate.of(2020, 5, 5));*/
+        author.setBirthDay(LocalDate.of(2020, 5, 5));
+        author.setRoleType(RoleType.AUTHOR);*/
+    }
+
+
     AuthorRequest request =
             AuthorRequest.builder()
                     .name("Author1")
@@ -68,47 +70,43 @@ class AuthorServiceImplTest {
                     .birthDay(LocalDate.of(2020, 5, 5))
                     .build();
 
+    Author author =
+            Author.builder()
+                    .id(1L)
+                    .name("Author1")
+                    .surname("SurnameAuthor")
+                    .biography("Author biography")
+                    .email("author1@gmail.com")
+                    .birthDay(LocalDate.of(2020, 5, 5))
+                    .build();
+
     @Test
     void givenCreateAuthorWhenCreatedThenReturnResult() {
         // Arrange
-
-        /*when(repository.existsByEmail(request.getEmail())).thenReturn(false);
-
-        Author author = new Author();
+        when(repository.existsByEmail(request.getEmail())).thenReturn(false);
         when(mapper.requestToModel(request)).thenReturn(author);
-        when(passwordCoderConfig.passwordEncode(request.getPassword())).thenReturn("$2a$10$HviE7/sG8N41Wzhx9FluOO1dqPNV5CkU3DCUKvJgm9r4wLiRmfwi.");
-        author.setRoleType(RoleType.AUTHOR);
 
         // Act
         service.createAuthor(request);
 
         // Assert
-        verify(repository, times(1)).existsByEmail(request.getEmail());
-        verify(repository, times(1)).save(author);
+     /*  verify(repository, times(1)).existsByEmail(request.getEmail());
+        verify(repository, times(1)).save(author);*/
         assertEquals(RoleType.AUTHOR, author.getRoleType());
-        assertEquals("encodedPassword", author.getPassword());*/
     }
 
     @Test
-    void givenCreateAuthorWhenThrowExcetpirThenReturnResult() {
+    void givenCreateAuthorWhenAuthorIsPresentThenThrowException() {
         // Arrange
+        String email = "author1@gmail.com";
+        when(repository.existsByEmail(email)).thenReturn(true);
 
-        /*when(repository.existsByEmail(request.getEmail())).thenReturn(false);
-
-        Author author = new Author();
-        when(mapper.requestToModel(request)).thenReturn(author);
-        when(passwordCoderConfig.passwordEncode(request.getPassword())).thenReturn("$2a$10$HviE7/sG8N41Wzhx9FluOO1dqPNV5CkU3DCUKvJgm9r4wLiRmfwi.");
-        author.setRoleType(RoleType.AUTHOR);
-
-        // Act
+        // act & assert
         service.createAuthor(request);
-
-        // Assert
-        verify(repository, times(1)).existsByEmail(request.getEmail());
-        verify(repository, times(1)).save(author);
-        assertEquals(RoleType.AUTHOR, author.getRoleType());
-        assertEquals("encodedPassword", author.getPassword());*/
+        verify(repository, times(1)).existsByEmail(email);
+        assertThrows(AlreadyBoundException.class, () -> service.createAuthor(request));
     }
+
     @Test
     void getAllAuthors() {
     }

@@ -32,14 +32,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
-    private final PasswordCoderConfig passwordCoderConfig;
 
     @Override
     public void createAuthor(AuthorRequest request) {
         if (!repository.existsByEmail(request.getEmail())) {
             Author author = mapper.requestToModel(request);
-            author.setRoleType(RoleType.AUTHOR);
-            author.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
+            //author.setRoleType(RoleType.AUTHOR);
+            //author.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
             repository.save(author);
             log.info("Created new author \n" + author);
         } else {
