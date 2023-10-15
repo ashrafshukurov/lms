@@ -249,7 +249,7 @@ class StudentServiceImplTest {
         assertEquals("Student not found with fin=" + fin, exception.getMessage());
 
         verify(studentRepository).findByFIN(fin);
-        verifyNoInteractions(orderRepository); // Ensure orderRepository was not called
+        verifyNoInteractions(orderRepository);
         verifyNoInteractions(orderMapper);
 
 
