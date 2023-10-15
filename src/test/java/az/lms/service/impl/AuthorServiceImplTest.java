@@ -70,14 +70,17 @@ class AuthorServiceImplTest {
 
     @Test
     void givenCreateAuthorWhenCreatedThenReturnResult() {
-        // Arrange
+//         Arrange
 
-        /*when(repository.existsByEmail(request.getEmail())).thenReturn(false);
-
+        when(repository.existsByEmail(request.getEmail())).thenReturn(false);
         Author author = new Author();
+        author.setRoleType(RoleType.AUTHOR);
+        author.setBiography(request.getBiography());
+        author.setName(request.getName());
+        author.setId(1L);
         when(mapper.requestToModel(request)).thenReturn(author);
         when(passwordCoderConfig.passwordEncode(request.getPassword())).thenReturn("$2a$10$HviE7/sG8N41Wzhx9FluOO1dqPNV5CkU3DCUKvJgm9r4wLiRmfwi.");
-        author.setRoleType(RoleType.AUTHOR);
+
 
         // Act
         service.createAuthor(request);
@@ -86,7 +89,7 @@ class AuthorServiceImplTest {
         verify(repository, times(1)).existsByEmail(request.getEmail());
         verify(repository, times(1)).save(author);
         assertEquals(RoleType.AUTHOR, author.getRoleType());
-        assertEquals("encodedPassword", author.getPassword());*/
+        assertEquals("$2a$10$HviE7/sG8N41Wzhx9FluOO1dqPNV5CkU3DCUKvJgm9r4wLiRmfwi.", author.getPassword());
     }
 
     @Test

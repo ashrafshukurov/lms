@@ -10,8 +10,8 @@ INSERT INTO students (fin, address, birth_date, e_mail, first_name, last_name, p
 VALUES ('1234567890', '123 Main St', '2000-01-01', 'john@example.com', 'John', 'Doe', 'hashed_password', 'STUDENT', 'A'),
        ('9876543210', '456 Elm St', '1999-05-15', 'jane@example.com', 'Jane', 'Smith', 'hashed_password', 'STUDENT', 'B');
 
-insert into orders (book_id, order_time, order_type, student_id)
-values (1, '2023-01-01', 'BORROWED', 1),
+INSERT INTO orders (book_id, order_time, order_type, student_id)
+VALUES (1, '2023-01-01', 'BORROWED', 1),
        (1, '2023-01-02', 'RETURNED', 1),
        (1, '2023-01-03', 'BORROWED', 1),
        (1, '2023-01-01', 'RETURNED', 2),

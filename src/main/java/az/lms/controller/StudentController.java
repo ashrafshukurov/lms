@@ -31,13 +31,13 @@ public class StudentController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 400, message = "Invalid insert")
     })
-    @RolesAllowed("ROLE_ADMIN")
+//    @RolesAllowed("ROLE_ADMIN")
     @PostMapping("/add")
     public void addStudent(@Valid @RequestBody StudentRequest studentRequest) {
         studentService.create(studentRequest);
     }
 
-    @RolesAllowed("ROLE_LIBRARIAN")
+//    @RolesAllowed("ROLE_LIBRARIAN")
     @ApiOperation(value = "Get-Student-By-fin", notes = "When you enter fin it will get Student", response = StudentResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -48,7 +48,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getById(fin));
     }
 
-    @RolesAllowed({"ADMIN","LIBRARIAN","STUDENT"})
+//    @RolesAllowed({"ADMIN","LIBRARIAN","STUDENT"})
     @ApiOperation(value = "Update Student", notes = "Update Student based on fin")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),
@@ -59,7 +59,7 @@ public class StudentController {
         studentService.update(studentRequest);
     }
 
-    @RolesAllowed({"STUDENT","ADMIN","LIBRARIAN"})
+//    @RolesAllowed({"STUDENT","ADMIN","LIBRARIAN"})
     @ApiOperation(value = "Getting-All-Students", notes = "It Will return Student list", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully work"),

@@ -33,4 +33,5 @@ public class StudentRequest {
    private String studentGroup;
    private LocalDate birthDate;
    private String address;
+
 }
