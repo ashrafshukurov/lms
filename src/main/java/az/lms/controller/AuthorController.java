@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +45,7 @@ public class AuthorController {
             @ApiResponse(code = 200, message = "Successfully updated"),
             @ApiResponse(code = 404, message = "Author id not found")
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateAuthor(@Valid @PathVariable Long id, @RequestBody AuthorRequest request) {
         service.updateAuthors(id, request);
         return ResponseEntity.ok("Successfully updated");
