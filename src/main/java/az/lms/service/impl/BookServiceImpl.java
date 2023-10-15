@@ -44,13 +44,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
         log.info("uploading file");
-        String fileName = UUID.randomUUID().toString().substring(0, 4) + "-" + imageFile.getOriginalFilename();
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
-        book.setImage(fileName);
+        String region = "eu-central-1";
         String objectKey = "images/" + imageFile.getOriginalFilename();
+        String s3ObjectUrl = "https://s3." + region + ".amazonaws.com/" + bucketName + "/" + objectKey;
+        book.setImage(s3ObjectUrl);
         fileUtil.uploadFile(bucketName,objectKey,imageFile);
         log.info("creating book");
         bookRepository.save(book);

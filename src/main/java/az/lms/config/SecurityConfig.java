@@ -53,10 +53,10 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**","/author/**","/book/**", "/order/**","/category/**","/librarian/**").permitAll()
+                .antMatchers("/auth/**","/author/**","/book/**", "/order/**","/category/**","/librarian/**","/student/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
                 // .antMatchers("/auth/**","/author/**","/book/**","/student/**").anonymous()
-                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
+//                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
                 // .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .antMatchers("/order/").hasAnyRole("ADMIN","LIBRARIAN")
                 .anyRequest().authenticated();

@@ -105,14 +105,14 @@ class BookServiceImplTest {
         fakeBook.setCount(12);
         when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
         when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
-//        doNothing().when(fileUtil).uploadFile(anyString(),anyString(),imageFile);
+        doNothing().when(fileUtil).uploadFile(anyString(),anyString(),any());
         //act
         bookService.createBook(bookRequest, imageFile);
 
         //assert
         verify(bookMapper).requestToEntity(bookRequest);
         verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
-//        verify(fileUtil).uploadFile(anyString(),anyString(),imageFile);
+        verify(fileUtil).uploadFile(anyString(),anyString(),any());
         verify(bookRepository).save(fakeBook);
     }
 

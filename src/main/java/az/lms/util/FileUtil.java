@@ -47,6 +47,7 @@ public class FileUtil {
                     .build();
 
             PutObjectResponse response = s3Client.putObject(request, RequestBody.fromInputStream(inputStream, multipartFile.getSize()));
+
         }
     }
 

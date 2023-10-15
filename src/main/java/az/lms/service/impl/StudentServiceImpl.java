@@ -3,6 +3,7 @@ package az.lms.service.impl;
 import az.lms.dto.request.StudentRequest;
 import az.lms.dto.response.OrderResponse;
 import az.lms.dto.response.StudentResponse;
+import az.lms.enums.RoleType;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.OrderMapper;
@@ -11,6 +12,7 @@ import az.lms.model.Order;
 import az.lms.model.Student;
 import az.lms.repository.OrderRepository;
 import az.lms.repository.StudentRepository;
+import az.lms.security.PasswordCoderConfig;
 import az.lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class StudentServiceImpl implements StudentService {
    private final OrderRepository orderRepository;
    private final StudentMapper studentMapper;
    private final OrderMapper orderMapper;
+   private final PasswordCoderConfig passwordCoderConfig;
 
    @Override
    public List<StudentResponse> getAll() {
@@ -44,6 +47,8 @@ public class StudentServiceImpl implements StudentService {
       log.info("Creating new student account");
       if (!studentRepository.existsByFIN(request.getFIN())) {
          Student student = studentMapper.requestToEntity(request);
+         student.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
+         student.setRoleType(RoleType.STUDENT);
          studentRepository.save(student);
       } else throw new AlreadyExistsException("Student already exist with such fin code");
    }
