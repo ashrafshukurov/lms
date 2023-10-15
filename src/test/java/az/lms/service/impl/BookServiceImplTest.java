@@ -80,41 +80,41 @@ class BookServiceImplTest {
     }
 
 
-//    @Test
-//    public void createBook_WithValidInput_ShouldUploadFileAndSaveBook() throws IOException {
-//        //arrange
-//        MultipartFile imageFile = new MockMultipartFile("image.jpg", new byte[0]);
-//        String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "image.jpg";
-//        BookRequest bookRequest = new BookRequest();
-//        bookRequest.setIsbn("1234f");
-//        bookRequest.setName("book1");
-//        bookRequest.setImage(fakeFileName);
-//        bookRequest.setDetails("details");
-//        bookRequest.setCount(12);
-//        bookRequest.setDescription("desc");
-//        bookRequest.setCategories_id(1L);
-//
-//        Book fakeBook = new Book();
-//        fakeBook.setId(1L);
-//        fakeBook.setIsbn("1234f");
-//        fakeBook.setImage(fakeFileName);
-//        Category category1=new Category();
-//        category1.setName("category");
-//        category1.setId(1L);
-//        fakeBook.setCategories(category1);
-//        fakeBook.setCount(12);
-//        when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
-//        when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
+    @Test
+    public void createBook_WithValidInput_ShouldUploadFileAndSaveBook() throws IOException {
+        //arrange
+        MultipartFile imageFile = new MockMultipartFile("image.jpg", new byte[0]);
+        String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "image.jpg";
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setIsbn("1234f");
+        bookRequest.setName("book1");
+        bookRequest.setImage(fakeFileName);
+        bookRequest.setDetails("details");
+        bookRequest.setCount(12);
+        bookRequest.setDescription("desc");
+        bookRequest.setCategories_id(1L);
+
+        Book fakeBook = new Book();
+        fakeBook.setId(1L);
+        fakeBook.setIsbn("1234f");
+        fakeBook.setImage(fakeFileName);
+        Category category1=new Category();
+        category1.setName("category");
+        category1.setId(1L);
+        fakeBook.setCategories(category1);
+        fakeBook.setCount(12);
+        when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
+        when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
 //        doNothing().when(fileUtil).uploadFile(anyString(),anyString(),imageFile);
-//        //act
-//        bookService.createBook(bookRequest, imageFile);
-//
-//        //assert
-//        verify(bookMapper).requestToEntity(bookRequest);
-//        verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
+        //act
+        bookService.createBook(bookRequest, imageFile);
+
+        //assert
+        verify(bookMapper).requestToEntity(bookRequest);
+        verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
 //        verify(fileUtil).uploadFile(anyString(),anyString(),imageFile);
-//        verify(bookRepository).save(fakeBook);
-//    }
+        verify(bookRepository).save(fakeBook);
+    }
 
     @Test
     public void testCreateBookWithExistingISbn() {
@@ -205,8 +205,8 @@ class BookServiceImplTest {
         List<BookResponse> bookResponses = bookService.getAllBooks();
         //assert
         assertEquals(2, bookResponses.size());
-        assertEquals("Category1", bookResponses.get(0).getCategory());
-        assertEquals("Category2", bookResponses.get(1).getCategory());
+        assertEquals(response1.getCategory(), bookResponses.get(0).getCategory());
+        assertEquals(response2.getCategory(), bookResponses.get(1).getCategory());
         verify(bookRepository,times(1)).findAll();
         verify(bookMapper,times(2)).entityToResponse(any());
 

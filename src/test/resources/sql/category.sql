@@ -1,2 +1,2 @@
-insert into categories values (1,'category1','desc','crime');
+INSERT INTO categories VALUES (1,'category1','desc','crime');
 
