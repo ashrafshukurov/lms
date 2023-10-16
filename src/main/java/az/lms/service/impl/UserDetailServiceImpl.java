@@ -14,7 +14,6 @@ import az.lms.model.Student;
 import az.lms.repository.AuthorRepository;
 import az.lms.repository.LibrarianRepository;
 import az.lms.repository.StudentRepository;
-import az.lms.security.UserPricnipal.AuthorPrincipal;
 import az.lms.security.UserPricnipal.LibrarianPrincipal;
 import az.lms.security.UserPricnipal.StudentPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -33,25 +32,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class UserDetailServiceImpl implements UserDetailsService {
-   private final AuthorRepository authorRepository;
    private final StudentRepository studentRepository;
    private final LibrarianRepository librarianRepository;
 
    @Override
    public UserDetails loadUserByUsername(String email) throws NotFoundException {
-      Optional<Author> authorOptional = authorRepository.findByEmail(email);
       Optional<Student> studentOptional = studentRepository.findByEmail(email);
       Optional<Librarian> librarianOptional = librarianRepository.findByEmail(email);
       Set<GrantedAuthority> authorities = new HashSet<>();
-      if (authorOptional.isPresent()) {
-         Author author = authorOptional.get();
-         AuthorPrincipal authorPrincipal = new AuthorPrincipal();
-         authorPrincipal.setEmail(author.getEmail());
-         authorPrincipal.setPassword(author.getPassword());
-         authorities.add(new SimpleGrantedAuthority("ROLE_" + author.getRoleType().name()));
-         authorPrincipal.setAuthorities(authorities);
-         return authorPrincipal;
-      }
       if (studentOptional.isPresent()) {
          Student student = studentOptional.get();
          StudentPrincipal studentPrincipal = new StudentPrincipal();

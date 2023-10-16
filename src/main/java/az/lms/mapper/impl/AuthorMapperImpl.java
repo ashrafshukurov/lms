@@ -27,7 +27,6 @@ public class AuthorMapperImpl implements AuthorMapper {
         response.setId(author.getId());
         response.setName(author.getName());
         response.setSurname(author.getSurname());
-        response.setEmail(author.getEmail());
         response.setBiography(author.getBiography());
         response.setBirthDay(author.getBirthDay());
         response.setBooks(author.getBooks());
@@ -37,12 +36,10 @@ public class AuthorMapperImpl implements AuthorMapper {
     @Override
     public Author requestToModel(AuthorRequest request) {
         Author author = new Author();
-        author.setRoleType(RoleType.AUTHOR);
-        author.setName(request.getSurname());
+        author.setName(request.getName());
         author.setSurname(request.getSurname());
-        author.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
         author.setBiography(request.getBiography());
-        author.setEmail(request.getEmail());
+        author.setBirthDay(request.getBirthDay());
         return author;
     }
 }

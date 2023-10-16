@@ -9,14 +9,11 @@ package az.lms.service.impl;
 
 import az.lms.dto.request.AuthorRequest;
 import az.lms.dto.response.AuthorResponse;
-import az.lms.enums.RoleType;
-import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.AuthorMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.repository.AuthorRepository;
-import az.lms.security.PasswordCoderConfig;
 import az.lms.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,16 +32,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void createAuthor(AuthorRequest request) {
-        if (!repository.existsByEmail(request.getEmail())) {
             Author author = mapper.requestToModel(request);
-            //author.setRoleType(RoleType.AUTHOR);
-            //author.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
             repository.save(author);
             log.info("Created new author \n" + author);
-        } else {
-            log.error("Author already exist!!!");
-            throw new AlreadyExistsException("Author already exist!!!");
-        }
     }
 
     @Override
@@ -60,7 +50,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(Long id) {
-        repository.deleteById(id);
+        Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found with id " + id));
+        repository.delete(author);
         log.info("Author has been deleted successfully.Deleted author id {}", id);
     }
 
@@ -77,8 +68,6 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found"));
         Author newAuthor = mapper.requestToModel(request);
         newAuthor.setId(author.getId());
-        newAuthor.setRoleType(RoleType.AUTHOR);
-        newAuthor.setEmail(author.getEmail());
         repository.save(newAuthor);
         log.info("Author updated successfully");
     }

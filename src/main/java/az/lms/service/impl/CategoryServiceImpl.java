@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +37,6 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Category name - " + request.getName() + " already exist!!!");
             throw new AlreadyExistsException("Category name-" + request.getName() + "already exist!!!");
         }
-
         Category category = repository.save(mapper.requestToModel(request));
         log.info("Created new category \n {}", category);
     }
@@ -72,14 +70,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategoryById(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            log.info("Category has been deleted successfully.Deleted category id {}", id);
-            log.error("Category id not found");
-        } else {
-            log.error("Category id not found");
-           throw new NotFoundException("Category id not found");
-        }
+        Category category = repository.findById(id).orElseThrow(() -> new NotFoundException("Category id not found"));
+        repository.delete(category);
+        log.info("Category has been deleted successfully.Deleted category id {}", id);
     }
 
     @Override

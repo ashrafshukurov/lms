@@ -26,12 +26,6 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "e_mail",unique = true)
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "first_name", length = 25, nullable = false)
     private String name;
 
@@ -52,11 +46,7 @@ public class Author {
     )
     private Set<Book> books;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role_type", nullable = false)
-    private RoleType roleType;
-
-    @Override
+   /* @Override
     public String toString() {
         return "Author{" +
                 "id=" + id +
@@ -66,5 +56,5 @@ public class Author {
                 ", birthDay=" + birthDay +
                 ", books=" + books +
                 '}';
-    }
+    }*/
 }

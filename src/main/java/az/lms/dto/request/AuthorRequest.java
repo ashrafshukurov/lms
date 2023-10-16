@@ -30,13 +30,6 @@ public class AuthorRequest {
     @Size(max = 25, message = "Invalid Name: Must be of 3 - 30 characters")
     private String surname;
 
-    @NotBlank(message = "Email cannot be empty")
-    @Email(regexp = "^[a-zA-Z0-9]+@gmail\\.com$", message = "Invalid email address")
-    private String email;
-
-    @NotBlank(message = "Password cannot be empty")
-    private String password;
-
     @Size(max = 200, message = "Invalid biography: Must be of max 200 characters")
     private String biography;
 
