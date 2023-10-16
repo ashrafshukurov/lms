@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -42,8 +43,14 @@ public class Book {
     private Set<Author> authors;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @JsonBackReference
     private Category categories;
+    public Set<Author> getAuthors(){
+        if(authors==null){
+            authors=new HashSet<>();
+        }
+        return authors;
+    }
 
 }

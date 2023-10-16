@@ -78,7 +78,7 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Category id not found");
         } else {
             log.error("Category id not found");
-           throw new NotFoundException("Category id not found");
+            throw new NotFoundException("Category id not found");
         }
     }
 

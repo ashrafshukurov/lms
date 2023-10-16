@@ -11,6 +11,7 @@ import az.lms.mapper.BookMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
+import az.lms.repository.AuthorRepository;
 import az.lms.repository.BookRepository;
 import az.lms.service.BookService;
 import az.lms.util.FileUtil;
@@ -18,9 +19,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,8 +41,9 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
     private final FileUtil fileUtil;
+    private final AuthorRepository authorRepository;
 
-    private final String bucketName="library.s3.amazonaws.com";
+    private final String bucketName = "library.s3.amazonaws.com";
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
@@ -48,11 +52,13 @@ public class BookServiceImpl implements BookService {
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
+        Author author = authorRepository.getById(bookRequest.getAuthor_id());
+        author.addBook(book);
         String region = "eu-central-1";
         String objectKey = "images/" + imageFile.getOriginalFilename();
         String s3ObjectUrl = "https://s3." + region + ".amazonaws.com/" + bucketName + "/" + objectKey;
         book.setImage(s3ObjectUrl);
-        fileUtil.uploadFile(bucketName,objectKey,imageFile);
+        fileUtil.uploadFile(bucketName, objectKey, imageFile);
         log.info("creating book");
         bookRepository.save(book);
     }
@@ -118,6 +124,7 @@ public class BookServiceImpl implements BookService {
         newBook.setCategories(book.getCategories());
         bookRepository.save(newBook);
     }
+
     @Override
     public List<BookResponse> getBookByName(String bookName) {
         List<Book> books = bookRepository.getBookByName(bookName)
@@ -136,7 +143,6 @@ public class BookServiceImpl implements BookService {
         });
         return bookResponses;
     }
-
 
 
 }
