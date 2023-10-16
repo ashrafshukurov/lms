@@ -47,8 +47,8 @@ public class Author {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_book",
-            joinColumns = @JoinColumn(name = "authors_id"),
-            inverseJoinColumns = @JoinColumn(name = "books_id")
+            joinColumns = @JoinColumn(name = "authors_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "books_id",referencedColumnName = "id")
     )
     private Set<Book> books;
 
@@ -66,5 +66,10 @@ public class Author {
                 ", birthDay=" + birthDay +
                 ", books=" + books +
                 '}';
+    }
+    public void addBook(Book book){
+        this.books.add(book);
+        book.getAuthors().add(this);
+
     }
 }
