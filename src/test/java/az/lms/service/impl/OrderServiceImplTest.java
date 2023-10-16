@@ -11,7 +11,6 @@ import az.lms.model.Order;
 import az.lms.enums.OrderType;
 import az.lms.repository.BookRepository;
 import az.lms.repository.OrderRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -62,9 +62,7 @@ class OrderServiceImplTest {
               .isbn("isbn")
               .description("Test description")
               .build();
-
    }
-
 
    @Test
    public void givenGetOrdersWhenFoundThenReturnOrderList() {
@@ -102,7 +100,6 @@ class OrderServiceImplTest {
       //assert
       assertNotNull(orderResponses);
       assertTrue(orderResponses.isEmpty());
-
    }
 
 
@@ -137,7 +134,7 @@ class OrderServiceImplTest {
       when(bookRepository.findById(100L)).thenReturn(Optional.empty());
 
       //act & assert
-      Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
+      assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("Book with ID " + orderRequest.getBookId() + " not found");
       verify(bookRepository, times(1)).findById(100L);
@@ -161,7 +158,7 @@ class OrderServiceImplTest {
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
 
       //act & assert
-      Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
+      assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(InsufficientCount.class)
               .hasMessage("This book is out of stock");
       verify(bookRepository, times(1)).findById(1L);
@@ -179,7 +176,7 @@ class OrderServiceImplTest {
       when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn("BORROWED");
 
       //act & assert
-      Assertions.assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
+      assertThatThrownBy(() -> orderService.borrowOrder(orderRequest))
               .isInstanceOf(AlreadyExistsException.class)
               .hasMessage("You have already taken the book!");
       verify(bookRepository, times(1)).findById(1L);
@@ -209,7 +206,7 @@ class OrderServiceImplTest {
 
 
    @Test
-   public void givenReturnOrderWhenNotBorrowedThenReturnBookNotFoundException() {
+   public void givenReturnOrderWhenNotReturnedThenReturnBookNotFoundException() {
       //arrange
       OrderRequest returnRequest = new OrderRequest();
       returnRequest.setOrderType(OrderType.RETURNED);
@@ -219,7 +216,7 @@ class OrderServiceImplTest {
       when(bookRepository.findById(100L)).thenReturn(Optional.empty());
 
       //act & assert
-      Assertions.assertThatThrownBy(() -> orderService.borrowOrder(returnRequest))
+      assertThatThrownBy(() -> orderService.borrowOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("Book with ID " + returnRequest.getBookId() + " not found");
       verify(bookRepository, times(1)).findById(100L);
@@ -237,7 +234,7 @@ class OrderServiceImplTest {
       when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn(null);
 
       //act & assert
-      Assertions.assertThatThrownBy(() -> orderService.returnOrder(returnRequest))
+      assertThatThrownBy(() -> orderService.returnOrder(returnRequest))
               .isInstanceOf(NotFoundException.class)
               .hasMessage("You have not taken the book!");
       verify(bookRepository, times(1)).findById(1L);

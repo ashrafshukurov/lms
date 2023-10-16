@@ -32,7 +32,6 @@ public class OrderServiceImpl implements OrderService {
    private final BookRepository bookRepository;
    private final OrderMapper orderMapper;
 
-
    @Override
    public List<OrderResponse> getOrders() {
       log.info("Getting all existing orders");
@@ -40,13 +39,12 @@ public class OrderServiceImpl implements OrderService {
       return orders.stream().map(orderMapper::entityToDto).toList();
    }
 
-
    @Transactional
    @Override
    public void borrowOrder(OrderRequest request) {
       log.info("Starting to create a new borrow order");
-      Book book = bookRepository.findById(request.getBookId()).orElseThrow(
-              () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
+      Book book = bookRepository.findById(request.getBookId())
+              .orElseThrow(() -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
       if (book.getCount() < 1)
          throw new InsufficientCount("This book is out of stock");
       String existingOrderType = orderRepository.getTypeOfLastOrder(request.getStudentId(), request.getBookId());
@@ -61,13 +59,12 @@ public class OrderServiceImpl implements OrderService {
       log.info("Successfully made borrow order");
    }
 
-
    @Transactional
    @Override
    public void returnOrder(OrderRequest request) {
       log.info("Starting to create a new return order");
-      Book book = bookRepository.findById(request.getBookId()).orElseThrow(
-              () -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
+      Book book = bookRepository.findById(request.getBookId())
+              .orElseThrow(() -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
       String existingOrderType = orderRepository.getTypeOfLastOrder(request.getStudentId(), request.getBookId());
       if ((existingOrderType == null) || existingOrderType.equalsIgnoreCase(OrderType.RETURNED.name())) {
          log.warn("You have not taken the book!");
