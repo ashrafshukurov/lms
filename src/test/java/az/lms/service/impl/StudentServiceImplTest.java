@@ -106,7 +106,7 @@ class StudentServiceImplTest {
         student1.setFIN(fin);
         StudentRequest request = new StudentRequest();
         request.setFIN(fin);
-        when(studentRepository.existsByFIN(fin)).thenReturn(true);
+        when(studentRepository.existsByFIN(fin)).thenReturn(false);
         when(studentMapper.requestToEntity(request)).thenReturn(student1);
         //act
         studentService.create(request);
@@ -121,7 +121,7 @@ class StudentServiceImplTest {
         String fin = "123L";
         StudentRequest studentRequest = new StudentRequest();
         studentRequest.setFIN(fin);
-        when(studentRepository.existsByFIN(fin)).thenReturn(false);
+        when(studentRepository.existsByFIN(fin)).thenReturn(true);
         //act & assert
         assertThrows(AlreadyExistsException.class, () -> studentService.create(studentRequest));
         verify(studentRepository, times(1)).existsByFIN(studentRequest.getFIN());

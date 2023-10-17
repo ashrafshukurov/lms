@@ -59,7 +59,8 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public void deleteLibrarian(Long id) {
-        repository.deleteById(id);
+        Librarian librarian = repository.findById(id).orElseThrow(() -> new NotFoundException("Librarian not found"));
+        repository.delete(librarian);
         log.info("Librarian has been deleted successfully.Deleted librarian id {}", id);
     }
 

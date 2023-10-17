@@ -8,12 +8,17 @@
 package az.lms.model;
 
 import az.lms.enums.RoleType;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
+@Table(name = "librarian")
 public class Librarian {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
