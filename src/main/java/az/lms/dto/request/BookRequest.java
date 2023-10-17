@@ -39,6 +39,7 @@ public class BookRequest {
     @NotBlank(message = "description can't be empty")
     @Size(max = 25, min = 5)
     private String description;
+    @NotNull
     private Long author_id;
 
 }

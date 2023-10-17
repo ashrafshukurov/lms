@@ -40,7 +40,6 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordCoderConfig.getPasswordEncoder());
-        // var authenticationManager = authManagerBuilder.build();
 
 
         http.exceptionHandling()
@@ -55,9 +54,8 @@ public class SecurityConfig {
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**","/author/**","/book/**", "/category/**","/librarian/**","/student/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
-                // .antMatchers("/auth/**","/author/**","/book/**","/student/**").anonymous()
-//                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
-                // .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
+                .antMatchers("/student").hasAnyRole("STUDENT","ADMIN")
+                 .antMatchers("/librarian/**").hasAnyRole("ADMIN","LIBRARIAN")
                 .antMatchers("/order/").hasAnyRole("ADMIN","LIBRARIAN")
                 .antMatchers("/order/**").hasAnyRole("STUDENT")
                 .anyRequest().authenticated();
