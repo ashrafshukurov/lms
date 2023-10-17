@@ -45,6 +45,12 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
     private Set<Book> books;
+    public void addBook(Book book){
+        this.books.add(book);
+        book.getAuthors().add(this);
+
+    }
+
 
    /* @Override
     public String toString() {
