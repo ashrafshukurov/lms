@@ -4,6 +4,8 @@ import az.lms.dto.request.AuthorRequest;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.impl.AuthorMapperImpl;
 import az.lms.model.Author;
+import az.lms.model.Book;
+import az.lms.model.Category;
 import az.lms.repository.AuthorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,10 +31,11 @@ class AuthorServiceImplTest {
     private AuthorServiceImpl service;
     @Mock
     AuthorMapperImpl mapper;
-
+    Set<Book> books = new HashSet<>();
     @BeforeEach
     void setUp() {
 
+        books.add(book);
     }
 
     AuthorRequest request =
@@ -53,6 +54,17 @@ class AuthorServiceImplTest {
                     .biography("Author biography")
                     .birthDay(LocalDate.of(2020, 5, 5))
                     .build();
+    Book book = Book.builder()
+            .name("Book1")
+            .count(1)
+            .categories(new Category())
+            .isbn("1234")
+            .details("Book1 details")
+            .description("Book1 description")
+            .build();
+
+
+
 
     @Test
     void givenCreateAuthorWhenCreatedThenReturnResult() {
@@ -156,7 +168,20 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void getBooksByAuthorId() {
+    void givenGetBooksByAuthorIdWhenFoundThenReturnBooksList() {
+        //arrange
 
+        //act
+
+        //assert
+    }
+
+    @Test
+    void givenGetBooksByAuthorIdWhenNotFoundThenThrowException() {
+        //arrange
+
+        //act
+
+        //assert
     }
 }
