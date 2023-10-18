@@ -8,11 +8,11 @@ import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.OrderMapper;
 import az.lms.mapper.StudentMapper;
-import az.lms.model.Book;
 import az.lms.model.Order;
 import az.lms.model.Student;
 import az.lms.repository.OrderRepository;
 import az.lms.repository.StudentRepository;
+import az.lms.security.PasswordCoderConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,8 +48,9 @@ class StudentServiceImplTest {
     private OrderRepository orderRepository;
     @Mock
     private OrderMapper orderMapper;
-    @InjectMocks
-    private Book book;
+    @Mock
+    private  PasswordCoderConfig passwordCoderConfig;
+
 
     @BeforeEach
     void setStudent() {
