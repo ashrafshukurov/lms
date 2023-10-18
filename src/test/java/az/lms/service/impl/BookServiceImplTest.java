@@ -10,6 +10,7 @@ import az.lms.mapper.BookMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
+import az.lms.repository.AuthorRepository;
 import az.lms.repository.BookRepository;
 import az.lms.util.FileUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,8 @@ class BookServiceImplTest {
     private Book book;
     @Mock
     private BookRepository bookRepository;
+    @Mock
+    private AuthorRepository authorRepository;
     @Mock
     private BookMapper bookMapper;
     @Mock
@@ -93,27 +96,30 @@ class BookServiceImplTest {
         bookRequest.setCount(12);
         bookRequest.setDescription("desc");
         bookRequest.setCategories_id(1L);
-
-        Book fakeBook = new Book();
-        fakeBook.setId(1L);
-        fakeBook.setIsbn("1234f");
-        fakeBook.setImage(fakeFileName);
-        Category category1=new Category();
+        Long author_id = 2L;
+        bookRequest.setAuthor_id(author_id);
+        book.setImage(fakeFileName);
+        Category category1 = new Category();
         category1.setName("category");
         category1.setId(1L);
-        fakeBook.setCategories(category1);
-        fakeBook.setCount(12);
-        when(bookMapper.requestToEntity(bookRequest)).thenReturn(fakeBook);
-        when(bookRepository.existsByIsbn(fakeBook.getIsbn())).thenReturn(false);
-        doNothing().when(fileUtil).uploadFile(anyString(),anyString(),any());
+        book.setCategories(category1);
+        book.setCount(12);
+        Set<Book> books = new HashSet<>();
+        books.add(book);
+        author.setId(author_id);
+        author.setBooks(books);
+        author.addBook(book);
+        when(bookMapper.requestToEntity(bookRequest)).thenReturn(book);
+        when(bookRepository.existsByIsbn(book.getIsbn())).thenReturn(false);
+        doNothing().when(fileUtil).uploadFile(anyString(), anyString(), any());
+        when(authorRepository.getById(bookRequest.getAuthor_id())).thenReturn(author);
         //act
         bookService.createBook(bookRequest, imageFile);
-
         //assert
         verify(bookMapper).requestToEntity(bookRequest);
-        verify(bookRepository).existsByIsbn(fakeBook.getIsbn());
-        verify(fileUtil).uploadFile(anyString(),anyString(),any());
-        verify(bookRepository).save(fakeBook);
+        verify(bookRepository).existsByIsbn(book.getIsbn());
+        verify(fileUtil).uploadFile(anyString(), anyString(), any());
+        verify(bookRepository).save(book);
     }
 
     @Test
@@ -121,13 +127,13 @@ class BookServiceImplTest {
         //arrange
         MultipartFile imageFile = new MockMultipartFile("imageFile", "test.jpg", "image/jpeg", "test".getBytes());
         BookRequest bookRequest1 = new BookRequest();
-        String isbn="123f";
+        String isbn = "123f";
         bookRequest1.setIsbn(isbn);
-        Book bookEntity=new Book();
+        Book bookEntity = new Book();
         bookEntity.setId(1L);
         bookEntity.setDetails("Details");
         bookEntity.setIsbn("123f");
-        Category category1=new Category();
+        Category category1 = new Category();
         category1.setId(1L);
         bookEntity.setCategories(category1);
 
@@ -207,8 +213,8 @@ class BookServiceImplTest {
         assertEquals(2, bookResponses.size());
         assertEquals(response1.getCategory(), bookResponses.get(0).getCategory());
         assertEquals(response2.getCategory(), bookResponses.get(1).getCategory());
-        verify(bookRepository,times(1)).findAll();
-        verify(bookMapper,times(2)).entityToResponse(any());
+        verify(bookRepository, times(1)).findAll();
+        verify(bookMapper, times(2)).entityToResponse(any());
 
     }
 
@@ -250,9 +256,9 @@ class BookServiceImplTest {
         assertNotNull(bookResponse1);
         assertEquals(book.getId(), bookResponse1.getId());
         assertEquals(category.getName(), bookResponse1.getCategory());
-        verify(bookRepository,times(1)).findById(any());
-        verify(bookMapper,times(1)).entityToResponse(any());
-        verify(authorMapper,times(1)).modelToResponse(any());
+        verify(bookRepository, times(1)).findById(any());
+        verify(bookMapper, times(1)).entityToResponse(any());
+        verify(authorMapper, times(1)).modelToResponse(any());
 
 
     }
@@ -300,9 +306,9 @@ class BookServiceImplTest {
         assertEquals(category.getName(), bookResponse1.get(0).getCategory());
         assertEquals(book.getIsbn(), bookResponse1.get(0).getIsbn());
         assertEquals(book.getCount(), bookResponse1.get(0).getCount());
-        verify(bookRepository,times(1)).getBookByName(anyString());
-        verify(bookMapper,times(1)).entityToResponse(any());
-        verify(authorMapper,times(1)).modelToResponse(any());
+        verify(bookRepository, times(1)).getBookByName(anyString());
+        verify(bookMapper, times(1)).entityToResponse(any());
+        verify(authorMapper, times(1)).modelToResponse(any());
 
     }
 
