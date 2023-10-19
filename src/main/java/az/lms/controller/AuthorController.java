@@ -81,7 +81,7 @@ public class AuthorController {
         service.deleteAuthor(id);
         return ResponseEntity.ok("Author with ID " + id + " has been successfully deleted.");
     }
-
+    
     @ApiOperation(value = "Get books by author id", notes = "Get books by  author id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = BookResponse.class),

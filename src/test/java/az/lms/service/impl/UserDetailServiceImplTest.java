@@ -1,4 +1,3 @@
-/*
 package az.lms.service.impl;
 
 import az.lms.enums.RoleType;
@@ -49,7 +48,6 @@ class UserDetailServiceImplTest {
 
     @Test
     void givenLoadUserByUsernameWhenUserFoundReturnUserDetails() {
-       */
 /* Set<GrantedAuthority> authorities = new HashSet<>();
         String studentEmail = "student@gmail.com";
         //arrange
@@ -63,10 +61,10 @@ class UserDetailServiceImplTest {
          service.loadUserByUsername(studentEmail);
         //assert
         verify(studentRepository, times(1)).findByEmail(studentEmail);
- *//*
+ */
 
 
-        // Arrange
+/*        // Arrange
         String email = "student@example.com";
         Student student = new Student();
         student.setEmail(email);
@@ -74,12 +72,12 @@ class UserDetailServiceImplTest {
 
         when(studentRepository.findByEmail(email)).thenReturn(Optional.of(student));
 
-        // Act
+        //
         UserDetails userDetails = userDetailService.loadUserByUsername(email);
 
         // Assert
         assertEquals(student.getEmail(), userDetails.getUsername());
-        // Diğer özellikleri de kontrol edebilirsiniz.
+        // Diğer özellikleri de kontrol edebilirsiniz.*/
     }
 
 
@@ -87,4 +85,4 @@ class UserDetailServiceImplTest {
     void givenLoadUserByUsernameWhenUserNotFoundThrowNotFoundException() {
 
     }
-}*/
+}
