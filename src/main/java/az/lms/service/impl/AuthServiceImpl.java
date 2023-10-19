@@ -17,7 +17,6 @@ import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.StudentMapper;
 import az.lms.model.Student;
-import az.lms.repository.LibrarianRepository;
 import az.lms.repository.StudentRepository;
 import az.lms.security.JwtTokenProvider;
 import az.lms.security.PasswordCoderConfig;
@@ -42,7 +41,6 @@ public class AuthServiceImpl implements AuthService {
    private final PasswordCoderConfig passwordEncoder;
    private final StudentRepository studentRepository;
    private final StudentMapper studentMapper;
-   private final LibrarianRepository librarianRepository;
 
 
    @Override

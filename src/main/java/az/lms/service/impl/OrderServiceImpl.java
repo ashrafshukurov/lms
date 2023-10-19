@@ -45,10 +45,10 @@ public class OrderServiceImpl implements OrderService {
       log.info("Starting to create a new borrow order");
       Book book = bookRepository.findById(request.getBookId())
               .orElseThrow(() -> new NotFoundException("Book with ID " + request.getBookId() + " not found"));
-      if (book.getCount() < 1)
+      if (book.getCount() == 0)
          throw new InsufficientCount("This book is out of stock");
       String existingOrderType = orderRepository.getTypeOfLastOrder(request.getStudentId(), request.getBookId());
-      if (existingOrderType != null && existingOrderType.equalsIgnoreCase(OrderType.BORROWED.name())) {
+      if (existingOrderType.equalsIgnoreCase(OrderType.BORROWED.name())) {
          log.warn("You have already taken the book!");
          throw new AlreadyExistsException("You have already taken the book!");
       }

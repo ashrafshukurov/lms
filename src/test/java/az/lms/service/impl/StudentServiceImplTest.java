@@ -61,7 +61,7 @@ class StudentServiceImplTest {
       student.setAddress("Baku,Azerbaijan");
       student.setSurName("Testov");
       student.setRoleType(RoleType.ADMIN);
-      student.setFIN("12345");
+      student.setFIN("1234ASF");
    }
 
    @Test
@@ -142,10 +142,10 @@ class StudentServiceImplTest {
    public void givenUpdateStudentThenUpdate() {
       //arrange
       Student student1 = new Student();
-      student1.setFIN("1234F");
+      student1.setFIN("1234asd");
       student1.setId(1234L);
       StudentRequest studentRequest = new StudentRequest();
-      studentRequest.setFIN("1234F");
+      studentRequest.setFIN("1234asd");
 
       //act
 
@@ -162,7 +162,7 @@ class StudentServiceImplTest {
    @Test
    public void givenUpdateStudentWhenThrowEmpty() {
       StudentRequest studentRequest = new StudentRequest();
-      studentRequest.setFIN("1234F");
+      studentRequest.setFIN("1234asd");
       when(studentRepository.findByFIN(studentRequest.getFIN())).thenReturn(Optional.empty());
       //act && assert
       assertThrows(NotFoundException.class, () -> studentService.update(studentRequest));
@@ -174,7 +174,7 @@ class StudentServiceImplTest {
    @Test
    public void givenGetByIdWhenFoundThenReturnResult() {
       //arrange
-      String fin = "1232F";
+      String fin = "1234asd";
       Student student1 = new Student();
       student1.setId(12L);
       student1.setFIN(fin);
@@ -194,7 +194,7 @@ class StudentServiceImplTest {
    @Test
    public void givenGetByIdWhenNotFoundThenThrow404() {
       //arrange
-      String fin = "123d";
+      String fin = "1234asd";
       when(studentRepository.findByFIN(fin)).thenReturn(Optional.empty());
       //act && assert
       assertThrows(NotFoundException.class, () -> studentService.getById(fin));
@@ -205,7 +205,7 @@ class StudentServiceImplTest {
    @Test
    public void givenDeleteStudentByIdWhenFoundThenDelete() {
       //arrange
-      String fin = "123df";
+      String fin = "1234asd";
       Student student1 = new Student();
       student1.setFIN(fin);
       when(studentRepository.findByFIN(fin)).thenReturn(Optional.of(student1));
