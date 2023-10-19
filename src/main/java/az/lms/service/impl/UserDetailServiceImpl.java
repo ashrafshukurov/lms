@@ -8,10 +8,8 @@
 package az.lms.service.impl;
 
 import az.lms.exception.NotFoundException;
-import az.lms.model.Author;
 import az.lms.model.Librarian;
 import az.lms.model.Student;
-import az.lms.repository.AuthorRepository;
 import az.lms.repository.LibrarianRepository;
 import az.lms.repository.StudentRepository;
 import az.lms.security.UserPricnipal.LibrarianPrincipal;

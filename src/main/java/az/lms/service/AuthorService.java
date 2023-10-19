@@ -8,11 +8,8 @@
 package az.lms.service;
 
 import az.lms.dto.request.AuthorRequest;
-import az.lms.dto.request.BookRequest;
 import az.lms.dto.response.AuthorResponse;
-import az.lms.dto.response.BookResponse;
 import az.lms.model.Book;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

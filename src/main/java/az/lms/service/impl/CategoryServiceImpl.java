@@ -12,7 +12,6 @@ import az.lms.dto.response.CategoryResponse;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.CategoryMapper;
-import az.lms.model.Book;
 import az.lms.model.Category;
 import az.lms.repository.CategoryRepository;
 import az.lms.service.CategoryService;
@@ -28,25 +27,25 @@ import java.util.List;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repository;
-    private final CategoryMapper mapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public void createCategory(CategoryRequest request) {
-        if (repository.existsByName(request.getName())) {
+        if (categoryRepository.existsByName(request.getName())) {
             log.error("Category name - " + request.getName() + " already exist!!!");
             throw new AlreadyExistsException("Category name-" + request.getName() + "already exist!!!");
         }
-        Category category = repository.save(mapper.requestToModel(request));
+        Category category = categoryRepository.save(categoryMapper.requestToModel(request));
         log.info("Created new category \n {}", category);
     }
 
     @Override
     public List<CategoryResponse> getAllCategory() {
-        List<Category> categories = repository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         List<CategoryResponse> categoryResponses = new ArrayList<>();
         for (Category category : categories) {
-            categoryResponses.add(mapper.modelToResponse(category));
+            categoryResponses.add(categoryMapper.modelToResponse(category));
         }
         log.info("Getting all category.All categories count {}", categoryResponses.size());
         return categoryResponses;
@@ -54,30 +53,28 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse getCategoryById(Long id) {
-        Category category = repository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category not found"));
         log.info("Getting category by id" + category.toString());
-        return mapper.modelToResponse(category);
+        return categoryMapper.modelToResponse(category);
     }
 
     @Override
     public void updateCategory(Long id, CategoryRequest request) {
-        Category category = repository.findById(id).orElseThrow(() -> new NotFoundException("Category id not found.ID: " + id));
-        Category newCategory = mapper.requestToModel(request);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category id not found.ID: " + id));
+        Category newCategory = categoryMapper.requestToModel(request);
         newCategory.setId(category.getId());
-        repository.save(newCategory);
+        categoryRepository.save(newCategory);
         log.info("Category successfully updated");
     }
 
     @Override
     public void deleteCategoryById(Long id) {
-        Category category = repository.findById(id).orElseThrow(() -> new NotFoundException("Category id not found"));
-        repository.delete(category);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category id not found"));
+        categoryRepository.delete(category);
         log.info("Category has been deleted successfully.Deleted category id {}", id);
     }
 
-    @Override
-    public List<Book> getBooksByCategory(Long id) {
-
-        return null;
-    }
 }

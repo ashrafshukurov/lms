@@ -27,22 +27,22 @@ import java.util.List;
 @Slf4j
 public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorRepository repository;
-    private final AuthorMapper mapper;
+    private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
     @Override
     public void createAuthor(AuthorRequest request) {
-            Author author = mapper.requestToModel(request);
-            repository.save(author);
+            Author author = authorMapper.requestToModel(request);
+            authorRepository.save(author);
             log.info("Created new author \n" + author);
     }
 
     @Override
     public List<AuthorResponse> getAllAuthors() {
-        List<Author> authors = repository.findAll();
+        List<Author> authors = authorRepository.findAll();
         List<AuthorResponse> responses = new ArrayList<>();
         for (var a : authors) {
-            responses.add(mapper.modelToResponse(a));
+            responses.add(authorMapper.modelToResponse(a));
         }
         log.info("Getting all authors.All author`s count {}", responses.size());
         return responses;
@@ -50,31 +50,31 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(Long id) {
-        Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found with id " + id));
-        repository.delete(author);
+        Author author = authorRepository.findById(id).orElseThrow(() -> new NotFoundException("Author not found with id " + id));
+        authorRepository.delete(author);
         log.info("Author has been deleted successfully.Deleted author id {}", id);
     }
 
     @Override
     public AuthorResponse getAuthorById(Long id) {
-        Author author = repository.findById(id).orElseThrow(()
+        Author author = authorRepository.findById(id).orElseThrow(()
                 -> new NotFoundException("Author not found!"));
         log.info("Getting author by id" + author.toString());
-        return mapper.modelToResponse(author);
+        return authorMapper.modelToResponse(author);
     }
 
     @Override
     public void updateAuthors(Long id, AuthorRequest request) {
-        Author author = repository.findById(id).orElseThrow(() -> new NotFoundException("Author not found"));
-        Author newAuthor = mapper.requestToModel(request);
+        Author author = authorRepository.findById(id).orElseThrow(() -> new NotFoundException("Author not found"));
+        Author newAuthor = authorMapper.requestToModel(request);
         newAuthor.setId(author.getId());
-        repository.save(newAuthor);
+        authorRepository.save(newAuthor);
         log.info("Author updated successfully");
     }
 
     @Override
     public List<Book> getBooksByAuthorId(Long authorId) {
-        Author author = repository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
+        Author author = authorRepository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
         log.info("Getting books by author id.ID: {} Book count: {}", authorId, author.getBooks().size());
         return new ArrayList<>(author.getBooks());
     }
