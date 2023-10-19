@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
     private final FileUtil fileUtil;
     private final AuthorRepository authorRepository;
 
-    private final String bucketName = "library.s3.amazonaws.com";
+    private final String bucketName = "amazons3.library.manegment.system";
 
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {

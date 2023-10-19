@@ -32,7 +32,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final FileUtil fileUtil;
-    private final String bucketName="library.s3.amazonaws.com";
+    private final String bucketName="amazons3.library.manegment.system";
 
 
     @ApiOperation(value = "adding book", notes = "add to Book and book picture")
