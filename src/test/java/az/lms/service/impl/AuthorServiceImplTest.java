@@ -2,7 +2,7 @@ package az.lms.service.impl;
 
 import az.lms.dto.request.AuthorRequest;
 import az.lms.exception.NotFoundException;
-import az.lms.mapper.impl.AuthorMapperImpl;
+import az.lms.mapper.AuthorMapper;
 import az.lms.model.Author;
 import az.lms.model.Book;
 import az.lms.model.Category;
@@ -30,7 +30,7 @@ class AuthorServiceImplTest {
     @InjectMocks
     private AuthorServiceImpl service;
     @Mock
-    AuthorMapperImpl mapper;
+    AuthorMapper mapper;
     Set<Book> books = new HashSet<>();
     @BeforeEach
     void setUp() {
@@ -141,7 +141,7 @@ class AuthorServiceImplTest {
 
     @Test
     void givenUpdateAuthorsWhenAuthorFoundThenUpdate() {
-        //arrance
+        //arrange
         Long id = 1L;
 
         when(repository.findById(id)).thenReturn(Optional.of(author));

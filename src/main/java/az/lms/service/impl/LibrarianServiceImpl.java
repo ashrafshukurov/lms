@@ -8,15 +8,11 @@
 package az.lms.service.impl;
 
 import az.lms.dto.request.LibrarianRequest;
-import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.LibrarianResponse;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
-import az.lms.mapper.AuthorMapper;
 import az.lms.mapper.LibrarianMapper;
-import az.lms.model.Author;
 import az.lms.model.Librarian;
-import az.lms.repository.AuthorRepository;
 import az.lms.repository.LibrarianRepository;
 import az.lms.security.PasswordCoderConfig;
 import az.lms.service.LibrarianService;
@@ -38,8 +34,10 @@ public class LibrarianServiceImpl implements LibrarianService {
     @Override
     public void createLibrarian(LibrarianRequest request) {
         if (!repository.existsByEmail(request.getEmail())) {
-            Librarian librarian = repository.save(mapper.requestToModel(request));
-            log.info("Created new author \n" + librarian);
+            Librarian librarian = mapper.requestToModel(request);
+            librarian.setPassword(passwordCoderConfig.passwordEncode(request.getPassword()));
+            repository.save(librarian);
+            log.info("Created new librarian \n" + librarian);
         } else {
             log.error("Librarian already exist!!!");
             throw new AlreadyExistsException("Librarian already exist!!!");
@@ -68,7 +66,7 @@ public class LibrarianServiceImpl implements LibrarianService {
     public LibrarianResponse getLibrarianById(Long id) {
         Librarian librarian = repository.findById(id).orElseThrow(()
                 -> new NotFoundException("Librarian not found!"));
-        log.info("Getting author by id" + librarian.toString());
+        log.info("Getting librarian by id" + librarian.toString());
         return mapper.modelToResponse(librarian);
     }
 
