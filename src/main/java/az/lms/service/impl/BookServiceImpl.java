@@ -42,11 +42,9 @@ public class BookServiceImpl implements BookService {
     private final AuthorMapper authorMapper;
     private final FileUtil fileUtil;
     private final AuthorRepository authorRepository;
-
-    private final String bucketName = "amazons3.library.manegment.system";
-
     @Override
     public void createBook(BookRequest bookRequest, MultipartFile imageFile) throws IOException {
+        final String bucketName = "library.management.system";
         log.info("uploading file");
         Book book = bookMapper.requestToEntity(bookRequest);
         if (bookRepository.existsByIsbn(book.getIsbn())) {

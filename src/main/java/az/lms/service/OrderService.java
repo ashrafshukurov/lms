@@ -12,11 +12,7 @@ import java.util.List;
  */
 @Service
 public interface OrderService {
-
    List<OrderResponse> getOrders();
-
    void borrowOrder(OrderRequest request);
-
    void returnOrder(OrderRequest request);
-
 }

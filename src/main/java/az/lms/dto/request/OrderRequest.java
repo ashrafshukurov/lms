@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-
 /**
  * @author Mehman Osmanov on 11.08.23
  * @project LMS

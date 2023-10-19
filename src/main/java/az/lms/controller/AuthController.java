@@ -13,25 +13,21 @@ import az.lms.dto.response.StudentResponse;
 import az.lms.dto.response.TokenResponse;
 import az.lms.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/auth")
-@Configuration
+@RestController
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> logon(@RequestBody LoginRequest request) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.accepted().body(authService.login(request));
     }
 
-    @PostMapping("/student/registration")
+    @PostMapping("/registration")
     public ResponseEntity<StudentResponse> studentRegistration(@RequestBody StudentRequest request) {
         return ResponseEntity.ok(authService.registration(request));
     }

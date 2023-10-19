@@ -2,12 +2,10 @@ package az.lms.exception;
 
 import az.lms.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,11 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author Mehman Osmanov on 11.08.23
@@ -34,7 +28,6 @@ public class GlobalExceptionHandler {
             NotFoundException.class,
             AlreadyExistsException.class,
             InsufficientCount.class,
-            MaxUploadSizeExceededException.class,
             DataIntegrityViolationException.class,
             S3Exception.class
     })
@@ -64,6 +57,19 @@ public class GlobalExceptionHandler {
         error.setDate(LocalDateTime.now());
         error.setStatus(HttpStatus.BAD_REQUEST);
         log.error("Validation failed for argument: " + errorMessage);
+        return error;
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse maxUploadSize(MaxUploadSizeExceededException e) {
+        ErrorResponse error = new ErrorResponse();
+        error.setErrorMessage(e.getMessage());
+        error.setErrorCode(HttpStatus.BAD_REQUEST.value());
+        error.setDate(LocalDateTime.now());
+        error.setStatus(HttpStatus.BAD_REQUEST);
+        log.error("Validation failed for argument: " + e.getMessage());
         return error;
     }
 

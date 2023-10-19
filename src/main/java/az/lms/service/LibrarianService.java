@@ -13,12 +13,8 @@ import az.lms.dto.response.LibrarianResponse;
 import java.util.List;
 public interface LibrarianService {
     void createLibrarian(LibrarianRequest request);
-
     List<LibrarianResponse> getAllLibrarian();
-
     void deleteLibrarian(Long id);
-
     LibrarianResponse getLibrarianById(Long id);
-
     void updateLibrarian(Long id, LibrarianRequest request);
 }
