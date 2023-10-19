@@ -13,17 +13,11 @@ import java.util.List;
  */
 @Service
 public interface StudentService {
-
    List<StudentResponse> getAll();
-
    void create(StudentRequest request);
-
    void update(StudentRequest request);
-
    StudentResponse getById(String fin);
-
    void deleteById(String fin);
-
    List<OrderResponse> getStudentOrders(String fin);
 
 }

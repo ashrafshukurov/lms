@@ -7,7 +7,6 @@
 
 package az.lms.controller;
 
-import az.lms.dto.request.AuthorRequest;
 import az.lms.dto.request.LibrarianRequest;
 import az.lms.dto.response.AuthorResponse;
 import az.lms.dto.response.LibrarianResponse;
@@ -17,10 +16,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 

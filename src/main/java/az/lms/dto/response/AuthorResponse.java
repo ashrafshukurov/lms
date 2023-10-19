@@ -11,7 +11,6 @@ import az.lms.model.Book;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,14 +20,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class AuthorResponse {
     private Long id;
-
     private String name;
-
     private String surname;
-
     private String biography;
-
     private LocalDate birthDay;
-
     private Set<Book> books;
 }

@@ -6,16 +6,10 @@
  */
 
 package az.lms.dto.request;
-
-import az.lms.enums.RoleType;
-import az.lms.model.Book;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

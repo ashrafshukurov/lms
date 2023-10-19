@@ -18,14 +18,9 @@ import java.util.List;
 
 public interface AuthorService {
     void createAuthor(AuthorRequest request);
-
     List<AuthorResponse> getAllAuthors();
-
     void deleteAuthor(Long id);
-
     AuthorResponse getAuthorById(Long id);
-
     void updateAuthors(Long id, AuthorRequest request);
-
-    public List<Book> getBooksByAuthorId(Long authorId);
+    List<Book> getBooksByAuthorId(Long authorId);
 }
