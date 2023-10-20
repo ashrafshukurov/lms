@@ -68,7 +68,6 @@ public class BookController {
             @ApiResponse(code = 404, message = "Invalid getting books")
     })
 
-    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());

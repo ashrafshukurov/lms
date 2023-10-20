@@ -27,8 +27,7 @@ public class FileUtil {
     }
 
     public void uploadFile(String bucketName, String objectKey, MultipartFile multipartFile) throws IOException {
-        log.info("file size {}:",multipartFile.getSize());
-        if(multipartFile.getSize()>400000){
+        if(multipartFile.getSize()>4_000_000){
             throw new MaxUploadSizeExceededException(multipartFile.getSize());
         }
         try (InputStream inputStream = multipartFile.getInputStream()) {

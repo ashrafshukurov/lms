@@ -7,7 +7,6 @@
 
 package az.lms.model;
 
-import az.lms.enums.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,17 +49,4 @@ public class Author {
         book.getAuthors().add(this);
 
     }
-
-
-   /* @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", biography='" + biography + '\'' +
-                ", birthDay=" + birthDay +
-                ", books=" + books +
-                '}';
-    }*/
 }
