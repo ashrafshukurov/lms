@@ -54,18 +54,22 @@ public class SecurityConfig {
               .and()
               .csrf().disable()
               .authorizeRequests()
-              //student
               .antMatchers(HttpMethod.POST, "/student/").permitAll()
               .antMatchers("/student/orders/{fin}").hasAnyRole("STUDENT", "LIBRARIAN", "ADMIN")
               .antMatchers(HttpMethod.GET, "/student/","/student/{fin}").hasAnyRole("LIBRARIAN", "ADMIN")
               .antMatchers(HttpMethod.PUT, "/student/").hasAnyRole("LIBRARIAN", "ADMIN")
               .antMatchers(HttpMethod.DELETE, "/student/{fin}").hasAnyRole("LIBRARIAN", "ADMIN")
-
-              .antMatchers("/auth/**", "/author/**", "/book/**", "/category/**", "/librarian/**").permitAll()
-              .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
-              .antMatchers("/librarian/**").hasAnyRole("ADMIN", "LIBRARIAN")
+              .antMatchers(HttpMethod.GET, "/book/","/book/name/{}bookName").permitAll()
+              .antMatchers(HttpMethod.GET, "/book/{id}").hasAnyRole("LIBRARIAN","ADMIN")
+              .antMatchers(HttpMethod.PUT, "/book/").hasAnyRole("LIBRARIAN","ADMIN")
+              .antMatchers(HttpMethod.POST, "/book/").hasAnyRole("LIBRARIAN","ADMIN")
+              .antMatchers(HttpMethod.DELETE, "/book/{id}").hasAnyRole("LIBRARIAN","ADMIN")
               .antMatchers("/order/").hasAnyRole("ADMIN", "LIBRARIAN")
               .antMatchers("/order/**").hasAnyRole("STUDENT")
+              .antMatchers("/librarian/**","/category/**","/author/**").hasAnyRole("ADMIN", "LIBRARIAN")
+              .antMatchers("/auth/**" ).permitAll()
+              .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
+
               .anyRequest().authenticated();
       http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
       return http.build();
