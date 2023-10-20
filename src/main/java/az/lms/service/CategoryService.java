@@ -9,7 +9,6 @@ package az.lms.service;
 
 import az.lms.dto.request.CategoryRequest;
 import az.lms.dto.response.CategoryResponse;
-import az.lms.model.Book;
 
 import java.util.List;
 

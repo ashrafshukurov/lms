@@ -56,7 +56,8 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public void update(StudentRequest request) {
       log.info("Updating student's fields");
-      Student student = studentRepository.findByFIN(request.getFIN().toLowerCase()).orElseThrow(() -> new NotFoundException("Student not found with fin code"));
+      Student student = studentRepository.findByFIN(request.getFIN().toLowerCase())
+              .orElseThrow(() -> new NotFoundException("Student not found with fin code"));
       Student newStudent = studentMapper.requestToEntity(request);
       newStudent.setId(student.getId());
       studentRepository.save(newStudent);
@@ -65,21 +66,24 @@ public class StudentServiceImpl implements StudentService {
    @Override
    public StudentResponse getById(String fin) {
       log.info("Getting student by fin {}", fin);
-      Student student = studentRepository.findByFIN(fin.toLowerCase()).orElseThrow(() -> new NotFoundException("Student not found with fin code " + fin));
+      Student student = studentRepository.findByFIN(fin.toLowerCase())
+              .orElseThrow(() -> new NotFoundException("Student not found with fin code " + fin));
       return studentMapper.entityToResponse(student);
    }
 
    @Override
    public void deleteById(String fin) {
       log.warn("Deleting student account");
-      Student student = studentRepository.findByFIN(fin.toLowerCase()).orElseThrow(() -> new NotFoundException("Student not found with fin code " + fin));
+      Student student = studentRepository.findByFIN(fin.toLowerCase())
+              .orElseThrow(() -> new NotFoundException("Student not found with fin code " + fin));
       studentRepository.delete(student);
    }
 
    @Override
    public List<OrderResponse> getStudentOrders(String fin) {
       log.warn("Getting all student's orders");
-      Student student = studentRepository.findByFIN(fin.toLowerCase()).orElseThrow(() -> new NotFoundException("Student not found with fin=" + fin));
+      Student student = studentRepository.findByFIN(fin.toLowerCase())
+              .orElseThrow(() -> new NotFoundException("Student not found with fin=" + fin));
       List<Order> orders = orderRepository.findOrderByStudentId(student.getId());
       return orders.stream().map(orderMapper::entityToDto).toList();
    }

@@ -118,7 +118,7 @@ class OrderServiceImplTest {
       orderRequest.setStudentId(1L);
 
       when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn(null);
+      when(orderRepository.getTypeOfLastOrder(1L, 1L)).thenReturn("RETURNED");
       when(orderMapper.dtoToEntity(orderRequest)).thenReturn(order);
       //act
       int bookCount = book.getCount();
