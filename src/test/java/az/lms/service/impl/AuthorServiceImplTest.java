@@ -167,21 +167,4 @@ class AuthorServiceImplTest {
         verify(mapper, never()).requestToModel(request);
     }
 
-    @Test
-    void givenGetBooksByAuthorIdWhenFoundThenReturnBooksList() {
-        //arrange
-
-        //act
-
-        //assert
-    }
-
-    @Test
-    void givenGetBooksByAuthorIdWhenNotFoundThenThrowException() {
-        //arrange
-
-        //act
-
-        //assert
-    }
 }
