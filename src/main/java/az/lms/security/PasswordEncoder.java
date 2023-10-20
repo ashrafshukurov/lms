@@ -10,12 +10,11 @@ package az.lms.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class PasswordCoderConfig {
+public class PasswordEncoder {
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
+    public org.springframework.security.crypto.password.PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

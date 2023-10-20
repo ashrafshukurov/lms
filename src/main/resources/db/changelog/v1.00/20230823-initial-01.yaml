@@ -34,12 +34,6 @@ databaseChangeLog:
               - column:
                   name: category_id
                   type: BIGINT
-#
-#              - addForeignKeyConstraint:
-#                  baseTableName: books
-#                  baseColumnNames: category_id
-#                  constraintName: fk_category_id
-#                  referencedTableName: categories
-#                  referencedColumnNames: id
+
 
 

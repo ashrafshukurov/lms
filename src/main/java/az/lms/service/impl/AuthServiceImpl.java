@@ -20,7 +20,7 @@ import az.lms.model.Student;
 import az.lms.repository.LibrarianRepository;
 import az.lms.repository.StudentRepository;
 import az.lms.security.JwtTokenProvider;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import az.lms.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
    private final AuthenticationManager authenticationManager;
    private final JwtTokenProvider jwtTokenProvider;
-   private final PasswordCoderConfig passwordEncoder;
+   private final PasswordEncoder passwordEncoder;
    private final StudentRepository studentRepository;
    private final StudentMapper studentMapper;
    private final LibrarianRepository librarianRepository;

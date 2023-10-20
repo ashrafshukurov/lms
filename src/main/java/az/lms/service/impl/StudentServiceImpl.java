@@ -12,14 +12,13 @@ import az.lms.model.Order;
 import az.lms.model.Student;
 import az.lms.repository.OrderRepository;
 import az.lms.repository.StudentRepository;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import az.lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Mehman Osmanov on 12.08.23
@@ -33,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
    private final OrderRepository orderRepository;
    private final StudentMapper studentMapper;
    private final OrderMapper orderMapper;
-   private final PasswordCoderConfig passwordCoderConfig;
+   private final PasswordEncoder passwordCoderConfig;
 
    @Override
    public List<StudentResponse> getAll() {

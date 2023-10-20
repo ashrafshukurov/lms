@@ -12,7 +12,7 @@ import az.lms.model.Order;
 import az.lms.model.Student;
 import az.lms.repository.OrderRepository;
 import az.lms.repository.StudentRepository;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +49,7 @@ class StudentServiceImplTest {
    @Mock
    private OrderMapper orderMapper;
    @Mock
-   private PasswordCoderConfig passwordCoderConfig;
+   private PasswordEncoder passwordCoderConfig;
 
 
    @BeforeEach

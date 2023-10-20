@@ -2,7 +2,7 @@ package az.lms.config;
 
 import az.lms.security.JwtAuthenticationEntryPoint;
 import az.lms.security.JwtAuthenticationFilter;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import az.lms.service.impl.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class SecurityConfig {
    private final JwtAuthenticationFilter jwtAuthenticationFilter;
    private final UserDetailServiceImpl userDetailsService;
    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-   private final PasswordCoderConfig passwordCoderConfig;
+   private final PasswordEncoder passwordCoderConfig;
 
    @Bean(BeanIds.AUTHENTICATION_MANAGER)
    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
