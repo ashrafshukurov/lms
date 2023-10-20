@@ -90,8 +90,8 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully work"),
             @ApiResponse(code = 404, message = "Not Found book")
     })
-    @GetMapping("/name/{bookname}")
-    public ResponseEntity<List<BookResponse>> getBookByName(@PathVariable String bookname) {
-        return ResponseEntity.ok(bookService.getBookByName(bookname));
+    @GetMapping("/name/{bookName}")
+    public ResponseEntity<List<BookResponse>> getBookByName(@PathVariable String bookName) {
+        return ResponseEntity.ok(bookService.getBookByName(bookName));
     }
 }
