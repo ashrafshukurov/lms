@@ -14,7 +14,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException{
         log.error("Responding with unauthorized error. Message - {}  ", e.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
     }

@@ -25,13 +25,12 @@ public class JwtTokenProvider {
         var expirationInMs = tokenType == TokenType.ACCESS_TOKEN ? accessTokenExpirationInMs : refreshTokenExpirationInMs;
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + Integer.parseInt(expirationInMs));
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-        return token;
     }
     public String getUserNameFromJWT(String token) {
         Claims claims = Jwts.parser()

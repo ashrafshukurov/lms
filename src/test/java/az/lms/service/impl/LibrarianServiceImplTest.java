@@ -1,21 +1,18 @@
 package az.lms.service.impl;
 
 import az.lms.dto.request.LibrarianRequest;
-import az.lms.dto.response.CategoryResponse;
 import az.lms.dto.response.LibrarianResponse;
 import az.lms.enums.RoleType;
 import az.lms.exception.AlreadyExistsException;
 import az.lms.exception.NotFoundException;
 import az.lms.mapper.LibrarianMapper;
-import az.lms.model.Category;
 import az.lms.model.Librarian;
 import az.lms.repository.LibrarianRepository;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ class LibrarianServiceImplTest {
     @Mock
     LibrarianMapper mapper;
     @Mock
-    PasswordCoderConfig passwordCoderConfig;
+    PasswordEncoder passwordCoderConfig;
     Long id = 1L;
     Librarian librarian = Librarian.builder()
             .id(1L)

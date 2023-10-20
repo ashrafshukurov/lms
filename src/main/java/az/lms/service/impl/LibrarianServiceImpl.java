@@ -14,7 +14,7 @@ import az.lms.exception.NotFoundException;
 import az.lms.mapper.LibrarianMapper;
 import az.lms.model.Librarian;
 import az.lms.repository.LibrarianRepository;
-import az.lms.security.PasswordCoderConfig;
+import az.lms.security.PasswordEncoder;
 import az.lms.service.LibrarianService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import java.util.List;
 public class LibrarianServiceImpl implements LibrarianService {
     private final LibrarianRepository repository;
     private final LibrarianMapper mapper;
-    private final PasswordCoderConfig passwordCoderConfig;
+    private final PasswordEncoder passwordCoderConfig;
 
     @Override
     public void createLibrarian(LibrarianRequest request) {
