@@ -66,8 +66,8 @@ public class SecurityConfig {
               .antMatchers(HttpMethod.DELETE, "/book/{id}").hasAnyRole("ADMIN")
               .antMatchers("/order/").hasAnyRole("ADMIN", "LIBRARIAN")
               .antMatchers("/order/**").hasAnyRole("STUDENT")
-              .antMatchers("/librarian/**", "/category/**", "/author/**").hasAnyRole("ADMIN", "LIBRARIAN")
-              .antMatchers("/auth/**").permitAll()
+              .antMatchers("/librarian/**", "/author/**").hasAnyRole("ADMIN", "LIBRARIAN")
+              .antMatchers("/auth/**", "/category/**").permitAll()
               .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**").permitAll()
 
               .anyRequest().authenticated();
