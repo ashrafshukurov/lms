@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             throw new AlreadyExistsException("Book with ISBN " + book.getIsbn() + " already exists");
         }
-        Author author = authorRepository.getById(bookRequest.getAuthor_id());
+        Author author = authorRepository.findById(bookRequest.getAuthor_id()).orElseThrow(()->new NotFoundException("Author is not found with this id"+bookRequest.getAuthor_id()));
         author.addBook(book);
         String region = "eu-central-1";
         String objectKey = "images/" + imageFile.getOriginalFilename();
@@ -126,7 +126,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponse> getBookByName(String bookName) {
-        List<Book> books = bookRepository.getBookByName(bookName)
+        List<Book> books = bookRepository.findByNameContaining(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
         List<BookResponse> bookResponses = new ArrayList<>();
         books.forEach(book -> {
