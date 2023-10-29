@@ -126,7 +126,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponse> getBookByName(String bookName) {
-        List<Book> books = bookRepository.getBookByName(bookName)
+        List<Book> books = bookRepository.findByNameContaining(bookName)
                 .orElseThrow(() -> new NotFoundException("Not found book with this name: " + bookName));
         List<BookResponse> bookResponses = new ArrayList<>();
         books.forEach(book -> {

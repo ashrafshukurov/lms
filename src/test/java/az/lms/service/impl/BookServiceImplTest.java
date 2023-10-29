@@ -309,7 +309,7 @@ class BookServiceImplTest {
         Set<Author> authors = new HashSet<>();
         authors.add(author);
         book.setAuthors(authors);
-        when(bookRepository.getBookByName(book.getName())).thenReturn(Optional.of(List.of(book)));
+        when(bookRepository.findByNameContaining(book.getName())).thenReturn(Optional.of(List.of(book)));
 
         BookResponse bookResponse = new BookResponse();
         bookResponse.setId(book.getId());
@@ -336,7 +336,7 @@ class BookServiceImplTest {
         assertEquals(category.getName(), bookResponse1.get(0).getCategory());
         assertEquals(book.getIsbn(), bookResponse1.get(0).getIsbn());
         assertEquals(book.getCount(), bookResponse1.get(0).getCount());
-        verify(bookRepository, times(1)).getBookByName(anyString());
+        verify(bookRepository, times(1)).findByNameContaining(anyString());
         verify(bookMapper, times(1)).entityToResponse(any());
         verify(authorMapper, times(1)).modelToResponse(any());
 
@@ -346,7 +346,7 @@ class BookServiceImplTest {
     public void givenGetBookByNameWhenNotFoundThenThrow404() {
         //arrange
         String invalidName = "kjsjfs";
-        when(bookRepository.getBookByName(invalidName)).thenReturn(Optional.empty());
+        when(bookRepository.findByNameContaining(invalidName)).thenReturn(Optional.empty());
         //assert & act
         assertThrows(NotFoundException.class, () -> bookService.getBookByName(invalidName));
 
