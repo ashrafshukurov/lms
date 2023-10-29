@@ -112,7 +112,7 @@ class BookServiceImplTest {
         when(bookMapper.requestToEntity(bookRequest)).thenReturn(book);
         when(bookRepository.existsByIsbn(book.getIsbn())).thenReturn(false);
         doNothing().when(fileUtil).uploadFile(anyString(), anyString(), any());
-        when(authorRepository.getById(bookRequest.getAuthor_id())).thenReturn(author);
+        when(authorRepository.findById(bookRequest.getAuthor_id())).thenReturn(Optional.of(author));
         //act
         bookService.createBook(bookRequest, imageFile);
         //assert
@@ -143,6 +143,36 @@ class BookServiceImplTest {
 
         // Act and Assert
         assertThrows(AlreadyExistsException.class, () -> bookService.createBook(bookRequest1, imageFile));
+    }
+    @Test
+    public void testCreateBookWithInvalidAuthorId() throws IOException {
+        MultipartFile imageFile = new MockMultipartFile("image.jpg", new byte[0]);
+        String fakeFileName = UUID.randomUUID().toString().substring(0, 4) + "image.jpg";
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setIsbn("1234f");
+        bookRequest.setName("book1");
+        bookRequest.setImage(fakeFileName);
+        bookRequest.setDetails("details");
+        bookRequest.setCount(12);
+        bookRequest.setDescription("desc");
+        bookRequest.setCategories_id(1L);
+        Long invalid_author_id = 1L;
+        bookRequest.setAuthor_id(invalid_author_id);
+        book.setImage(fakeFileName);
+        Category category1 = new Category();
+        category1.setName("category");
+        category1.setId(1L);
+        book.setCategories(category1);
+        book.setCount(12);
+        Set<Book> books = new HashSet<>();
+        books.add(book);
+        author.setId(invalid_author_id);
+        author.setBooks(books);
+        author.addBook(book);
+        when(authorRepository.findById(bookRequest.getAuthor_id())).thenReturn(Optional.empty());
+        when(bookMapper.requestToEntity(bookRequest)).thenReturn(book);
+        when(bookRepository.existsByIsbn(book.getIsbn())).thenReturn(false);
+        assertThrows(NotFoundException.class,()->bookService.createBook(bookRequest,imageFile));
     }
 
     @Test

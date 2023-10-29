@@ -69,6 +69,7 @@ public class BookController {
     })
 
     @GetMapping("/")
+    @CrossOrigin
     public ResponseEntity<List<BookResponse>> getBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
     }

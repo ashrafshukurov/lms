@@ -58,7 +58,7 @@ public class CategoryController {
             @ApiResponse(code = 200, message = "All category returned"),
             @ApiResponse(code = 404, message = "Category not found")
     })
-
+    @CrossOrigin
     @GetMapping("/all")
     public ResponseEntity<List<CategoryResponse>> getAllCategory() {
         return ResponseEntity.ok(service.getAllCategory());
