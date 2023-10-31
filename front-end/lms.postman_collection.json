@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "83b612a0-2a81-4cc8-9924-05e88b009eae",
+		"name": "lms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27009735"
+	},
+	"item": [
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Add Author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John\",\n    \"surname\": \"Doe\",\n    \"biography\": \"A prolific author\",\n    \"birthDay\": \"2023-05-23\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/author/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"author",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update author",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Cavid\",\n    \"surname\": \"Haciyevvv\",\n    \"biography\": \"A prolific author\",\n    \"birthDay\": \"2023-05-23\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/author/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"author",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/author/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"author",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get author by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/author/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"author",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete author by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/author/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"author",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books by author id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get All Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/category/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"category",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWhhY2l5ZXZAZ21haWwuY29tIiwiaWF0IjoxNjk1MjE4MTQyLCJleHAiOjE2OTUyMTg3NDJ9.h5cSkXRODX2HeMKz2ShfSDrScz0pr7pmXzAS5NSK2s-sK7sgnfDOelk7NcSrEfkU9MBzqwYLx5NOcDGd65hHTQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"name\": \"Dram\",\n    \"description\": \"Books that take place in imaginary worlds with magic and mythical creatures.\",\n    \"type\":\"category type 1\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"name\": \"Any name\",\n    \"description\": \"Books that take place in imaginary worlds with magic and mythical creatures.\",\n    \"type\":\"category type 1\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/category/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/category/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/category/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Librarian",
+			"item": [
+				{
+					"name": "All librarian",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWhhY2l5ZXZAZ21haWwuY29tIiwiaWF0IjoxNjkyNzc3NzEyLCJleHAiOjE2OTI3NzgzMTJ9.TvCGSfZmsvdktUpXFZsaT4gutQlef1QH9Xeap7cIQq0rxMRNh-Z8GDLt7HwGItg9jKoa2xEBVojdrcO9fmqA8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/librarian/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"librarian",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Librarian",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWhhY2l5ZXZAZ21haWwuY29tIiwiaWF0IjoxNjk1MjE3NTA4LCJleHAiOjE2OTUyMTgxMDh9.iHMQyJDX5Fft5NE8Ov819xIxH7KuF3UO9eY6UC3SaHGtShWxCtyV5GS9xLmSuo6HXWEAkxZbudVb-I3t1nF3bg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Libra1\",\n    \"surname\":\"Librarian\",\n    \"email\":\"libra1@gmail.com\",\n    \"password\":\"Aa123123\",\n    \"roleType\":\"LIBRARIAN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/librarian/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"librarian",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete librarian",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWhhY2l5ZXZAZ21haWwuY29tIiwiaWF0IjoxNjk1MjE3NTA4LCJleHAiOjE2OTUyMTgxMDh9.iHMQyJDX5Fft5NE8Ov819xIxH7KuF3UO9eY6UC3SaHGtShWxCtyV5GS9xLmSuo6HXWEAkxZbudVb-I3t1nF3bg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/librarian/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"librarian",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Librarian by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWhhY2l5ZXZAZ21haWwuY29tIiwiaWF0IjoxNjk1MjE3NTA4LCJleHAiOjE2OTUyMTgxMDh9.iHMQyJDX5Fft5NE8Ov819xIxH7KuF3UO9eY6UC3SaHGtShWxCtyV5GS9xLmSuo6HXWEAkxZbudVb-I3t1nF3bg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/librarian/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"librarian",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Librarian",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Libra3\",\n    \"surname\":\"Librarian\",\n    \"email\":\"librarian2@gmail.com\",\n    \"password\":\"Aa123123\",\n    \"roleType\":\"LIBRARIAN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/librarian/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"librarian",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Get all orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbDNAZ21haWwuY29tIiwiaWF0IjoxNjk1NTY4ODM4LCJleHAiOjE2OTU1Njk0Mzh9.pxgcb4hT5IWKr2nfEbE8zz7fDytLN-3wiP29ZzOPJTIU-ko7aHqMnnmdZe_xz_O814AejlvRhwk9MIAhqAY01g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/lms/v1/order/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make return order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbDNAZ21haWwuY29tIiwiaWF0IjoxNjk1NTY5MzQ3LCJleHAiOjE2OTU1Njk5NDd9.zjvnu_eN5kRYANJqJK4oqj6tlExJ8IkysWieiQVNNyIk6Ah_hYtKH1JnPEEEQvQ9tlMuNLP3bswmHdxtWnkDww",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"studentId\":1,\n\"bookId\":1,\n\"orderType\":\"RETURNED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/lms/v1/order/return",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"order",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make borrow order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"studentId\":1,\n\"bookId\":1,\n\"orderType\":\"BORROWED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/lms/v1/order/borrow",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"order",
+								"borrow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "addStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fin\":\"8czff5t\",\n    \"email\":\"HesenAliyev03@gmail.com\",\n    \"password\":\"hasan0304\",\n    \"name\":\"hasan\",\n    \"surName\":\"Aliyev\",\n    \"studentGroup\":\"1203i\",\n    \"birthDate\":\"2003-09-08\",\n    \"address\":\"Baku,izami rayonu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStudentByFin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/student/8czff5t",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"student",
+								"8czff5t"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStudent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateStudent",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fin\":\"8czff5t\",\n    \"email\":\"HesenAliyev03@gmail.com\",\n    \"password\":\"hasan0304\",\n    \"name\":\"Hasan\",\n    \"surName\":\"Aliyev\",\n    \"studentGroup\":\"1203i\",\n    \"birthDate\":\"2003-09-08\",\n    \"address\":\"Baku,izami rayonu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteStudentByFin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/student/1234567890",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"student",
+								"1234567890"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStudentOrdersByFin",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "addBook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "book3.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/book/?name=book1&isbn=123book3213112&count=12&details=book details&publishedTime=2000-09-09&categories_id=1&description=descrp1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"book",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "book1"
+								},
+								{
+									"key": "isbn",
+									"value": "123book3213112"
+								},
+								{
+									"key": "count",
+									"value": "12"
+								},
+								{
+									"key": "details",
+									"value": "book details"
+								},
+								{
+									"key": "publishedTime",
+									"value": "2000-09-09"
+								},
+								{
+									"key": "categories_id",
+									"value": "1"
+								},
+								{
+									"key": "description",
+									"value": "descrp1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBooks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/book/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"book",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBookById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateBook",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"prison-break\",\n    \"isbn\": \"1234f\",\n    \"count\": 4,\n    \"image\": \"de02-camera.jpg\",\n    \"publishedTime\": \"2002-08-09\",\n    \"description\": \"desc1\",\n    \"categories_id\":1,\n    \"details\": \"details\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/book/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"book",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBookByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/book/name/prison-break",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"book",
+								"name",
+								"prison-break"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteBookById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/v1/book/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"v1",
+								"book",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadFile",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add book",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"type": "file",
+							"src": "/home/jaweed/Pictures/Screenshots/Screenshot from 2023-08-12 19-16-24.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/v1/book/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"v1",
+						"book",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"john.doe@example.com\",\n    \"password\":\"Aa123123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
