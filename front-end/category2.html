@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Categories</title>
+</head>
+<body>
+<h1>Categories</h1>
+<ul id="categories">
+    <!-- Category names will be displayed here -->
+</ul>
+<table id="data-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    // Function to fetch and display the list of books
+    async function fetchBooks() {
+        try {
+            const response = await fetch('http://localhost:8080/lms/v1/book/category/2');
+            if (!response.ok) {
+                throw new Error('Failed to fetch books');
+            }
+            const data = await response.json();
+
+            const categories = document.getElementById('categories');
+            data.forEach(category => {
+                const listItem = document.createElement('li');
+                const bookLink = document.createElement('a');
+                bookLink.textContent = category.name;
+                bookLink.href = '#'; // Set href to '#' for click handling
+                bookLink.onclick = function() {
+                    showBookDetails(category); // Pass the book object to showBookDetails
+                    return false; // Prevent the default link behavior
+                };
+                listItem.appendChild(bookLink);
+                categories.appendChild(listItem);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Function to show book details based on the selected book object
+    function showBookDetails(category) {
+        // Select the table body where data will be populated.
+        const tbody = document.querySelector("#data-table tbody");
+        tbody.innerHTML = ''; // Clear the previous table data if any.
+
+        // Populate the table with the details of the selected book.
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${category.name}</td>
+            <td>${category.description}</td>`;
+        tbody.appendChild(row);
+    }
+
+    // Call the function to fetch and display the list of books
+    fetchBooks();
+</script>
+</body>
+</html>
