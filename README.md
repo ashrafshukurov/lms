@@ -3,21 +3,21 @@ A library management system is a crucial tool for efficiently organizing, catalo
 
 A library management system, often abbreviated as LMS, is a software solution designed to automate the processes and tasks associated with library operations. It enables librarians and library staff to manage library resources, track borrowed items, and assist library users in finding the information they need efficiently.
 # Home page of the application
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
-![img.png](img.png)
-![img_4.png](img_4.png)
+![img_2.png](readme_pics/img_2.png)
+![img_3.png](readme_pics/img_3.png)
+![img.png](readme_pics/img.png)
+![img_4.png](readme_pics/img_4.png)
 
 ## Getting started
-![img_5.png](img_5.png)
+![img_5.png](readme_pics/img_5.png)
 ## Showing all books
-![img_6.png](img_6.png)
+![img_6.png](readme_pics/img_6.png)
 ## Getting more details
-![img_1.png](img_1.png)
+![img_1.png](readme_pics/img_1.png)
 ## Categories
-![img_7.png](img_7.png)
+![img_7.png](readme_pics/img_7.png)
 ## Contact us
-![img_8.png](img_8.png)
+![img_8.png](readme_pics/img_8.png)
 
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
