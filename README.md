@@ -1,8 +1,24 @@
-# LMS
+# Library Management System - L.M.S.
+A library management system is a crucial tool for efficiently organizing, cataloging, and managing the resources within a library. Such a system helps librarians and library users streamline their interactions with the library's vast collection of books, periodicals, digital media, and other resources. This project aims to provide an overview of the key features and functionalities of a typical library management system.
 
-
+A library management system, often abbreviated as LMS, is a software solution designed to automate the processes and tasks associated with library operations. It enables librarians and library staff to manage library resources, track borrowed items, and assist library users in finding the information they need efficiently.
+# Home page of the application
+![Screenshot from 2023-11-01 01-28-02.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-02.png)
+![Screenshot from 2023-11-01 02-03-08.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2002-03-08.png)
+![img.png](img.png)
+![Screenshot from 2023-11-01 02-03-21.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2002-03-21.png)
 
 ## Getting started
+![Screenshot from 2023-11-01 01-28-24.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-24.png)
+## Showing all books
+![Screenshot from 2023-11-01 01-28-53.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-53.png)
+## Getting more details
+![img_1.png](img_1.png)
+## Categories
+![Screenshot from 2023-11-01 01-29-10.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-29-10.png)
+## Contact us
+![Screenshot from 2023-11-01 01-29-18.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-29-18.png)
+
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
