@@ -3,21 +3,21 @@ A library management system is a crucial tool for efficiently organizing, catalo
 
 A library management system, often abbreviated as LMS, is a software solution designed to automate the processes and tasks associated with library operations. It enables librarians and library staff to manage library resources, track borrowed items, and assist library users in finding the information they need efficiently.
 # Home page of the application
-![Screenshot from 2023-11-01 01-28-02.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-02.png)
-![Screenshot from 2023-11-01 02-03-08.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2002-03-08.png)
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
 ![img.png](img.png)
-![Screenshot from 2023-11-01 02-03-21.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2002-03-21.png)
+![img_4.png](img_4.png)
 
 ## Getting started
-![Screenshot from 2023-11-01 01-28-24.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-24.png)
+![img_5.png](img_5.png)
 ## Showing all books
-![Screenshot from 2023-11-01 01-28-53.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-28-53.png)
+![img_6.png](img_6.png)
 ## Getting more details
 ![img_1.png](img_1.png)
 ## Categories
-![Screenshot from 2023-11-01 01-29-10.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-29-10.png)
+![img_7.png](img_7.png)
 ## Contact us
-![Screenshot from 2023-11-01 01-29-18.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fhome%2Fmehman%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-01%2001-29-18.png)
+![img_8.png](img_8.png)
 
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
