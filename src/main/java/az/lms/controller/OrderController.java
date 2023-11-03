@@ -4,10 +4,7 @@ package az.lms.controller;
 import az.lms.dto.request.OrderRequest;
 import az.lms.dto.response.OrderResponse;
 import az.lms.service.OrderService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +25,7 @@ public class OrderController {
    private final OrderService orderService;
 
 
-   @ApiOperation(value = "Get all orders", notes = "This method gets list of all available orders")
+   @ApiOperation(value = "Get all orders", notes = "This method gets list of all available orders",authorizations = { @Authorization(value="jwtToken") })
    @ApiResponses(value = {
            @ApiResponse(code = 200, message = "SUCCESSFUL"),
    })
@@ -37,7 +34,7 @@ public class OrderController {
       return ResponseEntity.ok(orderService.getOrders());
    }
 
-   @ApiOperation(value = "Creating new order", notes = "Pass required order request to make successfully order")
+   @ApiOperation(value = "Creating new order", notes = "Pass required order request to make successfully order",authorizations = { @Authorization(value="jwtToken") })
    @ApiResponses(value = {
            @ApiResponse(code = 200, message = "Successfully ordered"),
            @ApiResponse(code = 400, message = "Invalid insert")
@@ -48,7 +45,7 @@ public class OrderController {
       return ResponseEntity.ok("Successfully ordered");
    }
 
-   @ApiOperation(value = "Creating new return", notes = "Pass required order request to make successfully return")
+   @ApiOperation(value = "Creating new return", notes = "Pass required order request to make successfully return",authorizations = { @Authorization(value="jwtToken") })
    @ApiResponses(value = {
            @ApiResponse(code = 200, message = "Successfully returned"),
            @ApiResponse(code = 400, message = "Invalid insert")

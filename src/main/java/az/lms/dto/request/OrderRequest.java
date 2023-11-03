@@ -12,14 +12,13 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class OrderRequest {
-   @ApiParam()
-   @ApiModelProperty(notes = "Student ID", example = "123", required = true)
+   @ApiModelProperty(notes = "Student ID", example = "1", required = true)
    @NotNull(message = "Student ID cannot be empty")
    private Long studentId;
-   @ApiModelProperty(notes = "Book ID", example = "123", required = true)
+   @ApiModelProperty(notes = "Book ID", example = "1", required = true)
    @NotNull(message = "Book ID cannot be empty")
    private Long bookId;
-   @ApiModelProperty(notes = "Order type", example = "ORDERED", required = true)
+   @ApiModelProperty(notes = "Order type", example = "BORROWED/RETURNED", required = true)
    @NotNull(message = "Order type cannot be empty")
    private OrderType orderType;
 }
